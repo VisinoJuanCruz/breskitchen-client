@@ -1,0 +1,20 @@
+.productos-container{
+    margin-top:10%;
+}
+
+.productos-title{
+    text-align: center;
+}
+
+.productos-list-container{
+  
+ /* CakeList.css */
+
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px; /* Espacio entre las tarjetas */
+    transition: opacity 0.5s ease-in-out; 
+  
+
+}

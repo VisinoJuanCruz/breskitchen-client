@@ -1,0 +1,39 @@
+.recetas{
+    margin-top:5%;
+}
+
+.recetas-container{
+
+    display:flex;
+    align-items: column;
+    flex-direction: column;
+    
+}
+
+.new-font{
+font-family: 'Borel', cursive;
+}
+
+.recetas-container{
+
+    display:flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+
+
+
+.receta{
+    background-color: bisque;
+    text-align: center;
+    border: 1px solid rgb(0, 0, 0);
+    margin: 20px;
+    padding: 15px;
+    box-shadow: 5px 5px 10px black;
+}
+
+.receta-title{
+    margin: 15px;
+}
+

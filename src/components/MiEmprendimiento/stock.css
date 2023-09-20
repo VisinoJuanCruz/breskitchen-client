@@ -1,0 +1,11 @@
+.stock-table{
+    width: 100%;
+    border: 1px solid black;
+}
+
+.columna-cantidad{
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 15px;
+}

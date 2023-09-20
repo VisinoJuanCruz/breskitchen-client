@@ -1,0 +1,22 @@
+
+.ofertas-container{
+    margin-top:10%;
+}
+
+.ofertas-title{
+    text-align: center;
+    font-family: 'Borel', cursive;
+}
+
+.ofertas-list-container{
+  
+ /* CakeList.css */
+
+    width: 100vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px; /* Espacio entre las tarjetas */
+    transition: opacity 0.5s ease-in-out; 
+  
+
+}

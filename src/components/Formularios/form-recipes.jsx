@@ -1,0 +1,197 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const CakeForm = () => {
+  const [cakeData, setCakeData] = useState({
+    name: '',
+    description: '',
+    price: 0,
+    ofer: false,
+    image: '',
+    ingredients: [],
+  });
+
+  const [ingredientList, setIngredientList] = useState([]);
+  const [selectedIngredients, setSelectedIngredients] = useState([]); // Ingredientes seleccionados con cantidad
+
+  const handleCakeChange = (e) => {
+    const { name, value } = e.target;
+    setCakeData({
+      ...cakeData,
+      [name]: value,
+    });
+  };
+
+  const handleIngredientChange = (e) => {
+  const { value } = e.target;
+  const ingredientId = value;
+
+  // Verificar si el ingrediente ya está en la lista de ingredientes seleccionados
+  const isIngredientSelected = selectedIngredients.some(
+    (ingredient) => ingredient.ingredient === ingredientId
+  );
+
+  if (!isIngredientSelected) {
+    setSelectedIngredients((prevIngredients) => [
+      ...prevIngredients,
+      {
+        ingredient: ingredientId,
+        quantity: 0, // Inicialmente, la cantidad es 0, pero puedes cambiarla según tus necesidades
+      },
+    ]);
+  }
+};
+
+
+  const handleQuantityChange = (ingredientId, quantity) => {
+    setSelectedIngredients((prevIngredients) =>
+      prevIngredients.map((ingredient) =>
+        ingredient.ingredient === ingredientId
+          ? { ...ingredient, quantity }
+          : ingredient
+      )
+    );
+  };
+  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const cakeDataWithIngredients = {
+      ...cakeData,
+      ingredients: selectedIngredients.map((ingredient) => ({
+        ingredient: ingredient.ingredient,
+        quantity: ingredient.quantity,
+      })),
+    };
+    cakeDataWithIngredients.price = parseInt(cakeDataWithIngredients.price);
+  
+    try {
+      // Realizar una solicitud HTTP para guardar los datos del pastel
+      await axios.post('http://localhost:3000/api/cakes', cakeDataWithIngredients);
+      // Limpiar el formulario después de enviar
+      setCakeData({
+        name: '',
+        description: '',
+        price: 0,
+        ofer: false,
+        image: '',
+        ingredients: [],
+      });
+      setSelectedIngredients([]); // Limpiar la lista de ingredientes seleccionados
+    } catch (error) {
+      console.error('Error al enviar el pastel', error);
+    }
+  };
+  
+
+  useEffect(() => {
+    const fetchIngredients = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/ingredients');
+        setIngredientList(response.data);
+      } catch (error) {
+        console.error('Error al obtener la lista de ingredientes', error);
+      }
+    };
+    fetchIngredients();
+  }, []);
+
+  console.log("INGREDENTS LIST:", ingredientList)
+  console.log("SELECTED INGREDIENTS:", selectedIngredients)
+  return (
+    <div>
+      <h2>Crear un nuevo pastel</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Nombre del pastel:</label>
+          <input
+            type="text"
+            name="name"
+            value={cakeData.name}
+            onChange={handleCakeChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Descripción:</label>
+          <input
+            type="text"
+            name="description"
+            value={cakeData.description}
+            onChange={handleCakeChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Precio:</label>
+          <input
+            type="number"
+            name="price"
+            value={cakeData.price}
+            onChange={handleCakeChange}
+            required
+          />
+        </div>
+        <div>
+          <label>¿En oferta?</label>
+          <input
+            type="checkbox"
+            name="ofer"
+            checked={cakeData.ofer}
+            onChange={handleCakeChange}
+          />
+        </div>
+        <div>
+          <label>Imagen:</label>
+          <input
+            type="text"
+            name="image"
+            value={cakeData.image}
+            onChange={handleCakeChange}
+            required
+          />
+        </div>
+        <div>
+            <label>Ingredientes:</label>
+            <select onChange={handleIngredientChange}>
+            <option value="">Seleccionar ingrediente</option>
+            {ingredientList.map((ingredient) => (
+                <option key={ingredient._id} value={ingredient._id}>
+                {ingredient.name}
+                </option>
+            ))}
+            </select>
+        </div>
+        <div>
+          <h3>Ingredientes seleccionados con cantidad:</h3>
+          <ul>
+  {selectedIngredients.map((selectedIngredient) => {
+    const ingredient = ingredientList.find(
+      (ingredient) => ingredient._id === selectedIngredient.ingredient
+    );
+    return (
+      <li key={selectedIngredient.ingredient}>
+        {ingredient?.name}(en gramos):{' '}
+        <input
+          type="number"
+          value={selectedIngredient.quantity}
+          onChange={(e) =>
+            handleQuantityChange(
+              selectedIngredient.ingredient,
+              parseInt(e.target.value, 10)
+            )
+          }
+        />
+      </li>
+    );
+  })}
+</ul>
+
+        </div>
+        <button type="submit">Guardar Pastel</button>
+      </form>
+    </div>
+  );
+};
+
+export default CakeForm;

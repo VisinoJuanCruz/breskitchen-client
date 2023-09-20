@@ -1,0 +1,56 @@
+.publicity-container{
+    padding: 0px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100vh;
+    margin-top:10%;
+    
+    
+    
+    
+}
+
+
+
+
+.carousel-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom:0;
+    
+}
+
+.cards-list{
+    display: grid;
+    grid-gap: 5px;
+    list-style-type: none;
+    grid-template-columns: repeat(
+    auto-fill,
+     minmax(
+       300px,
+       1fr
+   )
+     );
+    align-items: center; /* Centrar verticalmente */
+    justify-content: center;
+    
+}
+
+.resumen-ofertas-container{
+    margin-top:5%;
+}
+
+.resumen-productos-container{
+    margin-top:5%;
+}
+
+.publicity-title{
+    font-family: 'Borel', cursive;
+    font-size: 5em;
+    
+}
+

@@ -1,0 +1,61 @@
+
+
+.item-card{ 
+    background: radial-gradient(circle, rgb(231, 223, 210) 0%, rgb(231, 202, 174) 100%); 
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 1%;
+    border-radius: 15px;
+    border: 1px solid black;
+    box-shadow: 1px 1px 15px black;
+    text-align: center;
+    min-width: 200px;
+    min-height:300px;
+    max-height: 300px;
+    
+
+
+}
+
+.item-card img{
+  border: 1px solid black;
+}
+
+
+  .card-title{
+    margin-bottom:15px;
+  }
+  .card-text{
+    font-size: 1.5em;
+    margin:10%;
+  }
+
+  
+  .en-oferta .precio{
+    color:green;
+    font-weight: 700;
+  }
+
+  del{
+    color:red;
+  }
+
+  .en-oferta-etiqueta{
+    background-color: green;
+    text-align: center;
+    color:white;
+    padding-top:10px;
+    font-family: 'Borel', cursive;
+    margin-bottom: 1px;
+  }
+
+  .en-destacados-etiqueta{
+    background-color: purple;
+    text-align:center;
+    color:white;
+    padding-top:10px;
+
+    font-family: 'Borel', cursive;
+  }

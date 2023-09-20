@@ -1,0 +1,29 @@
+.sobremi-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    font-family: 'Borel', cursive;
+    min-width: 100%;
+    min-height: 100%;
+    margin-top: 10%;
+}
+
+.sobremi-container .img-container{
+    height: 300px;
+    align-self: center;
+    margin-right: 25px;
+    
+
+}
+
+.sobremi-container .img-container img{
+    height:100%;
+    border-radius: 50%;
+    box-shadow: 0px 0px 50px rgb(236, 168, 105);
+    
+}
+.text-container{
+    width: 50%;
+}
+
+/* rgb(236, 168, 105) */
