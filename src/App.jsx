@@ -14,6 +14,7 @@ import Stock from './components/MiEmprendimiento/Stock.jsx'
 import Recipes from './components/MiEmprendimiento/Recetas.jsx'
 import IngredientForm from './components/Formularios/form-ingredientes.jsx'
 import RecipeForm from './components/Formularios/form-recipes.jsx'
+import EditRecipe from './components/EditRecipe/EditRecipe.jsx'
 
 
 import Header from './components/Header/Header.jsx'
@@ -21,7 +22,9 @@ import Publicity from './components/Publicity/Publicity.jsx'
 import SobreMi from './components/SobreMi/SobreMi.jsx'
 import Productos from './components/Productos/Productos.jsx'
 import {Routes,Route} from 'react-router-dom'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router, useParams } from 'react-router-dom'
+
+
 
 
 function App() {
@@ -131,6 +134,7 @@ const TORTAS_DESTACADAS = TORTAS.filter(torta => torta.destacado)
         <Route path="/add-ingredient" element={<IngredientForm />} />
         <Route path="/add-recipe" element={<RecipeForm />} />
         <Route path="/recipes" element={<Recipes />} />
+        <Route path="/editar-receta/:id" element={<EditRecipe />} />
 
       </Routes>
       </div>

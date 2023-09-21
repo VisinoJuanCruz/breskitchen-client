@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./formulario.css"
 
 const CakeForm = () => {
   const [cakeData, setCakeData] = useState({
@@ -82,6 +83,13 @@ const CakeForm = () => {
       console.error('Error al enviar el pastel', error);
     }
   };
+  const handleRemoveIngredient = (ingredientIdToRemove) => {
+    setSelectedIngredients((prevIngredients) =>
+      prevIngredients.filter(
+        (ingredient) => ingredient.ingredient !== ingredientIdToRemove
+      )
+    );
+  };
   
 
   useEffect(() => {
@@ -99,7 +107,7 @@ const CakeForm = () => {
   console.log("INGREDENTS LIST:", ingredientList)
   console.log("SELECTED INGREDIENTS:", selectedIngredients)
   return (
-    <div>
+    <div className="form-container">
       <h2>Crear un nuevo pastel</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -171,8 +179,28 @@ const CakeForm = () => {
     );
     return (
       <li key={selectedIngredient.ingredient}>
-        {ingredient?.name}(en gramos):{' '}
-        <input
+        {ingredient.name}(en gramos)
+        {ingredient.name === "Huevo" ? 
+        <div><input
+          type="number"
+          value={selectedIngredient.quantity}
+          onChange={(e) =>
+            handleQuantityChange(
+              selectedIngredient.ingredient,
+              parseInt(e.target.value, 10)*60
+            )
+          }
+        />
+            <button
+                type="button"
+                onClick={() => handleRemoveIngredient(selectedIngredient.ingredient)}
+            >
+          ✖️
+            </button>
+          </div>
+          : 
+          <div>
+          <input
           type="number"
           value={selectedIngredient.quantity}
           onChange={(e) =>
@@ -182,6 +210,14 @@ const CakeForm = () => {
             )
           }
         />
+         <button
+            type="button"
+            onClick={() => handleRemoveIngredient(selectedIngredient.ingredient)}
+          >
+           ✖️  {/* Esto representa una cruz en formato Unicode */}
+          </button></div>}
+        
+        
       </li>
     );
   })}

@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 
 import './recetas.css'
 
@@ -27,10 +28,16 @@ export default function Recetas(){
         
         <div className="recetas">
             <h1 className="recetas-title text-center new-font">Recetas</h1>
+            
         <div className="recetas-container row justify-content-md-center">
             {cakes.map((cake) => (
               <div className="receta col-md-3 col-lg-3 col-sm-12" key={cake.name}>
+                
                 <h3 className="receta-title">{cake.name}</h3>
+
+                <div className="img-container">
+                <img src={cake.image}/>
+                </div>
                 <p>
                   <b>Ingredientes:</b>
                 </p>
@@ -64,8 +71,11 @@ export default function Recetas(){
                         return total;
                     }
                 }, 0).toFixed(2)}
-
-                
+            <p>
+                <Link to={`/editar-receta/${cake._id}`} className="edit-button ">
+                  Editar✏️
+                </Link>
+            </p>
             </div>
             ))}
 

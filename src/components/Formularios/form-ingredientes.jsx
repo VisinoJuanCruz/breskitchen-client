@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import "./formulario.css"
 
 function IngredientForm() {
 
@@ -32,7 +33,7 @@ function IngredientForm() {
   }
   
     return (
-      <div className="form-container">
+      <div className="form-container form">
         <form onSubmit={submitHandler}>
           <h1>Agregar ingrediente</h1>
          

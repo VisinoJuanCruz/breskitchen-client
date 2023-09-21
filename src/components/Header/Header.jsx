@@ -36,7 +36,7 @@ export default function Header(){
                                 Mi emprendimiento
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <Link className="header-button nav-item nav-link" to="/stock"><p className="header-title">Mi stock</p></Link>
+                                <Link className="header-button nav-item nav-link" to="/stock"><p className="header-title">Mis ingredientes</p></Link>
                                 <Link className="header-button nav-item nav-link" to="/add-ingredient"><p className="header-title">Agregar ingrediente</p></Link>
                                 <Link className="header-button nav-item nav-link" to="/recipes"><p className="header-title">Mis recetas</p></Link>
                                 <Link className="header-button nav-item nav-link" to="/add-recipe"><p className="header-title">Agregar receta</p></Link>

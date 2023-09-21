@@ -1,6 +1,8 @@
 .stock-table{
     width: 100%;
     border: 1px solid black;
+    background-color: #c19a74;
+    margin-bottom: 100px;
 }
 
 .columna-cantidad{
@@ -8,4 +10,21 @@
     display: flex;
     justify-content: space-between;
     margin: 0px 15px;
+}
+
+tr{
+        border: 1px solid black;
+
+}
+
+.name-column{
+    width: 200px;
+}
+
+.price-column{
+    width: 200px;
+    display:flex;
+    justify-content: space-between;
+    
+
 }

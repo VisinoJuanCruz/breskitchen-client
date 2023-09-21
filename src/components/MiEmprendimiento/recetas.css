@@ -37,3 +37,17 @@ font-family: 'Borel', cursive;
     margin: 15px;
 }
 
+/* Asegura que las imágenes se ajusten automáticamente al ancho del contenedor padre */
+.img-container img {
+    border: 1px solid rgb(169, 137, 68);
+    box-shadow: 2px 2px 10px black;
+    max-width: 200px; /* Establece el ancho máximo al 100% del contenedor padre */
+    height: auto; /* Ajusta automáticamente la altura para mantener la proporción */
+  }
+  
+  /* Agrega margen inferior opcional para separar las imágenes */
+  .img-container {
+    margin-bottom: 10px; /* Puedes ajustar este valor según tus preferencias */
+  }
+  
+
