@@ -1,147 +1,110 @@
-import { useState } from 'react'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import axios from 'axios';
+import './App.css';
 
-import TortaGalesa from "./images/tortagalesa.jpg"
-import BombonSuizo from "./images/bombonsuizo.jpg"
-import TortaOreo from "./images/tortaoreo.jpg"
-import TortaRogel from "./images/tortarogel.jpg"
-import PanDulceOreo from "./images/pandulceoreo.jpeg"
-
-import ListadoCompleto from './components/ListadoReducido/ListadoCompleto.jsx'
-import Ofertas from './components/Ofertas/Ofertas.jsx'
-import MiEmprendimiento from './components/MiEmprendimiento/MiEmprendimiento'
-import Stock from './components/MiEmprendimiento/Stock.jsx'
-import Recipes from './components/MiEmprendimiento/Recetas.jsx'
-import IngredientForm from './components/Formularios/form-ingredientes.jsx'
-import RecipeForm from './components/Formularios/form-recipes.jsx'
-import EditRecipe from './components/EditRecipe/EditRecipe.jsx'
-
-
-import Header from './components/Header/Header.jsx'
-import Publicity from './components/Publicity/Publicity.jsx'
-import SobreMi from './components/SobreMi/SobreMi.jsx'
-import Productos from './components/Productos/Productos.jsx'
-import {Routes,Route} from 'react-router-dom'
-import { BrowserRouter as Router, useParams } from 'react-router-dom'
-
-
-
+// Importa tus componentes aquí
+import Header from './components/Header/Header';
+import LoginForm from './components/Formularios/form-login';
+import Publicity from './components/Publicity/Publicity';
+import SobreMi from './components/SobreMi/SobreMi';
+import Productos from './components/Productos/Productos';
+import Ofertas from './components/Ofertas/Ofertas';
+import Stock from './components/MiEmprendimiento/Stock';
+import Recipes from './components/MiEmprendimiento/Recetas';
+import IngredientForm from './components/Formularios/form-ingredientes';
+import RecipeForm from './components/Formularios/form-recipes';
+import EditRecipe from './components/EditRecipe/EditRecipe';
 
 function App() {
- 
-  const TORTAS = [{
-    nombre: "Torta Rogel",
-    descripcion: "Torta sequita con muchas capaz con dulce de leche y merengue arriba",
-    img: TortaRogel,
-    precio:500,
-    oferta:false,
-    porcentajeDescuento:0,
-    destacado:false
-  },
-  {
-    nombre: "Bombon Suizo",
-    descripcion: "Bombon con dulce de leche y merengue arriba",
-    img: BombonSuizo,
-    precio:500,
-    oferta:false,
-    porcentajeDescuento:0,
-    destacado: false
-  },
-  {
-    nombre: "Torta Oreo",
-    descripcion: "Torta de oreo con dulce de leche",
-    img: TortaOreo,
-    precio:500,
-    oferta:false,
-    porcentajeDescuento:0,
-    destacado: true
-  },
-  {
-    nombre: "Torta Galesa",
-    descripcion: "Torta de galesa con dulce de leche y merengue arriba",
-    img: TortaGalesa,
-    precio:500,
-    oferta:true,
-    porcentajeDescuento:20,
-    destacado: false
-  }
-    ,
-  {
-    nombre: "Torta Merengue",
-    descripcion: "Torta con merengue",
-    img: TortaOreo,
-    precio:500,
-    oferta:true,
-    porcentajeDescuento:20,
-    destacado: false
-  },
-  {
-    nombre: "Rosca de Pascua",
-    descripcion: "Rosca con crema pastelera y frutos secos",
-    img: BombonSuizo,
-    precio:500,
-    oferta:false,
-    porcentajeDescuento:0,
-    destacado: true
-  },
-  {
-    nombre: "Pan Dulce Oreo",
-    descripcion: "Pan dulce con dulce de leche y Oreo",
-    img: PanDulceOreo,
-    precio:500,
-    oferta:true,
-    porcentajeDescuento:0,
-    destacado: true
-  },
-  {
-    nombre: "Galletitas Glaseadas",
-    descripcion: "Galletitas con glaseado",
-    img: TortaGalesa,
-    precio:500,
-    oferta:true,
-    porcentajeDescuento:50,
-    destacado: false
-  }
-    ,
-  {
-    nombre: "Chococotorta",
-    descripcion: "Torta de oreo con dulce de leche, crema y chocolinas",
-    img: TortaOreo,
-    precio:500,
-    oferta:true,
-    porcentajeDescuento:20,
-    destacado: false
-  },
-  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [cakes, setCakes] = useState([]);
 
-]
+  useEffect(() => {
+    const fetchCakes = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/cakes');
+        setCakes(response.data);
+      } catch (error) {
+        console.error('Error al obtener la lista de tortas', error);
+      }
+    };
+    fetchCakes();
+  }, []);
 
-const TORTAS_OFERTA = TORTAS.filter(torta => torta.oferta)
-const TORTAS_DESTACADAS = TORTAS.filter(torta => torta.destacado)
+  // Función para manejar el inicio de sesión exitoso
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
+  // Función para manejar el cierre de sesión
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
 
   return (
-    
-    
-    <div className="app">
-      <Header />
-      <div className="app-container">
-      <Routes>
-        <Route path="/" element={<Publicity TORTAS={TORTAS}/>}/>
-        <Route path="/sobre-mi" element={<SobreMi/>}/>
-        <Route path="/productos" element={<Productos TORTAS={TORTAS} />}/>
-        <Route path="/ofertas" element={<Ofertas TORTAS={TORTAS_OFERTA}/>} />
-        <Route path="/stock" element={<Stock />} />
-        <Route path="/add-ingredient" element={<IngredientForm />} />
-        <Route path="/add-recipe" element={<RecipeForm />} />
-        <Route path="/recipes" element={<Recipes />} />
-        <Route path="/editar-receta/:id" element={<EditRecipe />} />
-
-      </Routes>
+    <Router>
+      <div>
+        <header>
+         
+            <div className="app">
+              <Header onLogout={handleLogout} isLoggedIn={isLoggedIn}/>
+              <div className="app-container">
+                <Routes>
+                  <Route path="/" element={<Publicity cakes={cakes} />} />
+                  <Route path="/sobre-mi" element={<SobreMi />} />
+                  <Route path="/productos" element={<Productos cakes={cakes} />} />
+                  <Route path="/ofertas" element={<Ofertas />} />
+                  <Route path="/stock" element={<Stock />} />
+                  <Route path="/add-ingredient" element={<IngredientForm />} />
+                  <Route path="/add-recipe" element={<RecipeForm />} />
+                  <Route path="/recipes" element={<Recipes />} />
+                  <Route path="/editar-receta/:id" element={<EditRecipe />} />
+                  <Route path="login" element={<LoginForm onLoginSuccess={handleLoginSuccess}  />} />
+                </Routes>
+             </div>
+             </div>
+        </header>
       </div>
-      
-    </div>
-    
-  )
+    </Router>
+  );
 }
 
-export default App
+export default App;
+
+
+{/*
+
+  return (
+    <Router>
+      <div>
+        <header>
+          {isLoggedIn ? (
+            <div className="app">
+              <Header onLogout={handleLogout} />
+              <div className="app-container">
+                <Routes>
+                  <Route path="/" element={<Publicity cakes={cakes} />} />
+                  <Route path="/sobre-mi" element={<SobreMi />} />
+                  <Route path="/productos" element={<Productos cakes={cakes} />} />
+                  <Route path="/ofertas" element={<Ofertas />} />
+                  <Route path="/stock" element={<Stock />} />
+                  <Route path="/add-ingredient" element={<IngredientForm />} />
+                  <Route path="/add-recipe" element={<RecipeForm />} />
+                  <Route path="/recipes" element={<Recipes />} />
+                  <Route path="/editar-receta/:id" element={<EditRecipe />} />
+                </Routes>
+              </div>
+            </div>
+          ) : (
+              <LoginForm onLoginSuccess={handleLoginSuccess} />
+           
+          )}
+        </header>
+      </div>
+    </Router>
+  );
+}
+
+
+*/}

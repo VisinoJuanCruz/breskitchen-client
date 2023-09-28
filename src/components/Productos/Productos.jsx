@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CakeCard from '../Cards/CakeCard.jsx';
 import './productos.css';
 
-const Productos = ({ TORTAS }) => {
+const Productos = ({ cakes }) => {
   
 
 
@@ -10,7 +10,7 @@ const Productos = ({ TORTAS }) => {
     <div className="productos-container">
         <h2 className="productos-title">Nuestros Productos</h2>
         <div className="productos-list-container">
-          {TORTAS.map((item, index) => (
+          {cakes.map((item, index) => (
             <CakeCard key={index} item={item} />
           ))}
         </div>

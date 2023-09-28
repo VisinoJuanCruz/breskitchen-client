@@ -10,17 +10,16 @@ import ReducedList from '../ListadoReducido/ReducedList.jsx'
 import './publicity.css'
 
 
-export default function Publicity({TORTAS}){
-
+export default function Publicity({cakes}){
 
 
 
 
 //ALGUNOS PRODUCTOS QUE SON OFERTAS
-const TORTAS_OFERTA = TORTAS.filter(torta => torta.oferta)
-const TORTAS_DESTACADAS = TORTAS.filter(torta => torta.destacado)
-const TORTAS_RECOMENDADAS = TORTAS.filter(torta => !torta.oferta && !torta.destacado)
-console.log(TORTAS_RECOMENDADAS)
+const oferCakes = cakes.filter(cake => cake.ofer)
+const TORTAS_DESTACADAS = cakes.filter(torta => torta.destacado)
+const TORTAS_RECOMENDADAS = cakes.filter(torta => !torta.oferta && !torta.destacado)
+
 
 
     return(
@@ -34,10 +33,14 @@ console.log(TORTAS_RECOMENDADAS)
              <h2> Productos recomendados</h2>
              <CakeList TORTAS={TORTAS_RECOMENDADAS} />
             </div>
+
+            {oferCakes.length > 0 ? 
             <div className="resumen-ofertas-container container-fluid">
              <h2> Ofertas de la semana</h2>
-             <ReducedList TORTAS={TORTAS_OFERTA} />
+             <ReducedList oferCakes={oferCakes} />
             </div>
+            :
+            <></>}
             <div className="resumen-productos-container container-fluid">
              <h2> Productos destacados</h2>
              <CakeList TORTAS={TORTAS_DESTACADAS} />

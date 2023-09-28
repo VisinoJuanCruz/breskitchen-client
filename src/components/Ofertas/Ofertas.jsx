@@ -1,16 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import CakeCard from '../Cards/CakeCard.jsx';
+import axios from 'axios'
 import './ofertas.css';
 
-const Ofertas = ( {TORTAS }) => {
+const Ofertas = ( {cakes }) => {
   
+
+  const [oferCakes, setOferCakes] = useState([])
+
+
+  useEffect(() => {
+    const fetchOferCakes = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/ofer-cakes');
+        setOferCakes(response.data);
+      } catch (error) {
+        console.error('Error al obtener la lista tortas en oferta', error);
+      }
+    };
+    fetchOferCakes();
+  }, []);
+
+  console.log(oferCakes)
+
+
+
+
 
 
   return (
     <div className="ofertas-container">
         <h2 className="ofertas-title">Nuestros productos en oferta</h2>
       <div className="ofertas-list-container">
-        {TORTAS.map((item, index) => (
+        {oferCakes.map((item, index) => (
           <CakeCard key={index} item={item} />
         ))}
       </div>

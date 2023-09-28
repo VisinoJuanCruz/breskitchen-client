@@ -1,17 +1,20 @@
 import "./minimalistic.css"
 import Logo from "../../images/logo-breskitchen.jpeg"
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
-export default function Header(){
+export default function Header({onLogout, isLoggedIn}){
 
+    const navigate = useNavigate();
+    
     const logged = true
 
-
-   
-
-
-
-
+    const handleLogoutClick = () => {
+        // Llama a la función de cierre de sesión proporcionada desde App.js
+        onLogout();
+        // Redirige al usuario a la página de inicio de sesión (LoginForm)
+        navigate('/login');
+      };
+    
 
     return(
         <div className="generic-header">
@@ -31,6 +34,8 @@ export default function Header(){
                     <li><Link to="/">Inicio</Link></li>
                     <li><Link to="/productos">Productos</Link></li>
                     <li><Link to="/ofertas">Ofertas</Link></li>
+                    {isLoggedIn?
+                    <>
                         <li className="nav-item dropdown">
                             <a className="dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Mi emprendimiento
@@ -42,6 +47,14 @@ export default function Header(){
                                 <Link className="header-button nav-item nav-link" to="/add-recipe"><p className="header-title">Agregar receta</p></Link>
                             </div>
                         </li>
+                        <li>
+                            <Link onClick={handleLogoutClick}><p>Cerrar Sesión</p></Link>
+                        </li>
+                    </>
+                        :<li>
+                            <Link to="/login"><p className="header-title">Iniciar Sesión</p></Link>
+                        </li>
+                    }
                     </ul>
                 </div>
             </nav>

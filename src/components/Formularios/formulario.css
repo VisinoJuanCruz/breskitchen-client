@@ -33,7 +33,6 @@
 
   .form-container button {
     padding: 10px 20px;
-    background-color: #95672a;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -54,3 +53,21 @@
     margin-bottom: 5px;
   }
   
+
+  .save-button{
+    margin:15px;
+    background-color: rgb(17, 46, 163);
+  }
+
+  .delete-button{
+    
+    background-color: #952a2a;
+  }
+
+  .save-button:hover{
+    background-color: rgb(46, 72, 177);
+  }
+  .delete-button:hover{
+    
+    background-color: #b50f0f;
+  }

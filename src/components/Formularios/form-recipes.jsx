@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import "./formulario.css"
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const CakeForm = () => {
   const [cakeData, setCakeData] = useState({
@@ -14,14 +17,20 @@ const CakeForm = () => {
 
   const [ingredientList, setIngredientList] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]); // Ingredientes seleccionados con cantidad
+  const MySwal = withReactContent(Swal)
+  const navigate = useNavigate();
 
   const handleCakeChange = (e) => {
-    const { name, value } = e.target;
-    setCakeData({
-      ...cakeData,
-      [name]: value,
-    });
-  };
+    const { name, value, type, checked } = e.target;
+  
+  // Si es un checkbox, manejar el valor 'checked'
+  const newValue = type === 'checkbox' ? checked : value;
+
+  setCakeData({
+    ...cakeData,
+    [name]: newValue,
+  });
+};
 
   const handleIngredientChange = (e) => {
   const { value } = e.target;
@@ -70,6 +79,22 @@ const CakeForm = () => {
       // Realizar una solicitud HTTP para guardar los datos del pastel
       await axios.post('http://localhost:3000/api/cakes', cakeDataWithIngredients);
       // Limpiar el formulario después de enviar
+      MySwal.fire({
+        title: 'Receta agregada con éxito',
+        icon: 'success',
+      }).then(() => {
+        // Redirigir a la lista de recetas después de eliminar
+        navigate('/recipes');
+      });
+    } catch (error) {
+      console.error('Error al agregar la receta', error);
+      // Mostrar mensaje de error si la eliminación falla
+      MySwal.fire({
+        title: 'Error al agregar la receta',
+        text: 'Ha ocurrido un error al agregar la receta.',
+        icon: 'error',
+      });
+    }
       setCakeData({
         name: '',
         description: '',
@@ -79,9 +104,7 @@ const CakeForm = () => {
         ingredients: [],
       });
       setSelectedIngredients([]); // Limpiar la lista de ingredientes seleccionados
-    } catch (error) {
-      console.error('Error al enviar el pastel', error);
-    }
+    
   };
   const handleRemoveIngredient = (ingredientIdToRemove) => {
     setSelectedIngredients((prevIngredients) =>

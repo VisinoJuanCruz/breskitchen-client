@@ -2,12 +2,16 @@ import {useEffect, useState} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 
+
 import './recetas.css'
 
 export default function Recetas(){
 
 
     const [cakes, setCakes] = useState([])
+
+
+    
     useEffect(() => {
         const fetchIngredients = async () => {
           try {
@@ -38,6 +42,10 @@ export default function Recetas(){
                 <div className="img-container">
                 <img src={cake.image}/>
                 </div>
+                <div>
+                  <b>Descripcion: </b>
+                  <p>{cake.description}</p>
+                  </div>
                 <p>
                   <b>Ingredientes:</b>
                 </p>

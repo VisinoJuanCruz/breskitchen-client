@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CakeCard from '../Cards/CakeCard.jsx';
+import axios from 'axios'
 import './reducedlist.css';
 
-const ReducedList = ({ TORTAS }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const ReducedList = ({oferCakes}) => {
 
+ 
+  const [currentIndex, setCurrentIndex] = useState(0);
   const handleNext = () => {
     setCurrentIndex((prevIndex) => prevIndex + 1);
   };
@@ -13,7 +15,7 @@ const ReducedList = ({ TORTAS }) => {
     setCurrentIndex((prevIndex) => prevIndex - 1);
   };
 
-  const visibleCards = TORTAS.slice(currentIndex, currentIndex + 4);
+  const visibleCards = oferCakes.slice(currentIndex, currentIndex + 4);
 
   return (
     <div className="cake-list-container">
@@ -22,12 +24,12 @@ const ReducedList = ({ TORTAS }) => {
       
         
       <div className="cake-list">
-        {visibleCards.filter(item => item.oferta===true).map((item, index) => (
+        {visibleCards.filter(item => item.ofer===true).map((item, index) => (
           <CakeCard key={index} item={item} />
         ))}
       </div>
 
-      {currentIndex === (TORTAS.length - 4) || TORTAS.length < 5  ? <></>:<button className="arrow-button right" onClick={handleNext}>
+      {currentIndex === (oferCakes.length - 4) || oferCakes.length < 5  ? <></>:<button className="arrow-button right" onClick={handleNext}>
         →
       </button>}
       

@@ -1,9 +1,14 @@
 import {useState} from 'react'
+import {useNavigate} from 'react-router-dom'
+
 import "./formulario.css"
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 function IngredientForm() {
 
-  
+    const MySwal = withReactContent(Swal)
+    const navigate = useNavigate();
 
     const submitHandler = e => {
       e.preventDefault();
@@ -28,9 +33,18 @@ function IngredientForm() {
   
   
     })
+
+    MySwal.fire({
+      title: 'Ingrediente agregada con éxito',
+      icon: 'success',
+    }).then(() => {
+      // Redirigir a la lista de recetas después de eliminar
+      navigate('/stock');
+    })
+    
+      e.target.reset();;
+  } 
   
-    e.target.reset();
-  }
   
     return (
       <div className="form-container form">
@@ -44,7 +58,7 @@ function IngredientForm() {
         
       </div>
     )
+    
     }
-
     
     export default IngredientForm;
