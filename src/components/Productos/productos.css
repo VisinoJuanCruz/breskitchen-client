@@ -1,18 +1,22 @@
-.productos-container{
-    margin-top:10%;
-    
-}
-
-
-.productos-list-container{
+.productos-container {
+    margin-top: 10%;
+    text-align: center; /* Centra el contenido horizontalmente */
+  }
   
- /* CakeList.css */
-
-
+  .productos-title {
+    margin-bottom: 20px; /* Espacio entre el título y el input de búsqueda */
+  }
+  
+  .search-input {
+    display: flex;
+    justify-content: center; /* Centra el input horizontalmente */
+    margin-bottom: 20px; /* Espacio entre el input de búsqueda y la lista de productos */
+  }
+  
+  .productos-list-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px; /* Espacio entre las tarjetas */
-    transition: opacity 0.5s ease-in-out; 
+    transition: opacity 0.5s ease-in-out;
+  }
   
-
-}

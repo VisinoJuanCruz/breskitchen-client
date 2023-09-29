@@ -3,7 +3,7 @@ import CakeCard from '../Cards/CakeCard.jsx';
 import axios from 'axios'
 import './ofertas.css';
 
-const Ofertas = ( {cakes }) => {
+const Ofertas = ( {isLoggedIn}) => {
   
 
   const [oferCakes, setOferCakes] = useState([])
@@ -33,7 +33,7 @@ const Ofertas = ( {cakes }) => {
         <h2 className="ofertas-title">Nuestros productos en oferta</h2>
       <div className="ofertas-list-container">
         {oferCakes.map((item, index) => (
-          <CakeCard key={index} item={item} />
+          <CakeCard item={item} isLoggedIn={isLoggedIn} />
         ))}
       </div>
      

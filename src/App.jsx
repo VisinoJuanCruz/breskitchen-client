@@ -15,6 +15,7 @@ import Recipes from './components/MiEmprendimiento/Recetas';
 import IngredientForm from './components/Formularios/form-ingredientes';
 import RecipeForm from './components/Formularios/form-recipes';
 import EditRecipe from './components/EditRecipe/EditRecipe';
+import ListaDePrecios from './components/ListaDePrecios/ListaDePrecios.jsx'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -51,16 +52,17 @@ function App() {
               <Header onLogout={handleLogout} isLoggedIn={isLoggedIn}/>
               <div className="app-container">
                 <Routes>
-                  <Route path="/" element={<Publicity cakes={cakes} />} />
-                  <Route path="/sobre-mi" element={<SobreMi />} />
-                  <Route path="/productos" element={<Productos cakes={cakes} />} />
-                  <Route path="/ofertas" element={<Ofertas />} />
-                  <Route path="/stock" element={<Stock />} />
+                  <Route path="/"           element={<Publicity cakes={cakes} isLoggedIn={isLoggedIn} />} />
+                  <Route path="/sobre-mi"   element={<SobreMi />} />
+                  <Route path="/productos"  element={<Productos isLoggedIn={isLoggedIn} />} />
+                  <Route path="/ofertas"    element={<Ofertas isLoggedIn={isLoggedIn}/>} />
+                  <Route path="/stock"      element={<Stock />} />
                   <Route path="/add-ingredient" element={<IngredientForm />} />
                   <Route path="/add-recipe" element={<RecipeForm />} />
                   <Route path="/recipes" element={<Recipes />} />
                   <Route path="/editar-receta/:id" element={<EditRecipe />} />
-                  <Route path="login" element={<LoginForm onLoginSuccess={handleLoginSuccess}  />} />
+                  <Route path="/login" element={<LoginForm onLoginSuccess={handleLoginSuccess}  />} />
+                  <Route path="/price-list" element={<ListaDePrecios isLoggedIn={isLoggedIn}/>} />
                 </Routes>
              </div>
              </div>

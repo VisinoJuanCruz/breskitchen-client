@@ -1,0 +1,71 @@
+/* listaDePrecios.css */
+
+/* Estilos generales */
+.price-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+  }
+  
+  .price-list-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .price-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .price-list-table th {
+    background-color: #f2f2f2;
+    color: #333;
+    text-align: left;
+    padding: 10px;
+    border-bottom: 2px solid #333;
+  }
+  
+  .price-list-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  /* Estilos para las filas */
+  .price-list-row {
+    transition: background-color 0.3s;
+  }
+  
+  .price-list-row:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* Estilos para el pie de la tabla */
+  .price-list-total {
+    font-weight: bold;
+    text-align: right;
+    padding-top: 10px;
+  }
+  
+  /* Estilos para la "torta" alrededor de la lista */
+  .torta-wrapper {
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+  }
+
+  .pencil {
+    font-size: 24px; /* Ajusta el tamaño de la fuente según tus preferencias */
+    transform-origin: center; /* Establece el punto de transformación en el centro */
+  }
+  .pencil {
+    transform: rotate(45deg); /* Rota el lápiz 45 grados */
+  }

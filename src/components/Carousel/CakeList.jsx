@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CakeCard from '../Cards/CakeCard.jsx';
 import './cakelist.css';
 
-const CakeList = ({ TORTAS }) => {
+const CakeList = ({ cakes, isLoggedIn }) => {
   const [visibleCards, setVisibleCards] = useState(4);
 
   const handleLoadMore = () => {
@@ -12,11 +12,11 @@ const CakeList = ({ TORTAS }) => {
   return (
     <div>
       <div className="cake-list">
-        {TORTAS.slice(0, visibleCards).map((item, index) => (
-          <CakeCard key={index} item={item} />
+        {cakes.slice(0, visibleCards).map((item, index) => (
+          <CakeCard item={item} isLoggedIn={isLoggedIn} />
         ))}
       </div>
-      {visibleCards < TORTAS.length && (
+      {visibleCards < cakes.length && (
         <button className="load-more-button" onClick={handleLoadMore}>
           Mostrar más
         </button>

@@ -18,7 +18,7 @@ export default function Carousel2(){
                         <img src={BombonSuizo} className="d-block" alt="..."/>
                     </div>
                     <div className="carousel-item">
-                        <img src={TortaOreo} className="d-block " alt="..."/>
+                        <img src='https://i.imgur.com/eccOHti.jpg' className="d-block " alt="..."/>
                     </div>
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">

@@ -12,16 +12,16 @@
     margin: 0px 15px;
 }
 
-tr{
+.stock-table tr{
         border: 1px solid black;
 
 }
 
-.name-column{
+.stock-table .name-column{
     width: 200px;
 }
 
-.price-column{
+.stock-table .price-column{
     width: 200px;
     display:flex;
     justify-content: space-between;

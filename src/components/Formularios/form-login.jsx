@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import "./formulario.css"
 
 const LoginForm = ({ onLoginSuccess }) => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -23,6 +25,7 @@ const LoginForm = ({ onLoginSuccess }) => {
       if (response.data.success) {
         // Llamada a la función onLoginSuccess si la autenticación es exitosa
         onLoginSuccess();
+        navigate('/')
       } else {
         // Manejar el caso de autenticación fallida (por ejemplo, mostrar un mensaje de error)
         console.error('Autenticación fallida');

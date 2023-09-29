@@ -1,10 +1,11 @@
 import './cakecard.css'
 import {Link} from 'react-router-dom'
-export default function CakeCard ({item}) {
+export default function CakeCard ({item, isLoggedIn}) {
 
   const className = `card-text ${item.oferta ? 'en-oferta' : ''}`
+  console.log("ESTADO:", isLoggedIn)
   const logged = false;
-  const admin = true;
+  const admin = isLoggedIn;
  
   return (
     <div className="card">

@@ -1,3 +1,6 @@
+import {useState, useEffect} from 'react'
+import axios from 'axios'
+
 import Carousel from '../Carousel/Carousel.jsx'
 import Carousel2 from '../Carousel/Carousel2.jsx'
 import Carousel3 from '../Carousel/Carousel3.jsx'
@@ -10,8 +13,21 @@ import ReducedList from '../ListadoReducido/ReducedList.jsx'
 import './publicity.css'
 
 
-export default function Publicity({cakes}){
+export default function Publicity({isLoggedIn}){
 
+  const [cakes, setCakes] = useState([]);
+
+  useEffect(() => {
+    const fetchCakes = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/cakes');
+        setCakes(response.data);
+      } catch (error) {
+        console.error('Error al obtener la lista de tortas', error);
+      }
+    };
+    fetchCakes();
+  }, []);
 
 
 
@@ -31,19 +47,19 @@ const TORTAS_RECOMENDADAS = cakes.filter(torta => !torta.oferta && !torta.destac
             </div>
             <div className="resumen-productos-container container-fluid">
              <h2> Productos recomendados</h2>
-             <CakeList TORTAS={TORTAS_RECOMENDADAS} />
+             <CakeList cakes={cakes} isLoggedIn={isLoggedIn} />
             </div>
 
             {oferCakes.length > 0 ? 
             <div className="resumen-ofertas-container container-fluid">
              <h2> Ofertas de la semana</h2>
-             <ReducedList oferCakes={oferCakes} />
+             <ReducedList oferCakes={oferCakes} isLoggedIn={isLoggedIn} />
             </div>
             :
             <></>}
             <div className="resumen-productos-container container-fluid">
              <h2> Productos destacados</h2>
-             <CakeList TORTAS={TORTAS_DESTACADAS} />
+             <CakeList cakes={cakes} isLoggedIn={isLoggedIn} />
             </div>
             
 

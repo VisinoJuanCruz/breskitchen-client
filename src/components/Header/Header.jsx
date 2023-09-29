@@ -34,6 +34,7 @@ export default function Header({onLogout, isLoggedIn}){
                     <li><Link to="/">Inicio</Link></li>
                     <li><Link to="/productos">Productos</Link></li>
                     <li><Link to="/ofertas">Ofertas</Link></li>
+                    <li><Link to="/price-list">Listado de precios</Link></li>
                     {isLoggedIn?
                     <>
                         <li className="nav-item dropdown">
