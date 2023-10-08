@@ -1,11 +1,10 @@
 
-.ofertas-container{
-    margin-top:10%;
-}
 
 .ofertas-title{
     text-align: center;
-    font-family: 'Borel', cursive;
+    font-family: 'Lobster', cursive;
+    color:white;
+    font-size: 3em;
 }
 
 .ofertas-list-container{

@@ -24,6 +24,7 @@ const EditRecipe = () => {
     image: '',
     ingredients: [],
     discountRate: 0,
+    category:'',
   });
 
   useEffect(() => {
@@ -243,6 +244,16 @@ const EditRecipe = () => {
           />
         </div>
         <div>
+          <label>Categoría:</label>
+          <input
+            type="text"
+            name="category"
+            value={cakeData.category}
+            onChange={handleCakeChange}
+            required
+          />
+        </div>
+        <div>
           <label>Ingredientes:</label>
           <select onChange={handleIngredientChange}>
             <option value="">Seleccionar ingrediente</option>
@@ -253,6 +264,7 @@ const EditRecipe = () => {
             ))}
           </select>
         </div>
+        
         <div>
   <h3>Ingredientes seleccionados con cantidad:</h3>
   <ul>

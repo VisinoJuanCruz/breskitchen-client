@@ -5,7 +5,6 @@
     justify-content: center;
     align-items: center;
     max-width: 100vh;
-    margin-top:10%;
     
     
     
@@ -49,8 +48,14 @@
 }
 
 .publicity-title{
-    font-family: 'Borel', cursive;
+    font-family: 'Lobster','Borel', cursive;
     font-size: 5em;
+    text-shadow: 5px 5px 1px black;
+    color:rgb(255, 255, 255);
     
+}
+
+.publicity-subtitle{
+    color:white;
 }
 

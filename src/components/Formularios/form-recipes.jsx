@@ -6,6 +6,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 const CakeForm = () => {
+  
   const [cakeData, setCakeData] = useState({
     name: '',
     description: '',
@@ -14,7 +15,6 @@ const CakeForm = () => {
     image: '',
     ingredients: [],
   });
-
   const [ingredientList, setIngredientList] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]); // Ingredientes seleccionados con cantidad
   const MySwal = withReactContent(Swal)
@@ -30,7 +30,7 @@ const CakeForm = () => {
     ...cakeData,
     [name]: newValue,
   });
-};
+  };
 
   const handleIngredientChange = (e) => {
   const { value } = e.target;
@@ -50,8 +50,7 @@ const CakeForm = () => {
       },
     ]);
   }
-};
-
+  };
 
   const handleQuantityChange = (ingredientId, quantity) => {
     setSelectedIngredients((prevIngredients) =>
@@ -63,7 +62,6 @@ const CakeForm = () => {
     );
   };
   
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const cakeDataWithIngredients = {
@@ -106,6 +104,7 @@ const CakeForm = () => {
       setSelectedIngredients([]); // Limpiar la lista de ingredientes seleccionados
     
   };
+  
   const handleRemoveIngredient = (ingredientIdToRemove) => {
     setSelectedIngredients((prevIngredients) =>
       prevIngredients.filter(
@@ -114,7 +113,6 @@ const CakeForm = () => {
     );
   };
   
-
   useEffect(() => {
     const fetchIngredients = async () => {
       try {
@@ -127,8 +125,6 @@ const CakeForm = () => {
     fetchIngredients();
   }, []);
 
-  console.log("INGREDENTS LIST:", ingredientList)
-  console.log("SELECTED INGREDIENTS:", selectedIngredients)
   return (
     <div className="form-container">
       <h2>Crear un nuevo pastel</h2>
@@ -196,56 +192,54 @@ const CakeForm = () => {
         <div>
           <h3>Ingredientes seleccionados con cantidad:</h3>
           <ul>
-  {selectedIngredients.map((selectedIngredient) => {
-    const ingredient = ingredientList.find(
-      (ingredient) => ingredient._id === selectedIngredient.ingredient
-    );
-    return (
-      <li key={selectedIngredient.ingredient}>
-        {ingredient.name}(en gramos)
-        {ingredient.name === "Huevo" ? 
-        <div><input
-          type="number"
-          value={selectedIngredient.quantity}
-          onChange={(e) =>
-            handleQuantityChange(
-              selectedIngredient.ingredient,
-              parseInt(e.target.value, 10)*60
-            )
-          }
-        />
-            <button
-                type="button"
-                onClick={() => handleRemoveIngredient(selectedIngredient.ingredient)}
-            >
-          ✖️
-            </button>
-          </div>
-          : 
-          <div>
-          <input
-          type="number"
-          value={selectedIngredient.quantity}
-          onChange={(e) =>
-            handleQuantityChange(
-              selectedIngredient.ingredient,
-              parseInt(e.target.value, 10)
-            )
-          }
-        />
-         <button
-            type="button"
-            onClick={() => handleRemoveIngredient(selectedIngredient.ingredient)}
-          >
-           ✖️  {/* Esto representa una cruz en formato Unicode */}
-          </button></div>}
-        
-        
-      </li>
-    );
-  })}
-</ul>
-
+            {selectedIngredients.map((selectedIngredient) => {
+              const ingredient = ingredientList.find(
+                  (ingredient) => ingredient._id === selectedIngredient.ingredient
+              );
+              return (
+                <li key={selectedIngredient.ingredient}>
+                  {ingredient.name}(en gramos)
+                  {ingredient.name === "Huevo" ? 
+                  <div>
+                    <input
+                      type="number"
+                      value={selectedIngredient.quantity}
+                      onChange={(e) =>
+                      handleQuantityChange(
+                        selectedIngredient.ingredient,
+                        parseInt(e.target.value, 10)*60
+                      )
+                    }
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveIngredient(selectedIngredient.ingredient)}
+                    >
+                      ✖️
+                    </button>
+                  </div>
+                  : 
+                  <div>
+                    <input
+                    type="number"
+                    value={selectedIngredient.quantity}
+                    onChange={(e) =>
+                      handleQuantityChange(
+                        selectedIngredient.ingredient,
+                        parseInt(e.target.value, 10)
+                      )
+                    }
+                  />
+                  <button
+                      type="button"
+                      onClick={() => handleRemoveIngredient(selectedIngredient.ingredient)}
+                    >
+                    ✖️  {/* Esto representa una cruz en formato Unicode */}
+                    </button></div>}
+                </li>
+              );
+            })}
+          </ul>
         </div>
         <button type="submit">Guardar Pastel</button>
       </form>

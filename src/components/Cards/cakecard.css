@@ -19,8 +19,18 @@
 
 }
 
-.item-card img{
-  border: 1px solid black;
+.card-title{
+  font-family: 'Lobster','Borel', cursive;
+  text-align: center;
+  color:rgb(165, 16, 16);
+  text-shadow: 1px 1px 1px black;
+  
+  
+ }
+
+.card-body img{
+  max-height: 200px;
+  margin-bottom: 15px;
 }
 
 
@@ -58,4 +68,18 @@
     padding-top:10px;
 
     font-family: 'Borel', cursive;
+  }
+
+  .add-cart-btn{
+     background-color: #e67b61; /* Color de botones similar a rgb(208, 147, 106) */
+    color: #FFF;
+    border: none;
+    border-radius: 5px;
+    padding:10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .add-cart-btn:hover{
+    background-color: #eea78f;
   }

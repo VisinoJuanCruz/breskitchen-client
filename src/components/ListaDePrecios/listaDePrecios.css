@@ -10,11 +10,13 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin: 20px;
+
   }
   
   .price-list-title {
-    font-size: 24px;
+    font-size: 3em;
     margin-bottom: 10px;
+    color: #de4f33;
   }
   
   .price-list-table {
@@ -63,9 +65,19 @@
   }
 
   .pencil {
-    font-size: 24px; /* Ajusta el tamaño de la fuente según tus preferencias */
-    transform-origin: center; /* Establece el punto de transformación en el centro */
+    font-size: 24px; 
+    transform-origin: center; 
   }
   .pencil {
-    transform: rotate(45deg); /* Rota el lápiz 45 grados */
+    transform: rotate(45deg); 
   }
+
+.tabla-row {
+  transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+
+.tabla-row:hover {
+  background-color:#de4f33;
+  color: white; 
+}

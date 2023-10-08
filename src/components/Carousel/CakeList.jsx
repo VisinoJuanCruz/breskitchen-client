@@ -13,7 +13,7 @@ const CakeList = ({ cakes, isLoggedIn }) => {
     <div>
       <div className="cake-list">
         {cakes.slice(0, visibleCards).map((item, index) => (
-          <CakeCard item={item} isLoggedIn={isLoggedIn} />
+          <CakeCard id={index} item={item} isLoggedIn={isLoggedIn} />
         ))}
       </div>
       {visibleCards < cakes.length && (

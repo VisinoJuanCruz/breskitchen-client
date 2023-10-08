@@ -38,20 +38,19 @@
   }
   
   /* Agrega estos estilos al final de CakeList.css */
-.load-more-button {
-  margin-top: 20px;
-  background-color: #007bff;
-  color: white;
+.load-more-button 
+  {
+    background-color: #e67b61; /* Color de botones similar a rgb(208, 147, 106) */
+  color: #FFF;
   border: none;
   border-radius: 5px;
-  padding: 10px 20px;
+  padding:10px;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
+
+
 
 .load-more-button:hover {
-  background-color: #0056b3;
+  background-color: #eea78f; /* Cambio de color al pasar el mouse similar a rgb(177, 118, 84) */
 }
-
-

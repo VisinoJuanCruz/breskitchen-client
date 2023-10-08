@@ -3,21 +3,30 @@
   justify-content: center;
   align-items: center;
   
+  
 }
 
 .app-container{
-  margin-top:5%;
-  min-height: 100vh;
+  margin-top:7%;
+  margin-bottom:7%;
 }
 
 body{
-  background-color: rgb(219, 182, 142);
+  /*background-color: rgb(219, 182, 142);*/
+  background-color: #de4f33;
   margin-top: 0px;
+  min-height: 100vh;
 }
- h2{
-  font-family: 'Borel', cursive;
-  text-align: center;
- }
+
+
+  h2{
+    font-family: 'Lobster','Borel', cursive;
+    text-align: center;
+  
+    text-shadow: 2px 2px 1px black;
+   }
+  
+  
 
 
 @keyframes logo-spin {

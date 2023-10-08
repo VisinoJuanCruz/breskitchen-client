@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
 
@@ -16,10 +16,17 @@ import IngredientForm from './components/Formularios/form-ingredientes';
 import RecipeForm from './components/Formularios/form-recipes';
 import EditRecipe from './components/EditRecipe/EditRecipe';
 import ListaDePrecios from './components/ListaDePrecios/ListaDePrecios.jsx'
+import Cart from './components/Cart/Cart.jsx'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // En el punto de entrada de la aplicación (por ejemplo, App.js)
+const LoggedIn = localStorage.getItem('isLoggedIn');
+
+// Configura el estado de inicio de sesión en función de lo que se encuentra en el almacenamiento local
+const [isLoggedIn, setIsLoggedIn] = useState(LoggedIn === 'true');
+
   const [cakes, setCakes] = useState([]);
+ 
 
   useEffect(() => {
     const fetchCakes = async () => {
@@ -30,6 +37,26 @@ function App() {
         console.error('Error al obtener la lista de tortas', error);
       }
     };
+
+    // Verificar la autenticación al cargar la aplicación
+    const checkAuthentication = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/check-auth', {
+          withCredentials: true, // Incluye las cookies en la solicitud
+        });
+        if (response.data.success) {
+          setIsLoggedIn(true);
+        }
+      } catch (error) {
+        console.error('Error al verificar la autenticación', error);
+      }
+      
+    }
+   
+
+    // Comprueba la autenticación al cargar la aplicación
+    checkAuthentication();
+
     fetchCakes();
   }, []);
 
@@ -39,17 +66,24 @@ function App() {
   };
 
   // Función para manejar el cierre de sesión
-  const handleLogout = () => {
-    setIsLoggedIn(false);
+  const handleLogout = async () => {
+    // Cuando el usuario cierra sesión
+localStorage.removeItem('isLoggedIn');
+localStorage.removeItem('username');
+window.location.href = '/'; 
+
+
   };
 
+  const cakesInOfer = cakes.filter((cake) => cake.ofer === true);
+ 
   return (
     <Router>
       <div>
         <header>
          
             <div className="app">
-              <Header onLogout={handleLogout} isLoggedIn={isLoggedIn}/>
+              <Header onLogout={handleLogout} isLoggedIn={isLoggedIn} cakesInOfer={cakesInOfer}/>
               <div className="app-container">
                 <Routes>
                   <Route path="/"           element={<Publicity cakes={cakes} isLoggedIn={isLoggedIn} />} />
@@ -63,6 +97,7 @@ function App() {
                   <Route path="/editar-receta/:id" element={<EditRecipe />} />
                   <Route path="/login" element={<LoginForm onLoginSuccess={handleLoginSuccess}  />} />
                   <Route path="/price-list" element={<ListaDePrecios isLoggedIn={isLoggedIn}/>} />
+                  <Route path="/cart" element={<Cart  />} />
                 </Routes>
              </div>
              </div>
@@ -75,38 +110,3 @@ function App() {
 export default App;
 
 
-{/*
-
-  return (
-    <Router>
-      <div>
-        <header>
-          {isLoggedIn ? (
-            <div className="app">
-              <Header onLogout={handleLogout} />
-              <div className="app-container">
-                <Routes>
-                  <Route path="/" element={<Publicity cakes={cakes} />} />
-                  <Route path="/sobre-mi" element={<SobreMi />} />
-                  <Route path="/productos" element={<Productos cakes={cakes} />} />
-                  <Route path="/ofertas" element={<Ofertas />} />
-                  <Route path="/stock" element={<Stock />} />
-                  <Route path="/add-ingredient" element={<IngredientForm />} />
-                  <Route path="/add-recipe" element={<RecipeForm />} />
-                  <Route path="/recipes" element={<Recipes />} />
-                  <Route path="/editar-receta/:id" element={<EditRecipe />} />
-                </Routes>
-              </div>
-            </div>
-          ) : (
-              <LoginForm onLoginSuccess={handleLoginSuccess} />
-           
-          )}
-        </header>
-      </div>
-    </Router>
-  );
-}
-
-
-*/}

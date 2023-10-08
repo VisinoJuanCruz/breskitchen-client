@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import CakeCard from '../Cards/CakeCard.jsx';
 import axios from 'axios'
-
 import './productos.css';
 
 const Productos = ({isLoggedIn}) => {
   
   const [cakes, setCakes] = useState([]);
-
   const [searchTerm, setSearchTerm] = useState('');
+ 
 
   useEffect(() => {
     const fetchCakes = async () => {
@@ -29,22 +28,59 @@ const Productos = ({isLoggedIn}) => {
     return cake.name.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
+    // Filtrar los productos por categoría
+    const filterByCategory = (category) => {
+      return cakes.filter((cake) =>
+        cake.category.toLowerCase().includes(category.toLowerCase())
+      );
+    };
+
+    function esVocal(letra) {
+      return "aeiou".indexOf(letra.toLowerCase()) !== -1;
+    }
+  
+    // Renderizar los productos por categoría
+    const renderProductsByCategory = (category) => {
+      const filteredCakes = filterByCategory(category);
+      return (
+        <div key={category}>
+          <h2 className="category-title">
+            {category.charAt(0).toUpperCase() + category.slice(1)}
+            {esVocal(category.charAt(category.length - 1)) ? "s" : "es"}
+          </h2>
+          <div className="productos-list-container">
+          {filteredCakes.map((item, index) => (
+            <CakeCard
+              className="productos-list-item"
+              item={item}
+              isLoggedIn={isLoggedIn}
+              key={index}
+            />
+          ))}
+          </div>
+        </div>
+
+      );
+    };
+  
+    // Obtener una lista de categorías únicas
+    const uniqueCategories = [...new Set(cakes.map((cake) => cake.category))];
+  
+
   return (
     <div className="productos-container">
       <h2 className="productos-title">Nuestros Productos</h2>
       <div className="search-input">
         <input
           type="text"
-          placeholder="Buscar productos..."
+          placeholder="Buscar productos...🔎"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <div className="productos-list-container">
-        {filteredCakes.map((item, index) => (
-          <CakeCard className="productos-list-item" item={item} isLoggedIn={isLoggedIn} key={index} />
-        ))}
-      </div>
+      {uniqueCategories.reverse().map((category) =>
+        renderProductsByCategory(category)
+      )}
     </div>
   );
   

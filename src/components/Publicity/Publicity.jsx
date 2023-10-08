@@ -16,12 +16,14 @@ import './publicity.css'
 export default function Publicity({isLoggedIn}){
 
   const [cakes, setCakes] = useState([]);
+  const [oferCakes, setOferCakes] = useState([]);
 
   useEffect(() => {
     const fetchCakes = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/cakes');
         setCakes(response.data);
+        setOferCakes(cakes.filter(cake => cake.ofer))
       } catch (error) {
         console.error('Error al obtener la lista de tortas', error);
       }
@@ -32,7 +34,7 @@ export default function Publicity({isLoggedIn}){
 
 
 //ALGUNOS PRODUCTOS QUE SON OFERTAS
-const oferCakes = cakes.filter(cake => cake.ofer)
+
 const TORTAS_DESTACADAS = cakes.filter(torta => torta.destacado)
 const TORTAS_RECOMENDADAS = cakes.filter(torta => !torta.oferta && !torta.destacado)
 
@@ -46,19 +48,22 @@ const TORTAS_RECOMENDADAS = cakes.filter(torta => !torta.oferta && !torta.destac
               <Carousel2 />
             </div>
             <div className="resumen-productos-container container-fluid">
-             <h2> Productos recomendados</h2>
+             <h2 className="publicity-subtitle"> Productos recomendados</h2>
              <CakeList cakes={cakes} isLoggedIn={isLoggedIn} />
             </div>
 
-            {oferCakes.length > 0 ? 
-            <div className="resumen-ofertas-container container-fluid">
-             <h2> Ofertas de la semana</h2>
-             <ReducedList oferCakes={oferCakes} isLoggedIn={isLoggedIn} />
-            </div>
-            :
-            <></>}
+            
+              {oferCakes.length > 0 ? 
+              <div className="resumen-ofertas-container container-fluid">
+              <h2 className="publicity-subtitle"> Ofertas de la semana</h2>
+              <ReducedList cakes={cakes} isLoggedIn={isLoggedIn} />
+              </div>
+              :
+              <></>}
+              
+             
             <div className="resumen-productos-container container-fluid">
-             <h2> Productos destacados</h2>
+            <h2 className="publicity-subtitle"> Productos destacados</h2>
              <CakeList cakes={cakes} isLoggedIn={isLoggedIn} />
             </div>
             

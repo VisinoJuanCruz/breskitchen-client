@@ -13,9 +13,7 @@ export default function MiStock() {
   const [editedPrice, setEditedPrice] = useState(null);
   const [editingName, setEditingName] = useState(null);
   const [editedName, setEditedName] = useState('');
-
   const MySwal = withReactContent(Swal)
-
   const navigate = useNavigate();
 
   const loadIngredients = () => {
@@ -139,7 +137,7 @@ export default function MiStock() {
   }, [loading]);
 
   useEffect(() => {
-    console.log('RENDER MISTOCK');
+    
   }, [ingredients]);
 
   return (

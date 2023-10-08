@@ -1,10 +1,11 @@
 .productos-container {
-    margin-top: 10%;
     text-align: center; /* Centra el contenido horizontalmente */
   }
   
   .productos-title {
-    margin-bottom: 20px; /* Espacio entre el título y el input de búsqueda */
+    margin-bottom: 20px; 
+    color:white;
+    font-size: 3em;/* Espacio entre el título y el input de búsqueda */
   }
   
   .search-input {
@@ -15,8 +16,15 @@
   
   .productos-list-container {
     display: grid;
+    width: 100vh;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px; /* Espacio entre las tarjetas */
     transition: opacity 0.5s ease-in-out;
   }
   
+
+  .category-title{
+    color:white;
+    text-align: center;
+    font-size: 3em;
+  }

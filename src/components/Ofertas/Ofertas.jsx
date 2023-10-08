@@ -5,9 +5,7 @@ import './ofertas.css';
 
 const Ofertas = ( {isLoggedIn}) => {
   
-
   const [oferCakes, setOferCakes] = useState([])
-
 
   useEffect(() => {
     const fetchOferCakes = async () => {
@@ -21,14 +19,9 @@ const Ofertas = ( {isLoggedIn}) => {
     fetchOferCakes();
   }, []);
 
-  console.log(oferCakes)
-
-
-
-
-
-
+  
   return (
+    
     <div className="ofertas-container">
         <h2 className="ofertas-title">Nuestros productos en oferta</h2>
       <div className="ofertas-list-container">

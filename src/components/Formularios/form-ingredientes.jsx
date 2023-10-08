@@ -12,8 +12,7 @@ function IngredientForm() {
 
     const submitHandler = e => {
       e.preventDefault();
-      console.log("submitting store");
-    
+
       const name = e.target.name.value;
       const quantity = 0;
       const priceKg = e.target.priceKg.value;
@@ -23,7 +22,7 @@ function IngredientForm() {
         quantity,
         priceKg
       }
-  
+       //falta poner AXIOS
       fetch("http://localhost:3000/api/ingredients", {
         method: "POST",
         headers: {
@@ -61,4 +60,4 @@ function IngredientForm() {
     
     }
     
-    export default IngredientForm;
+export default IngredientForm;
