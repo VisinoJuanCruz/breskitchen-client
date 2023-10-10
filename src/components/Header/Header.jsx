@@ -17,7 +17,7 @@ export default function Header({onLogout, isLoggedIn, cakesInOfer}){
         <div className="generic-header">
             <div className="logo">
                 <Link className="navbar-brand logo" to="/">
-                    <img src={Logo} alt="logo" />
+                    <img src="https://i.imgur.com/FS05DJJ.jpg" alt="logo" />
                 </Link>
             </div>
             <nav className="navbar navbar-expand-lg  menu">

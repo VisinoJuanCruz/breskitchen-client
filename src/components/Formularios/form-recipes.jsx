@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
-import "./formulario.css"
+import "./form-recipes.css"
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
@@ -100,6 +100,7 @@ const CakeForm = () => {
         ofer: false,
         image: '',
         ingredients: [],
+        category: ''
       });
       setSelectedIngredients([]); // Limpiar la lista de ingredientes seleccionados
     
@@ -126,11 +127,12 @@ const CakeForm = () => {
   }, []);
 
   return (
-    <div className="form-container">
-      <h2>Crear un nuevo pastel</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="form-recipes-container">
+      <h2 className="form-recipes-title">Crear un nuevo pastel</h2>
+      <form className="form-recipes"onSubmit={handleSubmit}>
         <div>
           <label>Nombre del pastel:</label>
+          <br />
           <input
             type="text"
             name="name"
@@ -141,6 +143,7 @@ const CakeForm = () => {
         </div>
         <div>
           <label>Descripción:</label>
+          <br />
           <input
             type="text"
             name="description"
@@ -151,6 +154,7 @@ const CakeForm = () => {
         </div>
         <div>
           <label>Precio:</label>
+          <br />
           <input
             type="number"
             name="price"
@@ -161,6 +165,7 @@ const CakeForm = () => {
         </div>
         <div>
           <label>¿En oferta?</label>
+          
           <input
             type="checkbox"
             name="ofer"
@@ -170,6 +175,7 @@ const CakeForm = () => {
         </div>
         <div>
           <label>Imagen:</label>
+          <br />
           <input
             type="text"
             name="image"
@@ -179,69 +185,87 @@ const CakeForm = () => {
           />
         </div>
         <div>
-            <label>Ingredientes:</label>
-            <select onChange={handleIngredientChange}>
-            <option value="">Seleccionar ingrediente</option>
-            {ingredientList.map((ingredient) => (
-                <option key={ingredient._id} value={ingredient._id}>
-                {ingredient.name}
-                </option>
-            ))}
-            </select>
+          <label>Categoría:</label>
+          <br />
+          <input
+            type="text"
+            name="category"
+            value={cakeData.category}
+            onChange={handleCakeChange}
+            required
+          />
         </div>
         <div>
-          <h3>Ingredientes seleccionados con cantidad:</h3>
-          <ul>
+            <label>Ingredientes:</label>
+            <br />
+            <select onChange={handleIngredientChange}>
+              <option value="">Seleccionar ingrediente</option>
+              {ingredientList.map((ingredient) => (
+                <option key={ingredient._id} value={ingredient._id}>
+                  {ingredient.name}
+                </option>
+              ))}
+            </select>
+        </div>
+        <div className="form-recipe-ingredients-container">
+          <h5>Ingredientes seleccionados con cantidad:</h5>
+          <ul className="form-recipe-ingredients-list">
             {selectedIngredients.map((selectedIngredient) => {
               const ingredient = ingredientList.find(
                   (ingredient) => ingredient._id === selectedIngredient.ingredient
               );
               return (
                 <li key={selectedIngredient.ingredient}>
-                  {ingredient.name}(en gramos)
+                  
                   {ingredient.name === "Huevo" ? 
-                  <div>
-                    <input
+                  <div className="form-recipe-ingredient-container">
+                    <label>{ingredient.name}</label>
+                    <div>
+                      <input
+                        type="number"
+                        value={selectedIngredient.quantity}
+                        onChange={(e) =>
+                        handleQuantityChange(
+                          selectedIngredient.ingredient,
+                          parseInt(e.target.value, 10)*60
+                        )
+                      }
+                      />
+                      <button className="form-recipes-delete-ingredient-button"
+                        type="button"
+                        onClick={() => handleRemoveIngredient(selectedIngredient.ingredient)}
+                      >
+                        ✖️
+                      </button>
+                    </div>
+                  </div>
+                  : 
+                  <div className="form-recipe-ingredient-container">
+                     <label>{ingredient.name}</label>
+                     <div>
+                      <input
                       type="number"
                       value={selectedIngredient.quantity}
                       onChange={(e) =>
-                      handleQuantityChange(
-                        selectedIngredient.ingredient,
-                        parseInt(e.target.value, 10)*60
-                      )
-                    }
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveIngredient(selectedIngredient.ingredient)}
-                    >
-                      ✖️
-                    </button>
-                  </div>
-                  : 
-                  <div>
-                    <input
-                    type="number"
-                    value={selectedIngredient.quantity}
-                    onChange={(e) =>
-                      handleQuantityChange(
-                        selectedIngredient.ingredient,
-                        parseInt(e.target.value, 10)
-                      )
-                    }
-                  />
-                  <button
-                      type="button"
-                      onClick={() => handleRemoveIngredient(selectedIngredient.ingredient)}
-                    >
-                    ✖️  {/* Esto representa una cruz en formato Unicode */}
-                    </button></div>}
+                        handleQuantityChange(
+                          selectedIngredient.ingredient,
+                          parseInt(e.target.value, 10)
+                        )
+                        }
+                      />
+                    <button className="form-recipes-delete-ingredient-button"
+                        type="button"
+                        onClick={() => handleRemoveIngredient(selectedIngredient.ingredient)}
+                      >
+                      ✖️  {/* Esto representa una cruz en formato Unicode */}
+                      </button></div>
+                    </div>}
                 </li>
               );
             })}
           </ul>
         </div>
-        <button type="submit">Guardar Pastel</button>
+        <button className="form-recipes-button" type="submit">Guardar Pastel</button>
       </form>
     </div>
   );

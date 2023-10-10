@@ -1,4 +1,9 @@
-
+.card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 30px;
+}
 
 .item-card{ 
     background: radial-gradient(circle, rgb(231, 223, 210) 0%, rgb(231, 202, 174) 100%); 
@@ -22,7 +27,7 @@
 .card-title{
   font-family: 'Lobster','Borel', cursive;
   text-align: center;
-  color:rgb(165, 16, 16);
+  color: #de4f33;
   text-shadow: 1px 1px 1px black;
   
   
@@ -31,6 +36,8 @@
 .card-body img{
   max-height: 200px;
   margin-bottom: 15px;
+  border: 1px solid #de4f33; 
+  box-shadow: 1px 1px 10px black;
 }
 
 
@@ -78,6 +85,7 @@
     padding:10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    
   }
 
   .add-cart-btn:hover{

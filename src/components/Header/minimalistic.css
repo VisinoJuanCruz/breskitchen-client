@@ -23,7 +23,10 @@
   .logo img{
     height: 100%;
    
+    border-radius: 50%;
+   
   }
+ 
   
   
   .menu ul {

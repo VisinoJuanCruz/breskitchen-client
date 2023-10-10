@@ -32,7 +32,7 @@ export default function CakeCard({ item, isLoggedIn }) {
         quantity: 1,
       };
       cart.push(newItem);
-      console.log(newItem)
+      
     }
     
   
@@ -46,10 +46,11 @@ export default function CakeCard({ item, isLoggedIn }) {
 
   return (
     <div className="card">
+      <div className="card-body">
       {item.ofer ? <p className="en-oferta-etiqueta">Oferta</p> : <></>}
       {item.destacado ? <p className="en-destacados-etiqueta">Destacado</p> : <></>}
       
-      <div className="card-body">
+      
       <h5 className="card-title">{item.name}</h5>
         <img src={item.image} className="card-img-top" alt={item.name} />
       
@@ -67,6 +68,8 @@ export default function CakeCard({ item, isLoggedIn }) {
         ) : (
           <p className={className}> Precio: <span className="precio">${item.price}</span></p>
         )}
+      </div>
+        <div>
         {isLoggedIn ? (
           <Link to={`/editar-receta/${item._id}`} className="edit-button">
             Editar✏️
@@ -74,7 +77,8 @@ export default function CakeCard({ item, isLoggedIn }) {
         ) : (
           <button className="add-cart-btn" onClick={() => addToCart(item)}>Añadir al carrito 🛒</button>
         )}
-      </div>
+        </div>
+      
     </div>
   );
 };

@@ -139,7 +139,7 @@ const Cart = () => {
         <div>
           <ul className="cart-list flex row">
             {cart.map((item, index) => (
-              <li key={index} className="cart-item col-md-6" >
+              <li key={index} className="cart-item col-md-6 col-xl-3" >
                 <CartCard item={item} updateCartQuantity={updateCartQuantity} />
               </li>
             ))}
@@ -149,13 +149,15 @@ const Cart = () => {
         
         <div className="cart-buttons-container">
           
-          <button className="add-products-button" onClick={() => window.location.href = "/productos"}>Agregar productos</button>
+          <button className="add-products-button" onClick={() => window.location.href = "/productos"}>
+            Agregar productos ➕
+            </button>
         
           <button onClick={clearCart} className="clear-cart-button">
-            Vaciar carrito
+            Vaciar carrito ✖️
           </button>
           <button onClick={createWhatsAppMessage} className="order-button">
-            Realizar pedido
+            Realizar pedido ✔️
           </button>
         </div>
       </>

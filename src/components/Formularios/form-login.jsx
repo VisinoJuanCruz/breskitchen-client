@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './formulario.css';
+import './form-login.css';
 
 const LoginForm = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
@@ -41,37 +41,45 @@ const LoginForm = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className="form-container form">
-      <h1>Iniciar sesión</h1>
-      <form onSubmit={handleSubmit}>
-        {/* Elemento para mostrar errores */}
-        {error && <p className="error-message">{error}</p>}
-        <div>
-          <label htmlFor="username">Usuario:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Contraseña:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <button type="submit">Iniciar Sesión</button>
-        </div>
-      </form>
+    <div className="form-login-container form">
+      <div className="form-logo">
+        <img src="https://i.imgur.com/FS05DJJ.jpg" alt="logo" />
+      </div>
+      <div>
+        <h1 className="form-login-title">Iniciar sesión</h1>
+        <form className="form-login" onSubmit={handleSubmit}>
+          {/* Elemento para mostrar errores */}
+          {error && <p className="error-message">{error}</p>}
+          <div>
+            <label htmlFor="username">Usuario:</label>
+            <br />
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Contraseña:</label>
+            <br />
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        
+        
+        <button className="form-login-button" type="submit">Iniciar Sesión</button>
+        
+        </form>
+      </div>
     </div>
   );
 };

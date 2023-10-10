@@ -21,16 +21,17 @@ const Productos = ({isLoggedIn}) => {
     fetchCakes();
   }, []);
 
-  const filteredCakes = cakes.filter((cake) => {
-    if (searchTerm.trim() === '') {
-      return true;
-    }
-    return cake.name.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+  
 
     // Filtrar los productos por categoría
     const filterByCategory = (category) => {
-      return cakes.filter((cake) =>
+      const filteredCakes = cakes.filter((cake) => {
+        if (searchTerm.trim() === '') {
+          return true;
+        }
+        return cake.name.toLowerCase().includes(searchTerm.toLowerCase());
+      });
+      return filteredCakes.filter((cake) =>
         cake.category.toLowerCase().includes(category.toLowerCase())
       );
     };
@@ -43,26 +44,29 @@ const Productos = ({isLoggedIn}) => {
     const renderProductsByCategory = (category) => {
       const filteredCakes = filterByCategory(category);
       return (
-        <div key={category}>
-          <h2 className="category-title">
-            {category.charAt(0).toUpperCase() + category.slice(1)}
-            {esVocal(category.charAt(category.length - 1)) ? "s" : "es"}
-          </h2>
-          <div className="productos-list-container">
-          {filteredCakes.map((item, index) => (
-            <CakeCard
-              className="productos-list-item"
-              item={item}
-              isLoggedIn={isLoggedIn}
-              key={index}
-            />
-          ))}
+        filteredCakes.length !== 0 ? (
+          <div key={category}>
+            <h2 className="category-title">
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+              {esVocal(category.charAt(category.length - 1)) ? "s" : "es"}
+            </h2>
+            <div className="productos-list-container">
+              {filteredCakes.map((item, index) => (
+                <CakeCard
+                  className="productos-list-item"
+                  item={item}
+                  isLoggedIn={isLoggedIn}
+                  key={index}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-
+        ) : (
+          <></>
+        )
       );
     };
-  
+    
     // Obtener una lista de categorías únicas
     const uniqueCategories = [...new Set(cakes.map((cake) => cake.category))];
   

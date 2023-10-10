@@ -6,6 +6,7 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px; /* Espacio entre las tarjetas */
     transition: opacity 0.5s ease-in-out; 
+    padding-top:25px;
   }
 
 

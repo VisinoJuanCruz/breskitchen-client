@@ -8,6 +8,8 @@
     color:white;
     text-shadow: 1px 1px black;
     min-width: 300px;
+    max-width: 400px;
+    min-height: 300px;
     
 }
 .card-cart-title{
@@ -31,15 +33,17 @@
   /* Estilo de la parte izquierda (imagen del producto) */
 .rectangle-image {
   
-    flex: 1; /* Toma el 50% del ancho */
+    flex:1; /* Toma el 50% del ancho */
     max-width: 200px;/* Establece el ancho máximo */
     max-height: 200px; /* Establece la altura máxima */
-    overflow: hidden; /* Oculta el contenido que exceda las dimensiones máximas */
+    overflow:hidden; /* Oculta el contenido que exceda las dimensiones máximas */
   }
 
   .rectangle-image img{
     width: 100%;
     border:2px solid black;
+    /* make cover img */
+    
     
   }
   

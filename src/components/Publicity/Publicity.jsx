@@ -5,8 +5,6 @@ import Carousel from '../Carousel/Carousel.jsx'
 import Carousel2 from '../Carousel/Carousel2.jsx'
 import Carousel3 from '../Carousel/Carousel3.jsx'
 
-import VerticalCard from '../Cards/VerticalCard.jsx'
-import HorizontalCard from '../Cards/HorizontalCard.jsx'
 import CakeList from '../Carousel/CakeList.jsx'
 
 import ReducedList from '../ListadoReducido/ReducedList.jsx'

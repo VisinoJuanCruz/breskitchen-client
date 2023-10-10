@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 
-import "./formulario.css"
+import "./form-ingredientes.css"
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
@@ -46,15 +46,40 @@ function IngredientForm() {
   
   
     return (
-      <div className="form-container form">
-        <form onSubmit={submitHandler}>
-          <h1>Agregar ingrediente</h1>
-         
+      <div className="form-ingredientes-container form">
+        <div className="form-logo">
+          <img src="https://i.imgur.com/FS05DJJ.jpg" alt="logo" />
+        </div>
+        <div>
+          <h1 className="form-ingredientes-title">Agregar ingrediente</h1>
+          <form className="form-ingredientes" onSubmit={submitHandler}>
+          {/*  
           <p className="mt-5 color-dark">Nombre: <input name="name" /></p>
           <p className="mt-5 color-dark">Precio por Kilo: <input name="priceKg" /></p>
-          <button className="btn btn-dark mx-2 form-button" type="submit">Agregar</button>
+          */}
+           <div>
+            <label htmlFor="name">Nombre</label>
+            <br />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="priceKg">Precio por kilogramo</label>
+            <br />
+            <input
+              type="priceKg"
+              id="priceKg"
+              name="priceKg"
+              required
+            />
+          </div>
+          <button className="form-ingredientes-button" type="submit">Agregar</button>
         </form>
-        
+        </div>
       </div>
     )
     

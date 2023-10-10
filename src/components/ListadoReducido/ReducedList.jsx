@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import CakeCard from '../Cards/CakeCard.jsx';
-import axios from 'axios'
 import './reducedlist.css';
 
 const ReducedList = ({cakes}) => {
