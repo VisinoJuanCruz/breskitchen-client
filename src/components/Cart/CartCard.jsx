@@ -26,6 +26,7 @@ const CartCard = ({ item, updateCartQuantity }) => {
         showCancelButton: true,
         confirmButtonText: 'Sí',
         cancelButtonText: 'No',
+        color:'red'
       }).then((result) => {
         if (result.isConfirmed) {
           // Eliminar el producto del carrito

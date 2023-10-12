@@ -55,6 +55,7 @@ const Cart = () => {
           showCancelButton: true,
           confirmButtonText: 'Sí',
           cancelButtonText: 'No',
+         
         }).then((result) => {
           if (result.isConfirmed) {
             // Eliminar el producto de la copia del carrito
@@ -79,7 +80,7 @@ const Cart = () => {
   const clearCart = () => {
     // Mostrar una alerta de confirmación para vaciar el carrito
     Swal.fire({
-      title: '¿Desea vaciar el carrito?',
+      title: '<p class="toast-title">¿Desea vaciar el carrito?</p>',
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Sí',

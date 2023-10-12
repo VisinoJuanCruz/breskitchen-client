@@ -39,10 +39,12 @@ const Productos = ({isLoggedIn}) => {
     function esVocal(letra) {
       return "aeiou".indexOf(letra.toLowerCase()) !== -1;
     }
-  
+
+    
     // Renderizar los productos por categoría
     const renderProductsByCategory = (category) => {
       const filteredCakes = filterByCategory(category);
+      console.log("TORTAS",filteredCakes);
       return (
         filteredCakes.length !== 0 ? (
           <div key={category}>
