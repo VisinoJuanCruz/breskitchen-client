@@ -128,10 +128,10 @@ const CakeForm = () => {
 
   return (
     <div className="form-recipes-container">
-      <h2 className="form-recipes-title">Crear un nuevo pastel</h2>
+      <h2 className="form-recipes-title">Agregar nueva receta</h2>
       <form className="form-recipes"onSubmit={handleSubmit}>
         <div>
-          <label>Nombre del pastel:</label>
+          <label>Nombre:</label>
           <br />
           <input
             type="text"

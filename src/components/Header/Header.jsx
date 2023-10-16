@@ -1,5 +1,4 @@
 import "./minimalistic.css"
-import Logo from "../../images/logo-breskitchen.jpeg"
 import {Link, useNavigate} from 'react-router-dom'
 
 export default function Header({onLogout, isLoggedIn, cakesInOfer}){

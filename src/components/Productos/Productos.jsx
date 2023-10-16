@@ -41,13 +41,15 @@ const Productos = ({isLoggedIn}) => {
     }
 
     
+
+    
     // Renderizar los productos por categoría
     const renderProductsByCategory = (category) => {
       const filteredCakes = filterByCategory(category);
-      console.log("TORTAS",filteredCakes);
+      console.log("FILTERED",filteredCakes)
       return (
         filteredCakes.length !== 0 ? (
-          <div key={category}>
+          <div key={category} className="">
             <h2 className="category-title">
               {category.charAt(0).toUpperCase() + category.slice(1)}
               {esVocal(category.charAt(category.length - 1)) ? "s" : "es"}
@@ -69,10 +71,23 @@ const Productos = ({isLoggedIn}) => {
       );
     };
     
+
+    const isEmpty = (searchTerm, cakes) => {
+      return cakes.every((cake) => {
+        if (searchTerm.trim() === '') {
+          return true;
+        }
+        return !cake.name.toLowerCase().includes(searchTerm.toLowerCase());
+      });
+    };
+    
     // Obtener una lista de categorías únicas
     const uniqueCategories = [...new Set(cakes.map((cake) => cake.category))];
   
-
+    
+      const noProductsFound = isEmpty(searchTerm, cakes);
+   
+    
   return (
     <div className="productos-container">
       <h2 className="productos-title">Nuestros Productos</h2>
@@ -84,7 +99,10 @@ const Productos = ({isLoggedIn}) => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      {uniqueCategories.reverse().map((category) =>
+      
+      {noProductsFound && searchTerm.trim() !== ''  ? 
+        <h2 className="no-products-message">No se encontraron productos</h2>
+       : uniqueCategories.reverse().map((category) =>
         renderProductsByCategory(category)
       )}
     </div>

@@ -6,12 +6,13 @@ export default function SobreMi(){
 
     return(
         <section className="sobremi">
-            <div className="sobremi-container">
+            <div className="sobremi-container ">
+            <h2 className="sobremi-title">Gisela Inés Breska</h2>
                 <div className="img-container">
                     <img src={FotoPerfil} alt="Foto de perfil" />
                 </div>
                 <div className="text-container">
-                               <h2>Gisela Inés Breska</h2>
+                               
                 <p><strong>¡Bienvenidos a mi mundo dulce!</strong> Mi nombre es Gisela Inés Breska, y soy una apasionada amante de la pastelería y la panadería. Desde muy joven, descubrí que la magia de crear delicias dulces era mi verdadera vocación. Hoy, me complace compartir mi amor por la repostería con todos ustedes a través de mi emprendimiento.</p>
 
                 <p><strong>Mi Pasión por la Pastelería</strong>: Cada día, me despierto emocionada por la oportunidad de crear obras maestras en forma de budines, tortas, galletas, pan dulce y pastafrolas. Cada receta que elaboro es una expresión de mi amor y dedicación a este arte. Cada bocado que prueban mis clientes lleva consigo la esencia de mi pasión por la pastelería.</p>
@@ -26,11 +27,10 @@ export default function SobreMi(){
 
 <p>Si tienes alguna pregunta o solicitud especial, no dudes en contactarme. Estoy aquí para hacer que tus momentos dulces sean aún más especiales.</p>
 
-<strong><p>Con amor y azúcar,</p>
+<strong><p>Con amor y azúcar, ❤️</p>
 <p>Gisela Inés Breska</p></strong>
                 </div>
-
-            </div>
+             </div>
         </section>
     )
 }

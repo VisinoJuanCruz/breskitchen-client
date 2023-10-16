@@ -15,16 +15,22 @@
   }
   
   .productos-list-container {
-    display: grid;
-    width: 100vh;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px; /* Espacio entre las tarjetas */
+    display: flex; /* Utiliza un contenedor flexible para centrar las tarjetas */
+    justify-content: center; /* Centra horizontalmente las tarjetas */
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan si no caben en una línea */
+    gap: 10px; /* Espacio entre las tarjetas */
     transition: opacity 0.5s ease-in-out;
   }
   
+
+ 
 
   .category-title{
     color:white;
     text-align: center;
     font-size: 3em;
+  }
+
+  .no-products-message{
+    color:white;
   }

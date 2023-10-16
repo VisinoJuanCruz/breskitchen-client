@@ -137,7 +137,7 @@ const Cart = () => {
         </>
       ) : (
         <>
-        <div>
+        <div className="cart-list-container">
           <ul className="cart-list flex row">
             {cart.map((item, index) => (
               <li key={index} className="cart-item col-md-6 col-xl-3" >

@@ -1,6 +1,6 @@
 .sobremi-container{
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     color:white;
     font-family: 'Lobster',"borel", cursive;
@@ -8,12 +8,15 @@
     min-height: 100%;
     font-size: 1.1em;
     text-shadow: 1px 1px 1px black;
+    justify-content: center;
+    align-items: center;
 }
 
 .sobremi-container .img-container{
     height: 200px;
     align-self: center;
     margin-right: 25px;
+    
     
 
 }

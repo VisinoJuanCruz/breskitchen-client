@@ -1,17 +1,17 @@
-import './cakecard.css'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react';
+
 import { Link } from 'react-router-dom'
+import './cakecard.css'
 import Swal from 'sweetalert2'
 
 import withReactContent from 'sweetalert2-react-content'
 
 export default function CakeCard({ item, isLoggedIn }) {
 
-  const MySwal = withReactContent(Swal)
   const className = `card-text ${item.oferta ? 'en-oferta' : ''}`
 
   useEffect(() => {
-    console.log("RENDER CART CARD")
+    
   }, [item])
 
 
