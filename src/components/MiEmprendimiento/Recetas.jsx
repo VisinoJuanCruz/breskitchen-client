@@ -3,39 +3,45 @@ import axios from 'axios'
 import {Link} from 'react-router-dom'
 
 
-import './recetas.css'
 
-export default function Recetas(){
+import './recetas.css';
 
+export default function Recetas() {
+  const [cakes, setCakes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
-    const [cakes, setCakes] = useState([])
+  useEffect(() => {
+    const fetchIngredients = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/cakes');
+        setCakes(response.data);
+      } catch (error) {
+        console.error('Error al obtener la lista de ingredientes', error);
+      }
+    };
+    fetchIngredients();
+  }, []);
 
+  // Función para filtrar las recetas en función del término de búsqueda
+  const filteredCakes = cakes.filter((cake) =>
+    cake.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-    
-    useEffect(() => {
-        const fetchIngredients = async () => {
-          try {
-            const response = await axios.get('http://localhost:3000/api/cakes');
-            setCakes(response.data);
-          } catch (error) {
-            console.error('Error al obtener la lista de ingredientes', error);
-          }
-        };
-        fetchIngredients();
-      }, []);
+  return (
+    <div className="recetas">
+      <h1 className="recetas-title text-center new-font">Recetas</h1>
 
-      console.log(cakes)
-    
-
-    return (
-        
-        
-        <div className="recetas">
-            <h1 className="recetas-title text-center new-font">Recetas</h1>
-            
+      <div className="search-input">
+        <input
+          type="text"
+          placeholder="Buscar recetas..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
         <div className="recetas-container row justify-content-md-center">
-            {cakes.map((cake) => (
-              <div className="receta col-md-3 col-lg-3 col-sm-12" key={cake.name}>
+        {filteredCakes.map((cake) => (
+              <div className="receta col-xl-2 col-lg-3 col-md-4 col-sm-12" key={cake.name}>
                 
                 <h3 className="receta-title">{cake.name}</h3>
 
@@ -45,7 +51,11 @@ export default function Recetas(){
                 <div>
                   <b>Descripcion: </b>
                   <p>{cake.description}</p>
-                  </div>
+                </div>
+                <div>
+                  <b>Categoría:</b>
+                  <p>{cake.category}</p>
+                </div>
                 <p>
                   <b>Ingredientes:</b>
                 </p>
