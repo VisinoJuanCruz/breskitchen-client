@@ -4,6 +4,10 @@ import TortaOreo from "../../images/tortaoreo.jpg"
 import TortaRogel from "../../images/tortarogel.jpg"
 import './carousel.css'
 
+import Carousel from 'react-bootstrap/Carousel';
+
+
+
 
 const TORTAS = [{
     nombre: "Torta Rogel",
@@ -25,50 +29,29 @@ const TORTAS = [{
     descripcion: "Torta de galesa con dulce de leche y merengue arriba",
     img: TortaGalesa,}
   
+  ]
+    function Carousel1() {
+      return (
+        <Carousel className="carousel">
 
-]
+            {TORTAS.map(torta => (
+              
+              <Carousel.Item>
+              <img src={torta.img} text="First slide" />
+              <Carousel.Caption>
+                <div className="carousel-info">
+                <h3 className="carousel-title">{torta.nombre}</h3>
+                <p className="carousel-description">{torta.descripcion}</p>
+                </div>
+              </Carousel.Caption>
+            </Carousel.Item>
+              )
+            )}
 
-export default function Carousel() {
-    return (
-        <div className="carousel-container">
-            <div id="carouselExampleCaptions" className="carousel slide">
-  <div className="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div className="carousel-inner">
-    <div className="carousel-item active">
-      <img src={TortaOreo} className="d-block w-100" alt="..."/>
-      <div className="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Some representative placeholder content for the first slide.</p>
-      </div>
-    </div>
-    <div className="carousel-item">
-      <img src={TortaRogel} className="d-block w-100" alt="..."/>
-      <div className="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Some representative placeholder content for the second slide.</p>
-      </div>
-    </div>
-    <div className="carousel-item">
-      <img src={TortaGalesa} className="d-block w-100" alt="..."/>
-      <div className="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
-      </div>
-    </div>
-  </div>
-  <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span className="visually-hidden">Previous</span>
-  </button>
-  <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-    <span className="visually-hidden">Next</span>
-  </button>
-</div>
-        </div>
-    )
-}
+
+         
+        </Carousel>
+      );
+    }
+    
+    export default Carousel1;

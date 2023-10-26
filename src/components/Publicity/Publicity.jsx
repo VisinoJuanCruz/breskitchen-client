@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 
-import Carousel from '../Carousel/Carousel.jsx'
+import Carousel1 from '../Carousel/Carousel.jsx'
 import Carousel2 from '../Carousel/Carousel2.jsx'
 import Carousel3 from '../Carousel/Carousel3.jsx'
 
@@ -30,43 +30,39 @@ export default function Publicity({isLoggedIn}){
   }, []);
 
 
-
 //ALGUNOS PRODUCTOS QUE SON OFERTAS
 
-const TORTAS_DESTACADAS = cakes.filter(torta => torta.destacado)
+const oferCakes2 = cakes.filter(cake => cake.ofer)
+console.log(oferCakes2)
 const TORTAS_RECOMENDADAS = cakes.filter(torta => !torta.oferta && !torta.destacado)
 
-
-
-    return(
+  return(
         <div className="publicity-container">
-            
-           <h1 className="publicity-title">Breskitchen</h1>
+          <h1 className="publicity-title">Breskitchen</h1>
             <div className="carousel-container container-fluid">
-              <Carousel2 />
+              <Carousel1 />
             </div>
-            <div className="resumen-productos-container container-fluid">
-             <h2 className="publicity-subtitle"> Productos recomendados</h2>
-             <CakeList cakes={cakes} isLoggedIn={isLoggedIn} />
-            </div>
-
             
-              {oferCakes.length > 0 ? 
-              <div className="resumen-ofertas-container container-fluid">
-              <h2 className="publicity-subtitle"> Ofertas de la semana</h2>
-              <ReducedList cakes={cakes} isLoggedIn={isLoggedIn} />
-              </div>
-              :
-              <></>}
-              
-             
-            <div className="resumen-productos-container container-fluid">
+          <div className="resumen-productos-container container-fluid">
+            <h2 className="publicity-subtitle">
+              Productos recomendados
+            </h2>
+            <CakeList cakes={cakes} isLoggedIn={isLoggedIn} />
+          </div>
+
+          
+          {oferCakes2.length > 0 && 
+          <div className="resumen-productos-container container-fluid">
+          <h2 className="publicity-subtitle">
+            Ofertas de la semana
+          </h2>
+          <CakeList cakes={oferCakes2} isLoggedIn={isLoggedIn} />
+        </div>
+          }
+          <div className="resumen-productos-container container-fluid">
             <h2 className="publicity-subtitle"> Productos destacados</h2>
-             <CakeList cakes={cakes} isLoggedIn={isLoggedIn} />
-            </div>
-            
-
-            </div>
-        
-    )
+            <CakeList cakes={cakes} isLoggedIn={isLoggedIn} />
+          </div>
+        </div>
+        )
 }
