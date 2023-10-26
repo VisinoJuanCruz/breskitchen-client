@@ -1,0 +1,31 @@
+.bg-body-tertiary{
+    position:fixed;
+    top:0px;
+    width: 100%;
+    z-index: 1000;
+    
+    
+}
+.img-logo{
+    max-width: 100px;
+}
+
+.bg-body-tertiary a{
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+    
+}
+
+
+.bg-body-tertiary a:hover{
+    color: brown
+}
+.header-title{
+    font-family: 'Lobster','Borel', cursive;
+    text-align: center;
+    font-size: 1.2em;
+    text-shadow: 1px 1px 1px black;
+    color:red;
+
+}

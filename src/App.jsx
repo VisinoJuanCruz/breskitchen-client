@@ -5,6 +5,7 @@ import './App.css';
 
 // Importa tus componentes aquí
 import Header from './components/Header/Header';
+import Header2 from './components/Header/Header2';
 import LoginForm from './components/Formularios/form-login';
 import Publicity from './components/Publicity/Publicity';
 import SobreMi from './components/SobreMi/SobreMi';
@@ -83,7 +84,8 @@ window.location.href = '/';
         <header>
          
             <div className="app">
-              <Header onLogout={handleLogout} isLoggedIn={isLoggedIn} cakesInOfer={cakesInOfer}/>
+              {/*<Header onLogout={handleLogout} isLoggedIn={isLoggedIn} cakesInOfer={cakesInOfer}/> */}
+              <Header2 onLogout={handleLogout} isLoggedIn={isLoggedIn} cakesInOfer={cakesInOfer}/>
               <div className="app-container">
                 <Routes>
                   <Route path="/"           element={<Publicity cakes={cakes} isLoggedIn={isLoggedIn} />} />

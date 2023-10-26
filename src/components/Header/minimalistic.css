@@ -47,4 +47,8 @@
   .menu a:hover {
     color: brown
   }
-  
+  @media (max-width: 450px) {
+    .generic-header {
+      height: 7%;
+    }
+  }
