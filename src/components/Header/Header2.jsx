@@ -55,7 +55,7 @@ function Header2({onLogout, isLoggedIn, cakesInOfer}) {
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.4">
-                <Link className="header-button nav-item nav-link active" to="/recipes">
+                <Link className="header-button nav-item nav-link active" to="/add-recipe">
                   <p >
                     Agregar receta
                   </p>

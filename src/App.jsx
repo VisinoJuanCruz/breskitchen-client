@@ -16,7 +16,6 @@ import Recipes from './components/MiEmprendimiento/Recetas';
 import IngredientForm from './components/Formularios/form-ingredientes';
 import RecipeForm from './components/Formularios/form-recipes';
 import EditRecipe from './components/EditRecipe/EditRecipe';import Cart2 from './components/Cart2/Cart2.jsx'
-
 import ListaDePrecios from './components/ListaDePrecios/ListaDePrecios.jsx'
 
 function App() {
