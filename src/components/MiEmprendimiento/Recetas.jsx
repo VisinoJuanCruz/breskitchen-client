@@ -28,8 +28,8 @@ export default function Recetas() {
   );
 
   return (
-    <div className="recetas">
-      <h1 className="recetas-title text-center new-font">Recetas</h1>
+    <div className="recetas-container">
+      <h1 className="header-title ingredients-list-title text-center ">Recetas</h1>
 
       <div className="search-input">
         <input
@@ -39,7 +39,7 @@ export default function Recetas() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-        <div className="recetas-container row justify-content-md-center">
+        <div className="recetas-list-container row justify-content-md-center">
         {filteredCakes.map((cake) => (
               <div className="receta col-xl-2 col-lg-3 col-md-4 col-sm-12" key={cake.name}>
                 

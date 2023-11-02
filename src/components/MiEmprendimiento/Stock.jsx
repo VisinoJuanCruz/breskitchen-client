@@ -144,7 +144,7 @@ export default function MiStock() {
   console.log(ingredients)
   return (
     <div className="ingredients-list-container">
-      <h1 className="ingredients-list-title text-center">Stock</h1>
+      <h1 className="header-title ingredients-list-title text-center ">Stock</h1>
       <table className="ingredients-list-table">
         <thead>
           <tr>

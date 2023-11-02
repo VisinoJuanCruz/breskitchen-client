@@ -15,9 +15,9 @@ import Stock from './components/MiEmprendimiento/Stock';
 import Recipes from './components/MiEmprendimiento/Recetas';
 import IngredientForm from './components/Formularios/form-ingredientes';
 import RecipeForm from './components/Formularios/form-recipes';
-import EditRecipe from './components/EditRecipe/EditRecipe';
+import EditRecipe from './components/EditRecipe/EditRecipe';import Cart2 from './components/Cart2/Cart2.jsx'
+
 import ListaDePrecios from './components/ListaDePrecios/ListaDePrecios.jsx'
-import Cart from './components/Cart/Cart.jsx'
 
 function App() {
   // En el punto de entrada de la aplicación (por ejemplo, App.js)
@@ -99,7 +99,7 @@ window.location.href = '/';
                   <Route path="/editar-receta/:id" element={<EditRecipe />} />
                   <Route path="/login" element={<LoginForm onLoginSuccess={handleLoginSuccess}  />} />
                   <Route path="/price-list" element={<ListaDePrecios isLoggedIn={isLoggedIn}/>} />
-                  <Route path="/cart" element={<Cart  />} />
+                  <Route path="/cart" element={<Cart2  />} />
                 </Routes>
              </div>
              </div>

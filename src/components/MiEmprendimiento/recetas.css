@@ -1,5 +1,13 @@
-.recetas{
-    margin-top:5%;
+.recetas-container{
+   
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 0px 5% 0px 5%;
+    box-shadow: 10px 10px 10px black;
+    border:1px solid black;
+    
 }
 
 .recetas-container{
@@ -10,11 +18,8 @@
     
 }
 
-.new-font{
-font-family: 'Borel', cursive;
-}
 
-.recetas-container{
+.recetas-list-container{
 
     display:flex;
     justify-content: center;

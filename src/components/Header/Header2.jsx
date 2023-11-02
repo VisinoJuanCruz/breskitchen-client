@@ -35,28 +35,28 @@ function Header2({onLogout, isLoggedIn, cakesInOfer}) {
             <NavDropdown title="Mi emprendimiento" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">
                 <Link className="header-button nav-item nav-link active" to="/stock">
-                  <p className="header-title">
+                  <p >
                     Mis ingredientes
                   </p>
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
                 <Link className="header-button nav-item nav-link active" to="/add-ingredient">
-                  <p className="header-title">
+                  <p >
                     Agregar ingrediente
                   </p>
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">
                 <Link className="header-button nav-item nav-link active" to="/recipes">
-                  <p className="header-title">
+                  <p >
                     Mis recetas
                   </p>
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.4">
                 <Link className="header-button nav-item nav-link active" to="/recipes">
-                  <p className="header-title">
+                  <p >
                     Agregar receta
                   </p>
                 </Link>
