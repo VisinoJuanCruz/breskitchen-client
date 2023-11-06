@@ -8,6 +8,7 @@ const Productos = ({isLoggedIn}) => {
   const [cakes, setCakes] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
  
+  
 
   useEffect(() => {
     const fetchCakes = async () => {
@@ -46,7 +47,7 @@ const Productos = ({isLoggedIn}) => {
     // Renderizar los productos por categoría
     const renderProductsByCategory = (category) => {
       const filteredCakes = filterByCategory(category);
-      console.log("FILTERED",filteredCakes)
+      
       return (
         filteredCakes.length !== 0 ? (
           <div key={category} className="">

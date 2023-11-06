@@ -1,56 +1,57 @@
 /* CakeList.css */
 
 .cake-list {
-  display: flex; /* Utiliza un contenedor flexible para centrar las tarjetas */
-  justify-content: center; /* Centra horizontalmente las tarjetas */
-  flex-wrap: wrap; /* Permite que las tarjetas se envuelvan si no caben en una línea */
-  gap: 10px; /* Espacio entre las tarjetas */
-  transition: opacity 0.5s ease-in-out;
-  }
-
-
+    display: flex; /* Utiliza un contenedor flexible para centrar las tarjetas */
+    justify-content: center; /* Centra horizontalmente las tarjetas */
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan si no caben en una línea */
+    gap: 10px; /* Espacio entre las tarjetas */
+    transition: opacity 0.5s ease-in-out;
+    }
   
-  /* Estilos para las tarjetas (CakeCard) */
-  .card {
-    border: 1px solid #ddd;
+  
+    
+    /* Estilos para las tarjetas (CakeCard) */
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .card-img-top {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    .card-title {
+      font-size: 1.25rem;
+      margin-top: 10px;
+    }
+    
+    .card-text {
+      font-size: 1rem;
+      color: #888;
+    }
+    
+    /* Agrega estos estilos al final de CakeList.css */
+  .load-more-button 
+    {
+      background-color: #e67b61; /* Color de botones similar a rgb(208, 147, 106) */
+    color: #FFF;
+    border: none;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
+    padding:10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
   
-  .card:hover {
-    transform: translateY(-5px);
+  
+  
+  .load-more-button:hover {
+    background-color: #eea78f; /* Cambio de color al pasar el mouse similar a rgb(177, 118, 84) */
   }
   
-  .card-img-top {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  .card-title {
-    font-size: 1.25rem;
-    margin-top: 10px;
-  }
-  
-  .card-text {
-    font-size: 1rem;
-    color: #888;
-  }
-  
-  /* Agrega estos estilos al final de CakeList.css */
-.load-more-button 
-  {
-    background-color: #e67b61; /* Color de botones similar a rgb(208, 147, 106) */
-  color: #FFF;
-  border: none;
-  border-radius: 5px;
-  padding:10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-
-
-.load-more-button:hover {
-  background-color: #eea78f; /* Cambio de color al pasar el mouse similar a rgb(177, 118, 84) */
-}

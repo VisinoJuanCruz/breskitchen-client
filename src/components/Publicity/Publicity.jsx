@@ -1,20 +1,20 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-
-import Carousel1 from '../Carousel/Carousel.jsx'
-import Carousel2 from '../Carousel/Carousel2.jsx'
-import Carousel3 from '../Carousel/Carousel3.jsx'
-
+import CarouselProducts from '../Carousel/Carousel.jsx'
 import CakeList from '../Carousel/CakeList.jsx'
-
-import ReducedList from '../ListadoReducido/ReducedList.jsx'
 import './publicity.css'
+import Spinner from 'react-bootstrap/Spinner';
 
 
 export default function Publicity({isLoggedIn}){
 
   const [cakes, setCakes] = useState([]);
   const [oferCakes, setOferCakes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const [carouselCakes, setCarouselCakes] = useState([]);
+
+  
 
   useEffect(() => {
     const fetchCakes = async () => {
@@ -22,25 +22,37 @@ export default function Publicity({isLoggedIn}){
         const response = await axios.get('http://localhost:3000/api/cakes');
         setCakes(response.data);
         setOferCakes(cakes.filter(cake => cake.ofer))
+        setCarouselCakes(cakes.filter(cake => cake.carousel))
+        setLoading(false)
       } catch (error) {
         console.error('Error al obtener la lista de tortas', error);
       }
     };
     fetchCakes();
-  }, []);
+  }, [loading]);
 
 
 //ALGUNOS PRODUCTOS QUE SON OFERTAS
 
 const oferCakes2 = cakes.filter(cake => cake.ofer)
-console.log(oferCakes2)
-const TORTAS_RECOMENDADAS = cakes.filter(torta => !torta.oferta && !torta.destacado)
+const outstandingCakes = cakes.filter(cake => cake.outstanding)
+console.log(carouselCakes)
+
 
   return(
+    
         <div className="publicity-container">
           <h1 className="publicity-title">Breskitchen</h1>
             <div className="carousel-container container-fluid">
-              <Carousel1 />
+              {loading 
+                ? 
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+                : 
+                <CarouselProducts TORTAS={carouselCakes} />
+              }
+              
             </div>
             
           <div className="resumen-productos-container container-fluid">
@@ -59,10 +71,14 @@ const TORTAS_RECOMENDADAS = cakes.filter(torta => !torta.oferta && !torta.destac
           <CakeList cakes={oferCakes2} isLoggedIn={isLoggedIn} />
         </div>
           }
+          {outstandingCakes.length > 0 && 
           <div className="resumen-productos-container container-fluid">
-            <h2 className="publicity-subtitle"> Productos destacados</h2>
-            <CakeList cakes={cakes} isLoggedIn={isLoggedIn} />
-          </div>
+          <h2 className="publicity-subtitle">
+            Productos destacados
+          </h2>
+          <CakeList cakes={outstandingCakes} isLoggedIn={isLoggedIn} />
         </div>
+          }
+          </div>
         )
 }

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './App.css';
+import './app.css';
 
 // Importa tus componentes aquí
 import Header from './components/Header/Header';
-import Header2 from './components/Header/Header2';
 import LoginForm from './components/Formularios/form-login';
 import Publicity from './components/Publicity/Publicity';
 import SobreMi from './components/SobreMi/SobreMi';
@@ -15,8 +14,10 @@ import Stock from './components/MiEmprendimiento/Stock';
 import Recipes from './components/MiEmprendimiento/Recetas';
 import IngredientForm from './components/Formularios/form-ingredientes';
 import RecipeForm from './components/Formularios/form-recipes';
-import EditRecipe from './components/EditRecipe/EditRecipe';import Cart2 from './components/Cart2/Cart2.jsx'
+import EditRecipe from './components/EditRecipe/EditRecipe';
+import Cart from './components/Cart/Cart.jsx'
 import ListaDePrecios from './components/ListaDePrecios/ListaDePrecios.jsx'
+
 
 function App() {
   // En el punto de entrada de la aplicación (por ejemplo, App.js)
@@ -84,7 +85,7 @@ window.location.href = '/';
          
             <div className="app">
               {/*<Header onLogout={handleLogout} isLoggedIn={isLoggedIn} cakesInOfer={cakesInOfer}/> */}
-              <Header2 onLogout={handleLogout} isLoggedIn={isLoggedIn} cakesInOfer={cakesInOfer}/>
+              <Header onLogout={handleLogout} isLoggedIn={isLoggedIn} cakesInOfer={cakesInOfer}/>
               <div className="app-container">
                 <Routes>
                   <Route path="/"           element={<Publicity cakes={cakes} isLoggedIn={isLoggedIn} />} />
@@ -98,11 +99,13 @@ window.location.href = '/';
                   <Route path="/editar-receta/:id" element={<EditRecipe />} />
                   <Route path="/login" element={<LoginForm onLoginSuccess={handleLoginSuccess}  />} />
                   <Route path="/price-list" element={<ListaDePrecios isLoggedIn={isLoggedIn}/>} />
-                  <Route path="/cart" element={<Cart2  />} />
+                  <Route path="/cart" element={<Cart  />} />
                 </Routes>
              </div>
+             
              </div>
         </header>
+       
       </div>
     </Router>
   );

@@ -6,7 +6,6 @@
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin:auto;
-  text-align: center;
   border: 2px solid black;
   max-width: 95%;
   min-width: 300px ;
@@ -68,7 +67,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
 }
 
 .add-products-link {

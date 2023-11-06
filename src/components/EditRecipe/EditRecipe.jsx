@@ -24,6 +24,8 @@ const EditRecipe = () => {
     ingredients: [],
     discountRate: 0,
     category:'',
+    carousel:false,
+    outstanding: false,
   });
 
   useEffect(() => {
@@ -237,6 +239,36 @@ const EditRecipe = () => {
         </div>
         :
         <></>}
+        <div>
+          <label>¿Mostrar en Carousel?</label>
+       
+          <input
+            type="checkbox"
+            name="carousel"
+            checked={cakeData.carousel}
+            onChange={() =>
+              setCakeData((prevCakeData) => ({
+                ...prevCakeData,
+                carousel: !prevCakeData.carousel, // Invertir el valor actual
+              }))
+            }
+          />
+          </div>
+          <div>
+          <label>Destacado?</label>
+       
+          <input
+            type="checkbox"
+            name="outstanding"
+            checked={cakeData.outstanding}
+            onChange={() =>
+              setCakeData((prevCakeData) => ({
+                ...prevCakeData,
+                outstanding: !prevCakeData.outstanding, // Invertir el valor actual
+              }))
+            }
+          />
+          </div>
         </div>
         <div>
           <label>Imagen:</label>

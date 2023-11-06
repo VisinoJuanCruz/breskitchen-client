@@ -1,5 +1,5 @@
 import './sobremi.css'
-import FotoPerfil from '../../images/gisecv.jpg'
+import FotoPerfil from '../../assets/gisecv.jpeg'
 
 export default function SobreMi(){
 

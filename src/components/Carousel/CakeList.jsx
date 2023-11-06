@@ -1,5 +1,6 @@
 import CakeCard from '../Cards/CakeCard.jsx';
 import React, { useState, useEffect } from 'react';
+import Spinner from 'react-bootstrap/Spinner';
 
 import './cakelist.css';
 
@@ -43,7 +44,10 @@ const CakeList = ({ cakes, isLoggedIn }) => {
     }
   };
 
-  if (!cakes.length) return <p>Cargando</p>;
+  if (!cakes.length) return 
+  <Spinner animation="border" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </Spinner>;
 
   return (
     <div className="cake-list-container">

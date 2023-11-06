@@ -1,94 +1,16 @@
-/* Estilo del contenedor del rectángulo */
-.card-container{
-  margin-bottom: 10px;
-    padding: 10px;
-    border: 2px solid black;
-    background-color: #e67b61;
+.quantity-button{
+    background-color: rgb(233, 50, 50);
+    padding-left: 10px;
+    padding-right: 10px;
     border-radius: 15px;
-    color:white;
-    text-shadow: 1px 1px black;
-    min-width: 300px;
-    max-width: 400px;
-    min-height: 300px;
+    margin: 5px;
     
 }
-.card-cart-title{
-  color:white;
+
+.cart-item-quantity{
+    font-weight: 800;
 }
 
-.rectangle-name{
-  border-bottom: 1px solid black;
+.quantity-button:hover{
+    background-color: #e67b61;
 }
-
-.rectangle-container {
-    display: flex;
-    
-    
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Estilo de la parte izquierda (imagen del producto) */
-  /* Estilo de la parte izquierda (imagen del producto) */
-.rectangle-image {
-  
-    flex:1; /* Toma el 50% del ancho */
-    max-width: 200px;/* Establece el ancho máximo */
-    max-height: 200px; /* Establece la altura máxima */
-    overflow:hidden; /* Oculta el contenido que exceda las dimensiones máximas */
-  }
-
-  .rectangle-image img{
-    width: 100%;
-    border:2px solid black;
-    /* make cover img */
-    
-    
-  }
-  
-  /* Estilo de la parte derecha (nombre, cantidad y precio) */
-  .rectangle-details {
-    flex: 1; /* Toma el 50% del ancho */
-    padding-left: 10px; /* Espaciado a la izquierda para separar del lado izquierdo */
-  }
-  
-  /* Estilo para el nombre del producto */
-  .rectangle-name {
-    font-weight: bold;
-    text-align:center;
-  }
-  
-  /* Estilo para la cantidad */
-  .rectangle-quantity {
-    margin-top: 5px;
-    text-align:center;
-    display:flex;
-    flex-direction: column;
-  
-  }
-
-  .quantity-controls{
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    
-  }
-  
-  /* Estilo para el precio */
-  .rectangle-price {
-    margin-top: 5px;
-    font-weight: bold;
-    text-align: end;
-  }
-
-  .quantity-button{
-    width: 20px;
-    height: 20px;
-    margin:3px;
-    font-size: 0.75em;
-    background-color: #de4f33;
-    color:white;
-    border:1px solid black;
-  }
-  

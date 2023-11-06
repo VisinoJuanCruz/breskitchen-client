@@ -173,6 +173,7 @@ const CakeForm = () => {
             onChange={handleCakeChange}
           />
         </div>
+        
         <div>
           <label>Imagen:</label>
           <br />

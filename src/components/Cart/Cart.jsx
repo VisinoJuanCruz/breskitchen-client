@@ -1,4 +1,3 @@
-// Cart.jsx
 import React, { useState, useEffect } from 'react';
 import './cart.css';
 import CartCard from './CartCard.jsx';
@@ -117,37 +116,43 @@ const Cart = () => {
     window.open(whatsappLink, '_blank');
   };
   
-  /*
-  const FinishCart = () => {
-    axios.post()
-    curl -i -X POST `
-  https://graph.facebook.com/v17.0/154433287744342/messages `
-  -H 'Authorization: Bearer EAAEsFP3RVyQBO3y5cnG7ROOXV3m2QwKEXxc5cLppFZBVWzfGnjsdjS9mFu2i0Ra9QW99L01JZCJHaerzw6kVhuVwbChft0191fmOaVfr2UsZCscZCJcwSZBA7lHo3COMD4oIIgOFxchL6lqdymZAbi0u4GU3gGGnZBXoB72BYSdnXguQFhmSUOGEWeNj4rFN1uBANgPOPuGZBATJ9Jiu8gZDZD' `
-  -H 'Content-Type: application/json' `
-  -d '{ \"messaging_product\": \"whatsapp\", \"to\": \"542267410091\", \"type\": \"template\", \"template\": { \"name\": \"hello_world\", \"language\": { \"code\": \"en_US\" } } }'
-  }
-  */
+ 
   return (
     <div className="cart-container">
       <h2 className="cart-title">Carrito de Compras 🛒</h2>
       {cart.length === 0 ? (
         <>
-        <p>El carrito está vacío.</p>
+        <p className="text-center">El carrito está vacío.</p>
         <Link to="/productos" className="add-products-link"> <button className="add-products-empty-cart"> Agregar productos al carrito </button></Link>
         </>
       ) : (
         <>
-        <div className="cart-list-container">
-          <ul className="cart-list flex row">
-            {cart.map((item, index) => (
-              <li key={index} className="cart-item col-md-6 col-xl-3" >
-                <CartCard item={item} updateCartQuantity={updateCartQuantity} />
-              </li>
-            ))}
-          </ul>
-          <p className="cart-total">Total: ${calculateTotal()}</p>
-        </div>
         
+
+        
+      
+        <table className="price-list-table">
+          <thead>
+            <tr>
+            <th>
+              Nombre
+            </th>
+            <th>
+              Precio
+            </th>
+            <th>
+              Cantidad
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+            {cart.map((cake) => (
+              <CartCard cake={cake} updateCartQuantity={updateCartQuantity} />
+          ))}
+          </tbody>
+        </table>
+    
+    <p className="cart-total">Total: ${calculateTotal()}</p>
         <div className="cart-buttons-container">
           
           <button className="add-products-button" onClick={() => window.location.href = "/productos"}>
