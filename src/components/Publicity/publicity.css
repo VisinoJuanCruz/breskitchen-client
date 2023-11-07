@@ -4,7 +4,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-width: 100vh;
     
     
     
@@ -18,7 +17,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom:0;
     
     
 }

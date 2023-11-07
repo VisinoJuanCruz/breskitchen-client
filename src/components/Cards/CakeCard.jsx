@@ -71,7 +71,7 @@ export default function CakeCard({ item, isLoggedIn }) {
   return (
     <div className="card">
       <div className="card-body">
-      {item.ofer ? <p className="en-oferta-etiqueta">Oferta</p> : <></>}
+      {/*item.ofer ? <p className="en-oferta-etiqueta">Oferta</p> : <></>*/}
       {item.destacado ? <p className="en-destacados-etiqueta">Destacado</p> : <></>}
       
       

@@ -17,7 +17,7 @@ import RecipeForm from './components/Formularios/form-recipes';
 import EditRecipe from './components/EditRecipe/EditRecipe';
 import Cart from './components/Cart/Cart.jsx'
 import ListaDePrecios from './components/ListaDePrecios/ListaDePrecios.jsx'
-
+import Footer from './components/Footer/Footer.jsx'
 
 function App() {
   // En el punto de entrada de la aplicación (por ejemplo, App.js)
@@ -102,7 +102,7 @@ window.location.href = '/';
                   <Route path="/cart" element={<Cart  />} />
                 </Routes>
              </div>
-             
+             <Footer />
              </div>
         </header>
        

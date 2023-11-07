@@ -10,7 +10,7 @@ const Ofertas = ( {isLoggedIn}) => {
   useEffect(() => {
     const fetchOferCakes = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/cakes/ofer');
+        const response = await axios.get('http://localhost:3000/api/ofer-cakes');
         setOferCakes(response.data);
       } catch (error) {
         console.error('Error al obtener la lista tortas en oferta', error);
@@ -19,7 +19,7 @@ const Ofertas = ( {isLoggedIn}) => {
     fetchOferCakes();
   }, []);
 
-  
+  console.log(oferCakes)
   return (
     
     <div className="ofertas-container">
