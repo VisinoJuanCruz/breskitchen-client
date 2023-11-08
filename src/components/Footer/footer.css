@@ -5,18 +5,47 @@
     height: 7%;
     background-color: white;
     display:flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
+    min-height: 60px;
+    padding-top:15px;
+    padding-bottom:15px;
 
 }
 
+.link:hover{
+        text-decoration: none;
+        
+      }
+      ;
 
-.footer-container a{
+
+
+.footer-container i{
+
+    margin-right: 10px;
+}
+
+
+.footer-container {
     color:black;
     font-size: 1.2em;
     
+    
 }
-.footer-container a:hover{
+.footer-container :hover{
     color:black;
     
+}
+
+
+
+.link-instagram:hover{
+    text-decoration: none;
+  
+}
+
+.link-whatsapp:hover{
+    text-decoration: none;
+  
 }
