@@ -7,13 +7,13 @@ export default function Footer() {
   return (
     <div className="footer-container">
       <Link className="link-instagram" to="http://www.instagram.com/breskitchenn">
-      <p style={{color: "#ed333b",}}> <i className="fa-brands fa-instagram fa-2xl"  style={{color: "#ed333b",}}></i>
+      <p> <i className="social-icon fa-brands fa-instagram fa-2xl" ></i>
       Instagram</p>
       </Link>
 
 
       <Link className="link-whatsapp" to="https://wa.me/2215113411">
-      <p style={{color: "#26a269"}}><i className="fa-brands fa-whatsapp fa-2xl" style={{color: "#26a269"}}></i>
+      <p><i className="social-icon fa-brands fa-whatsapp fa-2xl" ></i>
       Contacto</p>
       </Link>
      

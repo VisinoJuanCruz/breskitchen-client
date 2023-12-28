@@ -11,13 +11,12 @@ import Carousel from 'react-bootstrap/Carousel';
     function CarouselProducts({TORTAS}) {
 
 
-      console.log("CAROUSEL",TORTAS)
       return (
         <Carousel className="carousel">
 
             {TORTAS.map(torta => (
               
-              <Carousel.Item>
+              <Carousel.Item key={torta._id}>
               <img src={torta.image} text="First slide" />
               <Carousel.Caption>
                 <div className="carousel-info">

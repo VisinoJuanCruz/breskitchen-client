@@ -17,7 +17,10 @@
         text-decoration: none;
         
       }
-      ;
+
+.social-icon{
+    margin-right: 15px;
+}
 
 
 
@@ -33,19 +36,27 @@
     
     
 }
-.footer-container :hover{
-    color:black;
-    
+
+.link-instagram{
+    color: #ed333b;
+    transition: color 0.3s ease;
+}
+
+.link-whatsapp{
+    color: #26a269; 
+    transition: color 0.3s ease;
 }
 
 
 
 .link-instagram:hover{
     text-decoration: none;
+    color: #f37d83
   
 }
 
 .link-whatsapp:hover{
     text-decoration: none;
+    color: #54ba8a; 
   
 }

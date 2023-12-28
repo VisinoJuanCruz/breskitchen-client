@@ -42,39 +42,22 @@ const Cart = () => {
     const updatedCart = [...cart];
   
     // Buscar el índice del item en la copia del carrito
-    console.log(itemId)
+    
     const itemIndex = updatedCart.findIndex((item) => item._id === itemId);
-    console.log("ITEM SELECICONADO : ",)
+    
     if (itemIndex !== -1) {
       if (newQuantity === 0) {
         // Si la nueva cantidad es 0, eliminar el item de la copia del carrito
-        Swal.fire({
-          title: `¿Desea eliminar "${updatedCart[itemIndex].name}" del carrito?`,
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonText: 'Sí',
-          cancelButtonText: 'No',
-         
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // Eliminar el producto de la copia del carrito
+        
             updatedCart.splice(itemIndex, 1);
             // Actualizar el estado del carrito
             setCart(updatedCart);
             // Actualizar el carrito en localStorage
             localStorage.setItem('cart', JSON.stringify(updatedCart));
           }
-        });
-      } else {
-        // Actualizar la cantidad del item en la copia del carrito
-        updatedCart[itemIndex].quantity = newQuantity;
-        // Actualizar el estado del carrito
-        setCart(updatedCart);
-        // Actualizar el carrito en localStorage
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
-      }
+        }
     }
-  };
+ 
 
   const clearCart = () => {
     // Mostrar una alerta de confirmación para vaciar el carrito
@@ -127,10 +110,6 @@ const Cart = () => {
         </>
       ) : (
         <>
-        
-
-        
-      
         <table className="price-list-table">
           <thead>
             <tr>

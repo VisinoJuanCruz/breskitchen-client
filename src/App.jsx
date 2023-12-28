@@ -27,6 +27,7 @@ const LoggedIn = localStorage.getItem('isLoggedIn');
 const [isLoggedIn, setIsLoggedIn] = useState(LoggedIn === 'true');
 
   const [cakes, setCakes] = useState([]);
+  const [cakesInOfer, setCakesInOfer] = useState(cakes.filter((cake) => cake.ofer === true))
  
 
   useEffect(() => {
@@ -53,12 +54,18 @@ const [isLoggedIn, setIsLoggedIn] = useState(LoggedIn === 'true');
       }
       
     }
+
+    const updateCakesInOfer = () => {
+      // Filtra las tortas en oferta
+      const updatedCakesInOfer = cakes.filter((cake) => cake.ofer === true);
+      setCakesInOfer(updatedCakesInOfer);
+    };
    
 
     // Comprueba la autenticación al cargar la aplicación
-    checkAuthentication();
-
     fetchCakes();
+    checkAuthentication();   
+    updateCakesInOfer();
   }, []);
 
   // Función para manejar el inicio de sesión exitoso
@@ -76,7 +83,7 @@ window.location.href = '/';
 
   };
 
-  const cakesInOfer = cakes.filter((cake) => cake.ofer === true);
+ 
  
   return (
     <Router>
@@ -104,8 +111,7 @@ window.location.href = '/';
              </div>
              <Footer />
              </div>
-        </header>
-       
+        </header>       
       </div>
     </Router>
   );

@@ -14,6 +14,8 @@ const CakeForm = () => {
     ofer: false,
     image: '',
     ingredients: [],
+    carousel: false,
+    outstanding:false,
   });
   const [ingredientList, setIngredientList] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]); // Ingredientes seleccionados con cantidad
@@ -100,7 +102,9 @@ const CakeForm = () => {
         ofer: false,
         image: '',
         ingredients: [],
-        category: ''
+        category: '',
+        carousel:false,
+        outstanding:false,
       });
       setSelectedIngredients([]); // Limpiar la lista de ingredientes seleccionados
     

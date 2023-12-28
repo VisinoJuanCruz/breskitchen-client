@@ -3,12 +3,14 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import {Link, useNavigate} from 'react-router-dom';
+
 import './header.css';
 
 
 
-function Header2({onLogout, isLoggedIn, cakesInOfer}) {
+function Header({onLogout, isLoggedIn, cakesInOfer}) {
 
+  
   const navigate = useNavigate();
     
     const handleLogoutClick = () => {
@@ -66,8 +68,10 @@ function Header2({onLogout, isLoggedIn, cakesInOfer}) {
               <Link onClick={handleLogoutClick}><p>Cerrar Sesión</p></Link>
               </NavDropdown.Item>
             </NavDropdown>
-            :
-            <Nav.Link><Link to="/login">Iniciar Sesión</Link></Nav.Link>}
+            :<>
+            {/*<Nav.Link><Link to="/login">Iniciar Sesión</Link></Nav.Link>*/}
+            </>
+            }
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -75,4 +79,4 @@ function Header2({onLogout, isLoggedIn, cakesInOfer}) {
   );
 }
 
-export default Header2;
+export default Header;

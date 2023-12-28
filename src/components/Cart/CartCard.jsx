@@ -23,7 +23,7 @@ const CartCard2 = ({ cake, updateCartQuantity }) => {
     } else {
       // Mostrar una alerta de confirmación para eliminar el producto
       Swal.fire({
-        title: `¿Desea eliminar "${cake.name}" del carrito?`,
+        title: `<p class="toast-title">¿Desea eliminar "${cake.name}" del carrito?</p>`,
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: 'Sí',

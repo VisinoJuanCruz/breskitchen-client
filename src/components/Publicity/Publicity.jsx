@@ -36,7 +36,7 @@ export default function Publicity({isLoggedIn}){
 
 const oferCakes2 = cakes.filter(cake => cake.ofer)
 const outstandingCakes = cakes.filter(cake => cake.outstanding)
-console.log(carouselCakes)
+
 
 
   return(
