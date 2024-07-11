@@ -18,7 +18,7 @@ import EditRecipe from './components/EditRecipe/EditRecipe';
 import Cart from './components/Cart/Cart.jsx'
 import ListaDePrecios from './components/ListaDePrecios/ListaDePrecios.jsx'
 import Footer from './components/Footer/Footer.jsx'
-const API_URL = `https://breskitchen-server.vercel.app/`
+const API_URL = `https://breskitchen-server.vercel.app`
 
 function App() {
   // En el punto de entrada de la aplicación (por ejemplo, App.js)
