@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './form-login.css';
 
-const LoginForm = ({ onLoginSuccess }) => {
+const LoginForm = ({ onLoginSuccess,API_URL }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
@@ -20,7 +20,7 @@ const LoginForm = ({ onLoginSuccess }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${process.env.API_URL}/api/login`, formData);
+      const response = await axios.post(`${API_URL}/api/login`, formData);
 
       // Verificar si la autenticación fue exitosa en función de la respuesta del servidor
       if (response.data.success) {

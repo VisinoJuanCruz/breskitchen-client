@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './listaDePrecios.css';
 
-export default function ListaDePrecios({ isLoggedIn }) {
+export default function ListaDePrecios({ isLoggedIn,API_URL }) {
   const [cakes, setCakes] = useState([]);
   const [editingPrice, setEditingPrice] = useState(null);
   const [editedPrice, setEditedPrice] = useState(null);
@@ -18,7 +18,7 @@ export default function ListaDePrecios({ isLoggedIn }) {
   useEffect(() => {
     const fetchCakes = async () => {
       try {
-        const response = await axios.get(`${process.env.API_URL}/api/cakes`);
+        const response = await axios.get(`${API_URL}/api/cakes`);
         setCakes(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de tortas', error);
@@ -36,7 +36,7 @@ export default function ListaDePrecios({ isLoggedIn }) {
   const handleSavePrice = async (cakeId) => {
     if (!isNaN(editedPrice) && parseFloat(editedPrice) >= 0) {
       try {
-        const response = await fetch(`${process.env.API_URL}/api/cakes/updatePrice/${cakeId}`, {
+        const response = await fetch(`${API_URL}/api/cakes/updatePrice/${cakeId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

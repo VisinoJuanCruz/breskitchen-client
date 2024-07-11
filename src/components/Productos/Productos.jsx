@@ -3,7 +3,7 @@ import CakeCard from '../Cards/CakeCard.jsx';
 import axios from 'axios'
 import './productos.css';
 
-const Productos = ({isLoggedIn}) => {
+const Productos = ({isLoggedIn,API_URL}) => {
   
   const [cakes, setCakes] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -13,7 +13,7 @@ const Productos = ({isLoggedIn}) => {
   useEffect(() => {
     const fetchCakes = async () => {
       try {
-        const response = await axios.get(`${process.env.API_URL}/api/cakes`);
+        const response = await axios.get(`${API_URL}/api/cakes`);
         setCakes(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de tortas', error);

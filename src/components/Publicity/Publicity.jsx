@@ -6,7 +6,7 @@ import './publicity.css'
 import Spinner from 'react-bootstrap/Spinner';
 
 
-export default function Publicity({isLoggedIn}){
+export default function Publicity({isLoggedIn,API_URL}){
 
   const [cakes, setCakes] = useState([]);
   const [oferCakes, setOferCakes] = useState([]);
@@ -19,7 +19,7 @@ export default function Publicity({isLoggedIn}){
   useEffect(() => {
     const fetchCakes = async () => {
       try {
-        const response = await axios.get(`${process.env.API_URL}/api/cakes`);
+        const response = await axios.get(`${API_URL}/api/cakes`);
         setCakes(response.data);
         setOferCakes(cakes.filter(cake => cake.ofer))
         setCarouselCakes(cakes.filter(cake => cake.carousel))

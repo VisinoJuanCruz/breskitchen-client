@@ -2,18 +2,18 @@ import {useEffect, useState} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 
-
-
 import './recetas.css';
 
-export default function Recetas() {
+export default function Recetas({API_URL}) {
+
+
   const [cakes, setCakes] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchIngredients = async () => {
       try {
-        const response = await axios.get(`${process.env.API_URL}/api/cakes`);
+        const response = await axios.get(`${API_URL}/api/cakes`);
         setCakes(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de ingredientes', error);

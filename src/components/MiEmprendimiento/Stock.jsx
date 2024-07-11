@@ -6,7 +6,9 @@ import withReactContent from 'sweetalert2-react-content'
 import './stock.css'
 
 
-export default function MiStock() {
+export default function MiStock({API_URL}) {
+
+  
   const [ingredients, setIngredients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingPrice, setEditingPrice] = useState(null);
@@ -17,7 +19,7 @@ export default function MiStock() {
   const navigate = useNavigate();
 
   const loadIngredients = () => {
-    fetch(`${process.env.API_URL}/api/ingredients`)
+    fetch(`${API_URL}/api/ingredients`)
       .then((res) => res.json())
       .then((ingredients) => {
         setIngredients(ingredients);
@@ -35,7 +37,7 @@ export default function MiStock() {
     // Verificar si editedPrice es un número válido mayor que 0
     if (!isNaN(editedPrice) && parseFloat(editedPrice) >= 0) {
       try {
-        const response = await fetch(`${process.env.API_URL}/api/ingredients/updatePrice/${ingredientId}`, {
+        const response = await fetch(`${API_URL}/api/ingredients/updatePrice/${ingredientId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -77,7 +79,7 @@ export default function MiStock() {
     }
 
     try {
-      const response = await fetch(`${process.env.API_URL}/api/ingredients/updateName/${ingredientId}`, {
+      const response = await fetch(`${API_URL}/api/ingredients/updateName/${ingredientId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +116,7 @@ export default function MiStock() {
 
       if(confirmDelete.isConfirmed){
       try {
-        const response = await fetch(`${process.env.API_URL}/api/ingredients/${ingredientId}`, {
+        const response = await fetch(`${API_URL}/api/ingredients/${ingredientId}`, {
           method: 'DELETE',
         });
 

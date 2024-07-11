@@ -5,7 +5,7 @@ import "./form-ingredientes.css"
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-function IngredientForm() {
+function IngredientForm({API_URL}) {
 
     const MySwal = withReactContent(Swal)
     const navigate = useNavigate();
@@ -23,7 +23,7 @@ function IngredientForm() {
         priceKg
       }
        //falta poner AXIOS
-      fetch(`${process.env.API_URL}/api/ingredients`, {
+      fetch(`${API_URL}/api/ingredients`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"},

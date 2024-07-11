@@ -18,6 +18,7 @@ import EditRecipe from './components/EditRecipe/EditRecipe';
 import Cart from './components/Cart/Cart.jsx'
 import ListaDePrecios from './components/ListaDePrecios/ListaDePrecios.jsx'
 import Footer from './components/Footer/Footer.jsx'
+const API_URL = `https://breskitchen-server.vercel.app/`
 
 function App() {
   // En el punto de entrada de la aplicación (por ejemplo, App.js)
@@ -33,7 +34,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(LoggedIn === 'true');
   useEffect(() => {
     const fetchCakes = async () => {
       try {
-        const response = await axios.get(`${process.env.API_URL}/api/cakes`);
+        const response = await axios.get(`${API_URL}/api/cakes`);
         setCakes(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de tortas', error);
@@ -43,7 +44,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(LoggedIn === 'true');
     // Verificar la autenticación al cargar la aplicación
     const checkAuthentication = async () => {
       try {
-        const response = await axios.get(`${process.env.API_URL}/api/check-auth`, {
+        const response = await axios.get(`${API_URL}/api/check-auth`, {
           withCredentials: true, // Incluye las cookies en la solicitud
         });
         if (response.data.success) {
@@ -95,7 +96,7 @@ window.location.href = '/';
               <Header onLogout={handleLogout} isLoggedIn={isLoggedIn} cakesInOfer={cakesInOfer}/>
               <div className="app-container">
                 <Routes>
-                  <Route path="/"           element={<Publicity cakes={cakes} isLoggedIn={isLoggedIn} />} />
+                  <Route path="/"           element={<Publicity cakes={cakes} isLoggedIn={isLoggedIn} API_URL={API_URL}/>} />
                   <Route path="/sobre-mi"   element={<SobreMi />} />
                   <Route path="/productos"  element={<Productos isLoggedIn={isLoggedIn} />} />
                   <Route path="/ofertas"    element={<Ofertas isLoggedIn={isLoggedIn}/>} />
