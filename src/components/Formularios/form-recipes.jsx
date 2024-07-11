@@ -77,7 +77,7 @@ const CakeForm = () => {
   
     try {
       // Realizar una solicitud HTTP para guardar los datos del pastel
-      await axios.post('http://localhost:3000/api/cakes', cakeDataWithIngredients);
+      await axios.post(`${process.env.API_URL}/api/cakes`, cakeDataWithIngredients);
       // Limpiar el formulario después de enviar
       MySwal.fire({
         title: 'Receta agregada con éxito',
@@ -121,7 +121,7 @@ const CakeForm = () => {
   useEffect(() => {
     const fetchIngredients = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/ingredients');
+        const response = await axios.get(`${process.env.API_URL}/api/ingredients`);
         setIngredientList(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de ingredientes', error);
