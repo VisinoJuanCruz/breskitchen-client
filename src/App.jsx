@@ -33,7 +33,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(LoggedIn === 'true');
   useEffect(() => {
     const fetchCakes = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/cakes');
+        const response = await axios.get(`${process.env.API_URL}/api/cakes`);
         setCakes(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de tortas', error);
@@ -43,7 +43,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(LoggedIn === 'true');
     // Verificar la autenticación al cargar la aplicación
     const checkAuthentication = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/check-auth', {
+        const response = await axios.get(`${process.env.API_URL}/api/check-auth`, {
           withCredentials: true, // Incluye las cookies en la solicitud
         });
         if (response.data.success) {

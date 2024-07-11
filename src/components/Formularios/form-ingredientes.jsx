@@ -23,7 +23,7 @@ function IngredientForm() {
         priceKg
       }
        //falta poner AXIOS
-      fetch("http://localhost:3000/api/ingredients", {
+      fetch(`${process.env.API_URL}/api/ingredients`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"},

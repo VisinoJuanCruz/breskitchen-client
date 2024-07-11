@@ -31,7 +31,7 @@ const EditRecipe = () => {
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/cakes/${id}`);
+        const response = await axios.get(`${process.env.API_URL}/api/cakes/${id}`);
         setCakeData(response.data);
         setSelectedIngredients(response.data.ingredients);
       } catch (error) {
@@ -44,7 +44,7 @@ const EditRecipe = () => {
   useEffect(() => {
     const fetchIngredients = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/ingredients');
+        const response = await axios.get(`${process.env.API_URL}/api/ingredients`);
         setIngredientList(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de ingredientes', error);
@@ -118,7 +118,7 @@ const EditRecipe = () => {
   
     if (confirmEdit.isConfirmed) {
       try {
-        await axios.put(`http://localhost:3000/api/cakes/${id}`, cakeDataWithIngredients);
+        await axios.put(`${process.env.API_URL}/api/cakes/${id}`, cakeDataWithIngredients);
         console.log(cakeDataWithIngredients)
         // Mostrar mensaje de éxito
         MySwal.fire({
@@ -152,7 +152,7 @@ const EditRecipe = () => {
     if (confirmDelete.isConfirmed) {
       try {
         // Realizar una solicitud HTTP para eliminar la receta
-        await axios.delete(`http://localhost:3000/api/cakes/${id}`);
+        await axios.delete(`${process.env.API_URL}/api/cakes/${id}`);
         // Mostrar mensaje de éxito
         MySwal.fire({
           title: 'Receta eliminada con éxito',

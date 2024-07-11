@@ -20,7 +20,7 @@ const LoginForm = ({ onLoginSuccess }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/api/login', formData);
+      const response = await axios.post(`${process.env.API_URL}/api/login`, formData);
 
       // Verificar si la autenticación fue exitosa en función de la respuesta del servidor
       if (response.data.success) {

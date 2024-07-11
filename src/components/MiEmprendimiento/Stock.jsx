@@ -17,7 +17,7 @@ export default function MiStock() {
   const navigate = useNavigate();
 
   const loadIngredients = () => {
-    fetch(`http://localhost:3000/api/ingredients`)
+    fetch(`${process.env.API_URL}/api/ingredients`)
       .then((res) => res.json())
       .then((ingredients) => {
         setIngredients(ingredients);
@@ -35,7 +35,7 @@ export default function MiStock() {
     // Verificar si editedPrice es un número válido mayor que 0
     if (!isNaN(editedPrice) && parseFloat(editedPrice) >= 0) {
       try {
-        const response = await fetch(`http://localhost:3000/api/ingredients/updatePrice/${ingredientId}`, {
+        const response = await fetch(`${process.env.API_URL}/api/ingredients/updatePrice/${ingredientId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export default function MiStock() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/ingredients/updateName/${ingredientId}`, {
+      const response = await fetch(`${process.env.API_URL}/api/ingredients/updateName/${ingredientId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ export default function MiStock() {
 
       if(confirmDelete.isConfirmed){
       try {
-        const response = await fetch(`http://localhost:3000/api/ingredients/${ingredientId}`, {
+        const response = await fetch(`${process.env.API_URL}/api/ingredients/${ingredientId}`, {
           method: 'DELETE',
         });
 
