@@ -20,7 +20,7 @@ const LoginForm = ({ onLoginSuccess,API_URL }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${API_URL}/api/login`, formData);
+      const response = await axios.post(`${API_URL}/api/login`, formData,{ withCredentials: true });
 
       // Verificar si la autenticación fue exitosa en función de la respuesta del servidor
       if (response.data.success) {
