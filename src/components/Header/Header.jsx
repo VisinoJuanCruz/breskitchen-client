@@ -69,7 +69,7 @@ function Header({onLogout, isLoggedIn, cakesInOfer}) {
               </NavDropdown.Item>
             </NavDropdown>
             :<>
-            {/*<Nav.Link><Link to="/login">Iniciar Sesión</Link></Nav.Link>*/}
+            <Nav.Link><Link to="/login">Iniciar Sesión</Link></Nav.Link>
             </>
             }
           </Nav>
