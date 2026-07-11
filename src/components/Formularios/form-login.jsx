@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import * as AuthApi from "../../api/auth.api";
 import './form-login.css';
 
 const LoginForm = ({ onLoginSuccess, API_URL }) => {
@@ -17,24 +17,38 @@ const LoginForm = ({ onLoginSuccess, API_URL }) => {
     };
 
     const handleSubmit = async (e) => {
-      e.preventDefault();
-    
-      try {
-        const response = await axios.post(`${API_URL}/api/login`, formData, { withCredentials: true });
-    
-        if (response.data.success) {
-          onLoginSuccess();
-          navigate('/');
-          localStorage.setItem('isLoggedIn', true);
-          localStorage.setItem('username', formData.username);
+
+    e.preventDefault();
+
+    try {
+
+        const response = await AuthApi.login(formData);
+
+        if (response.success) {
+
+            onLoginSuccess();
+
+            navigate("/");
+
+            localStorage.setItem("isLoggedIn", true);
+
+            localStorage.setItem("username", formData.username);
+
         } else {
-          setError('Usuario o contraseña incorrectos');
+
+            setError("Usuario o contraseña incorrectos");
+
         }
-      } catch (error) {
-        console.error('Error de autenticación:', error);
-        setError('Error de red al intentar iniciar sesión');
-      }
-    };
+
+    } catch (error) {
+
+        console.error(error);
+
+        setError("Error de red al intentar iniciar sesión");
+
+    }
+
+};
     
     return (
         <div className="form-login-container form">

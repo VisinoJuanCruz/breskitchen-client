@@ -103,7 +103,7 @@ function App() {
                 <Route path="/add-recipe" element={<RecipeForm API_URL={API_URL} />} />
                 <Route path="/recipes" element={<Recipes API_URL={API_URL} />} />
                 <Route path="/editar-receta/:id" element={<EditRecipe API_URL={API_URL} />} />
-                <Route path="/login" element={<LoginForm onLoginSuccess={handleLoginSuccess} API_URL={API_URL} />} />
+                <Route path="/login" element={<LoginForm onLoginSuccess={handleLoginSuccess} />} />
                 <Route path="/price-list" element={<ListaDePrecios isLoggedIn={isLoggedIn} API_URL={API_URL}/>} />
                 <Route path="/cart" element={<Cart  />} />
               </Routes>
