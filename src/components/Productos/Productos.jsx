@@ -11,7 +11,16 @@ const Productos = ({isLoggedIn, API_URL}) => {
     const fetchCakes = async () => {
       try {
         const response = await axios.get(`${API_URL}/api/cakes`);
-        setCakes(response.data);
+        // Sanitizar cakes: quitar ingredientes nulos y asegurar campos mínimos
+        const sanitized = response.data.map((cake) => ({
+          ...cake,
+          ingredients: Array.isArray(cake.ingredients)
+            ? cake.ingredients.filter((ing) => ing != null)
+            : [],
+          name: cake.name || '',
+          category: cake.category || 'sin categoria',
+        }));
+        setCakes(sanitized);
       } catch (error) {
         console.error('Error al obtener la lista de tortas', error);
       }
@@ -51,7 +60,7 @@ const Productos = ({isLoggedIn, API_URL}) => {
                 className="productos-list-item"
                 item={item}
                 isLoggedIn={isLoggedIn}
-                key={index}
+                key={item.id || index}
               />
             ))}
           </div>
@@ -71,7 +80,7 @@ const Productos = ({isLoggedIn, API_URL}) => {
     });
   };
 
-  const uniqueCategories = [...new Set(cakes.map((cake) => cake.category))];
+  const uniqueCategories = [...new Set(cakes.map((cake) => cake.category || 'sin categoria'))];
 
   const noProductsFound = isEmpty(searchTerm, cakes);
 

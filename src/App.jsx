@@ -68,20 +68,23 @@ function App() {
   // Función para manejar el cierre de sesión
   const handleLogout = async () => {
     try {
-      await axios.post(`${API_URL}/api/logout`, {}, {
-        withCredentials: true, // Incluye las cookies en la solicitud
+      const response = await axios.post(`${API_URL}/api/logout`, {}, {
+        withCredentials: true,
       });
-
-      // Limpiar el estado y redireccionar a la página principal u otra página deseada
-      localStorage.removeItem('isLoggedIn'); // Opcionalmente, puedes limpiar otros datos en localStorage
-      localStorage.removeItem('username');
-      setIsLoggedIn(false); // Actualiza el estado de autenticación en el frontend
-      window.location.href = '/'; // Redirige a la página de inicio o a otra página deseada
-
+  
+      if (response.data.success) {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('username');
+        setIsLoggedIn(false);
+        window.location.href = '/';
+      } else {
+        console.error('Error al cerrar sesión', response.data.message);
+      }
     } catch (error) {
       console.error('Error al cerrar sesión', error);
     }
   };
+  
 
   return (
     <Router>
@@ -95,7 +98,7 @@ function App() {
                 <Route path="/sobre-mi" element={<SobreMi />} />
                 <Route path="/productos" element={<Productos isLoggedIn={isLoggedIn} API_URL={API_URL}/>} />
                 <Route path="/ofertas" element={<Ofertas isLoggedIn={isLoggedIn} API_URL={API_URL} />} />
-                <Route path="/stock" element={<Stock API_URL={API_URL} />} />
+                <Route path="/stock" element={<Stock/>} />
                 <Route path="/add-ingredient" element={<IngredientForm API_URL={API_URL} />} />
                 <Route path="/add-recipe" element={<RecipeForm API_URL={API_URL} />} />
                 <Route path="/recipes" element={<Recipes API_URL={API_URL} />} />
