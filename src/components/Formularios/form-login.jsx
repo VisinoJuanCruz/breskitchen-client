@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as AuthApi from "../../api/auth.api";
 import './form-login.css';
 
-const LoginForm = ({ onLoginSuccess, API_URL }) => {
+const LoginForm = ({ onLoginSuccess}) => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: '',

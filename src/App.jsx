@@ -18,7 +18,7 @@ import EditRecipe from './components/EditRecipe/EditRecipe';
 import Cart from './components/Cart/Cart.jsx'
 import ListaDePrecios from './components/ListaDePrecios/ListaDePrecios.jsx'
 import Footer from './components/Footer/Footer.jsx'
-const API_URL = `https://breskitchen-server.vercel.app`
+import { API_URL } from "./api/config.js";
 
 function App() {
   // En el punto de entrada de la aplicación (por ejemplo, App.js)
@@ -94,17 +94,17 @@ function App() {
             <Header onLogout={handleLogout} isLoggedIn={isLoggedIn} cakesInOfer={cakesInOfer}/>
             <div className="app-container">
               <Routes>
-                <Route path="/" element={<Publicity cakes={cakes} isLoggedIn={isLoggedIn} API_URL={API_URL}/>} />
+                <Route path="/" element={<Publicity cakes={cakes} isLoggedIn={isLoggedIn}  />} />
                 <Route path="/sobre-mi" element={<SobreMi />} />
-                <Route path="/productos" element={<Productos isLoggedIn={isLoggedIn} API_URL={API_URL}/>} />
-                <Route path="/ofertas" element={<Ofertas isLoggedIn={isLoggedIn} API_URL={API_URL} />} />
-                <Route path="/stock" element={<Stock/>} />
-                <Route path="/add-ingredient" element={<IngredientForm API_URL={API_URL} />} />
-                <Route path="/add-recipe" element={<RecipeForm API_URL={API_URL} />} />
-                <Route path="/recipes" element={<Recipes API_URL={API_URL} />} />
-                <Route path="/editar-receta/:id" element={<EditRecipe API_URL={API_URL} />} />
+                <Route path="/productos" element={<Productos isLoggedIn={isLoggedIn}  />} />
+                <Route path="/ofertas" element={<Ofertas isLoggedIn={isLoggedIn}   />} />
+                <Route path="/stock" element={<Stock  />} />
+                <Route path="/add-ingredient" element={<IngredientForm   />} />
+                <Route path="/add-recipe" element={<RecipeForm   />} />
+                <Route path="/recipes" element={<Recipes   />} />
+                <Route path="/editar-receta/:id" element={<EditRecipe   />} />
                 <Route path="/login" element={<LoginForm onLoginSuccess={handleLoginSuccess} />} />
-                <Route path="/price-list" element={<ListaDePrecios isLoggedIn={isLoggedIn} API_URL={API_URL}/>} />
+                <Route path="/price-list" element={<ListaDePrecios isLoggedIn={isLoggedIn}  />} />
                 <Route path="/cart" element={<Cart  />} />
               </Routes>
             </div>

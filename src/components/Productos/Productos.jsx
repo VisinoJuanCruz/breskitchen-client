@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import CakeCard from '../Cards/CakeCard.jsx';
 import axios from 'axios'
 import './productos.css';
+ import { API_URL } from "../../api/config.js";
 
-const Productos = ({isLoggedIn, API_URL}) => {
+const Productos = ({isLoggedIn}) => {
   const [cakes, setCakes] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   

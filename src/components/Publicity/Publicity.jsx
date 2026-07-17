@@ -4,9 +4,10 @@ import CarouselProducts from '../Carousel/Carousel.jsx'
 import CakeList from '../Carousel/CakeList.jsx'
 import './publicity.css'
 import Spinner from 'react-bootstrap/Spinner';
+ import { API_URL } from "../../api/config.js";
 
 
-export default function Publicity({isLoggedIn,API_URL}){
+export default function Publicity({isLoggedIn}){
 
   const [cakes, setCakes] = useState([]);
   const [oferCakes, setOferCakes] = useState([]);

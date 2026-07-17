@@ -2,8 +2,9 @@ import React, { useState,useEffect } from 'react';
 import CakeCard from '../Cards/CakeCard.jsx';
 import axios from 'axios'
 import './ofertas.css';
+ import { API_URL } from "../../api/config.js";
 
-const Ofertas = ( {isLoggedIn,API_URL}) => {
+const Ofertas = ( {isLoggedIn}) => {
   
   const [oferCakes, setOferCakes] = useState([])
 

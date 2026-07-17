@@ -4,10 +4,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import './editrecipe.css'
+ import { API_URL } from "../../api/config.js";
 
 
-
-const EditRecipe = ({API_URL}) => {
+const EditRecipe = () => {
 
   const MySwal = withReactContent(Swal)
   const { id } = useParams(); // Obtén el ID de la receta desde los parámetros de la URL

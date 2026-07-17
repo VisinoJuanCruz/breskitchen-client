@@ -1,11 +1,11 @@
 import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-
+ import { API_URL } from "../../api/config.js";
 import "./form-ingredientes.css"
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-function IngredientForm({API_URL}) {
+function IngredientForm(){
 
     const MySwal = withReactContent(Swal)
     const navigate = useNavigate();

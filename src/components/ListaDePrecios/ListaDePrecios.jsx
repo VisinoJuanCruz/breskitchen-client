@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './listaDePrecios.css';
+ import { API_URL } from "../../api/config.js";
 
-export default function ListaDePrecios({ isLoggedIn, API_URL }) {
+export default function ListaDePrecios({ isLoggedIn}) {
   const [cakes, setCakes] = useState([]);
   const [editingPrice, setEditingPrice] = useState(null);
   const [editedPrice, setEditedPrice] = useState(null);

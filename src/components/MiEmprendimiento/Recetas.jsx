@@ -1,10 +1,11 @@
 import {useEffect, useState} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+ import { API_URL } from "../../api/config.js";
 
 import './recetas.css';
 
-export default function Recetas({API_URL}) {
+export default function Recetas() {
 
 
   const [cakes, setCakes] = useState([]);
