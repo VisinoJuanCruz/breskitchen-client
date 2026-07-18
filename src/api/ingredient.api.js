@@ -12,6 +12,27 @@ export async function getAll() {
 
 }
 
+export async function create(data) {
+
+    const response = await fetch(
+        `${API_URL}/api/ingredients`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Error al crear el ingrediente");
+    }
+
+    return await response.json();
+
+}
+
 export async function updatePrice(id, data) {
 
     const response = await fetch(

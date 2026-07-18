@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import "./form-recipes.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
  import { API_URL } from "../../api/config.js";
+ import * as ingredientApi from "../../api/ingredient.api";
+import * as recipeApi from "../../api/recipe.api";
 
 const CakeForm = () => {
   const [cakeData, setCakeData] = useState({
@@ -84,7 +85,7 @@ const CakeForm = () => {
 
     try {
       // Realizar una solicitud HTTP para guardar los datos del pastel
-      await axios.post(`${API_URL}/api/cakes`, cakeDataWithIngredients);
+      await recipeApi.create(cakeDataWithIngredients);
       // Limpiar el formulario después de enviar
       MySwal.fire({
         title: "Receta agregada con éxito",
@@ -129,19 +130,27 @@ const CakeForm = () => {
     );
   };
 
-  useEffect(() => {
-    const fetchIngredients = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/api/ingredients`);
-        console.log("VIENE:",response.data);
-        setIngredientList(response.data);
-      } catch (error) {
-        console.error("Error al obtener la lista de ingredientes", error);
-      }
-    };
-    fetchIngredients();
-  }, []);
+useEffect(() => {
 
+    const loadIngredients = async () => {
+
+        try {
+
+            const data = await ingredientApi.getAll();
+
+            setIngredientList(data);
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+
+    };
+
+    loadIngredients();
+
+}, []);
   return (
     <div className="form-recipes-container">
       <h2 className="form-recipes-title">Agregar nueva receta</h2>
