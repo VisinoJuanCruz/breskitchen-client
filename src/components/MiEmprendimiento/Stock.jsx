@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from "react";
 import IngredientTable from "./IngredientTable";
- import { API_URL } from "../../api/config.js";
+import { getAll } from "../../api/ingredient.api";
 
 export default function Stock() {
-  
+
     const [ingredients, setIngredients] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const loadIngredients = () => {
+    const loadIngredients = async () => {
 
-        fetch(`${API_URL}/api/ingredients`)
-            .then(res => res.json())
-            .then(data => {
+        try {
 
-                setIngredients(data);
-                setLoading(false);
+            const data = await getAll();
 
-            });
+            setIngredients(data);
+
+        } catch (error) {
+
+            console.error(error);
+
+        } finally {
+
+            setLoading(false);
+
+        }
 
     };
 
@@ -41,11 +48,8 @@ export default function Stock() {
             </h1>
 
             <IngredientTable
-
                 ingredients={ingredients}
                 setIngredients={setIngredients}
-                API_URL={API_URL}
-
             />
 
         </div>

@@ -3,8 +3,7 @@ import IngredientRow from "./IngredientRow";
 export default function IngredientTable({
 
     ingredients,
-    setIngredients,
-    API_URL
+    setIngredients
 
 }) {
 
@@ -30,7 +29,7 @@ export default function IngredientTable({
 
                 {
 
-                    ingredients.map(ingredient => (
+                    ingredients.map((ingredient) => (
 
                         <IngredientRow
 
@@ -41,8 +40,6 @@ export default function IngredientTable({
                             ingredients={ingredients}
 
                             setIngredients={setIngredients}
-
-                            API_URL={API_URL}
 
                         />
 

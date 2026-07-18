@@ -5,12 +5,16 @@ import withReactContent from "sweetalert2-react-content";
 import IngredientNameEditor from "./IngredientNameEditor";
 import IngredientPriceEditor from "./IngredientPriceEditor";
 
+import {
+    updatePrice,
+    updateName,
+    remove
+} from "../../api/ingredient.api";
+
 export default function IngredientRow({
 
     ingredient,
-    ingredients,
-    setIngredients,
-    API_URL
+    setIngredients
 
 }) {
 
@@ -33,33 +37,25 @@ export default function IngredientRow({
 
         try {
 
-            const response = await fetch(
-                `${API_URL}/api/ingredients/updateName/${ingredient._id}`,
+            const updatedIngredient = await updateName(
+                ingredient._id,
                 {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        name: editedName,
-                    }),
+                    name: editedName
                 }
             );
 
-            if (!response.ok) {
+            setIngredients(previous =>
 
-                throw new Error("Error al actualizar.");
+                previous.map(item =>
 
-            }
-
-            const updatedIngredient = await response.json();
-
-            setIngredients(prev =>
-                prev.map(item =>
                     item._id === updatedIngredient._id
+
                         ? updatedIngredient
+
                         : item
+
                 )
+
             );
 
             setEditingName(false);
@@ -83,35 +79,33 @@ export default function IngredientRow({
 
         try {
 
-            const response = await fetch(
-                `${API_URL}/api/ingredients/updatePrice/${ingredient._id}`,
+            const response = await updatePrice(
+                ingredient._id,
                 {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-
-                        priceKg: editedPrice
-
-                    }),
+                    priceKg: editedPrice
                 }
             );
 
-            if (!response.ok) {
+            // Tu backend devuelve:
+            // {
+            //     ingredient,
+            //     affectedRecipes
+            // }
 
-                throw new Error("Error al actualizar.");
+            const updatedIngredient = response.ingredient;
 
-            }
+            setIngredients(previous =>
 
-            const updatedIngredient = await response.json();
+                previous.map(item =>
 
-            setIngredients(prev =>
-                prev.map(item =>
                     item._id === updatedIngredient._id
+
                         ? updatedIngredient
+
                         : item
+
                 )
+
             );
 
             setEditingPrice(false);
@@ -138,7 +132,7 @@ export default function IngredientRow({
 
             confirmButtonText: "Eliminar",
 
-            cancelButtonText: "Cancelar",
+            cancelButtonText: "Cancelar"
 
         });
 
@@ -150,26 +144,16 @@ export default function IngredientRow({
 
         try {
 
-            const response = await fetch(
+            await remove(ingredient._id);
 
-                `${API_URL}/api/ingredients/${ingredient._id}`,
+            setIngredients(previous =>
 
-                {
+                previous.filter(item =>
 
-                    method: "DELETE",
+                    item._id !== ingredient._id
 
-                }
+                )
 
-            );
-
-            if (!response.ok) {
-
-                throw new Error("Error al eliminar.");
-
-            }
-
-            setIngredients(prev =>
-                prev.filter(item => item._id !== ingredient._id)
             );
 
         } catch (error) {
@@ -258,11 +242,7 @@ export default function IngredientRow({
 
             <td>
 
-                <button
-
-                    onClick={handleDeleteIngredient}
-
-                >
+                <button onClick={handleDeleteIngredient}>
 
                     Eliminar
 
