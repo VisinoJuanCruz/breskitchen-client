@@ -9,7 +9,7 @@ export async function createIngredient(data) {
 }
 
 export async function updateIngredientPrice(id, data) {
-    return await ingredientApi.updatePrice(id, data);
+    return await ingredientApi.updateUnitPrice(id, data);
 }
 
 export async function updateIngredientName(id, data) {

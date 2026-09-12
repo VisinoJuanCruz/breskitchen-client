@@ -80,3 +80,251 @@
   background-color:#de4f33;
   color: white; 
 }
+
+
+.ingredient-modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:99999;
+}
+
+.ingredient-modal{
+
+    width:650px;
+    max-width:90%;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:10px;
+
+    box-shadow:0 0 20px rgba(0,0,0,.4);
+}
+
+/* ---------- Modal ---------- */
+
+.ingredient-modal-backdrop {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, .55);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+}
+
+.ingredient-modal {
+
+    background: white;
+
+    width: 700px;
+    max-width: 90vw;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    border-radius: 12px;
+
+    padding: 30px;
+
+    box-shadow: 0 10px 40px rgba(0,0,0,.35);
+
+}
+
+.ingredient-modal h2{
+
+    margin-bottom:25px;
+
+    color:#de4f33;
+
+    text-shadow:none;
+
+}
+
+.ingredient-modal textarea{
+
+    min-height:120px;
+
+    resize:vertical;
+
+}
+
+.ingredient-modal-buttons{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-top:25px;
+
+}
+
+.ingredient-modal-buttons button{
+
+    padding:10px 20px;
+
+}
+
+.delete-button{
+
+    margin-left:auto;
+
+    background:#d33;
+
+    color:white;
+
+}
+
+/* ---------------- FORMULARIO ---------------- */
+
+.ingredient-form-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.form-group.full-width{
+
+    grid-column:1 / -1;
+
+}
+
+.form-group label{
+
+    font-size:.9rem;
+
+    color:#555;
+
+    margin-bottom:6px;
+
+    font-weight:600;
+
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+    width:100%;
+
+    padding:10px 12px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+    transition:.2s;
+
+    box-sizing:border-box;
+
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+    border-color:#de4f33;
+
+    outline:none;
+
+    box-shadow:0 0 0 3px rgba(222,79,51,.15);
+
+}
+
+.form-group textarea{
+
+    min-height:120px;
+
+    resize:vertical;
+
+}
+
+.ingredient-modal-buttons{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-top:30px;
+
+}
+
+.ingredient-modal-buttons button{
+
+    padding:10px 22px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+.ingredient-modal-buttons button:first-child{
+
+    background:#de4f33;
+
+    color:white;
+
+}
+
+.ingredient-modal-buttons button:nth-child(2){
+
+    background:#ececec;
+
+}
+
+.delete-button{
+
+    margin-left:auto;
+
+    background:#d33;
+
+    color:white;
+
+}
+
+@media (max-width:700px){
+
+    .ingredient-form-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

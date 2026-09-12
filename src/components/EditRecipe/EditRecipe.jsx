@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import './editrecipe.css'
- import { API_URL } from "../../api/config.js";
+import * as recipeApi from "../../api/recipe.api";
+import * as ingredientApi from "../../api/ingredient.api";
 
 
 const EditRecipe = () => {
@@ -29,29 +29,49 @@ const EditRecipe = () => {
   });
 
   useEffect(() => {
-    const fetchRecipe = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/api/cakes/${id}`);
-        setCakeData(response.data);
-        setSelectedIngredients(response.data.ingredients);
-      } catch (error) {
-        console.error('Error al obtener la receta', error);
-      }
+
+    const loadRecipe = async () => {
+
+        try {
+
+            const recipe = await recipeApi.getOne(id);
+
+            setCakeData(recipe);
+            setSelectedIngredients(recipe.ingredients);
+
+        } catch (error) {
+
+            console.error("Error al obtener la receta", error);
+
+        }
+
     };
-    fetchRecipe();
-  }, [id]);
+
+    loadRecipe();
+
+}, [id]);
 
   useEffect(() => {
-    const fetchIngredients = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/api/ingredients`);
-        setIngredientList(response.data);
-      } catch (error) {
-        console.error('Error al obtener la lista de ingredientes', error);
-      }
+
+    const loadIngredients = async () => {
+
+        try {
+
+            const ingredients = await ingredientApi.getAll();
+
+            setIngredientList(ingredients);
+
+        } catch (error) {
+
+            console.error("Error al obtener los ingredientes", error);
+
+        }
+
     };
-    fetchIngredients();
-  }, []);
+
+    loadIngredients();
+
+}, []);
 
   const handleCakeChange = (e) => {
     const { name, value } = e.target;
@@ -118,7 +138,7 @@ const EditRecipe = () => {
   
     if (confirmEdit.isConfirmed) {
       try {
-        await axios.put(`${API_URL}/api/cakes/${id}`, cakeDataWithIngredients);
+        await recipeApi.update(id, cakeDataWithIngredients);;
         console.log(cakeDataWithIngredients)
         // Mostrar mensaje de éxito
         MySwal.fire({
@@ -152,7 +172,7 @@ const EditRecipe = () => {
     if (confirmDelete.isConfirmed) {
       try {
         // Realizar una solicitud HTTP para eliminar la receta
-        await axios.delete(`${API_URL}/api/cakes/${id}`);
+        await recipeApi.remove(id);
         // Mostrar mensaje de éxito
         MySwal.fire({
           title: 'Receta eliminada con éxito',

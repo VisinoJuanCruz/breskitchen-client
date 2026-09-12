@@ -33,7 +33,28 @@ export async function create(data) {
 
 }
 
-export async function updatePrice(id, data) {
+export const update = async (id, ingredient) => {
+
+    const response = await fetch(
+        `${API_URL}/api/ingredients/${id}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(ingredient)
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Error al actualizar el ingrediente");
+    }
+
+    return await response.json();
+
+};
+
+export async function updateUnitPrice(id, data) {
 
     const response = await fetch(
         `${API_URL}/api/ingredients/updatePrice/${id}`,

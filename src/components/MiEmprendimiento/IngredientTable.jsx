@@ -1,56 +1,30 @@
 import IngredientRow from "./IngredientRow";
 
 export default function IngredientTable({
-
-    ingredients,
-    setIngredients
-
+  ingredients,
+  setIngredients,
+  onEdit,
 }) {
+  return (
+    <table className="ingredients-list-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-    return (
-
-        <table className="ingredients-list-table">
-
-            <thead>
-
-                <tr>
-
-                    <th>Nombre</th>
-
-                    <th>Precio x kilo</th>
-
-                    <th>Acciones</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                {
-
-                    ingredients.map((ingredient) => (
-
-                        <IngredientRow
-
-                            key={ingredient._id}
-
-                            ingredient={ingredient}
-
-                            ingredients={ingredients}
-
-                            setIngredients={setIngredients}
-
-                        />
-
-                    ))
-
-                }
-
-            </tbody>
-
-        </table>
-
-    );
-
+      <tbody>
+        {ingredients.map((ingredient) => (
+          <IngredientRow
+            key={ingredient._id}
+            ingredient={ingredient}
+            setIngredients={setIngredients}
+            onEdit={onEdit}
+          />
+        ))}
+      </tbody>
+    </table>
+  );
 }

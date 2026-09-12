@@ -12,21 +12,72 @@ export async function getAll() {
 
 }
 
+export async function getOne(id) {
+
+    const response = await fetch(`${API_URL}/api/cakes/${id}`);
+
+    if (!response.ok) {
+        throw new Error("Error al obtener la receta");
+    }
+
+    return await response.json();
+
+}
+
 export async function create(recipe) {
 
-    const response = await fetch(
-        `${API_URL}/api/cakes`,
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(recipe)
-        }
-    );
+    const response = await fetch(`${API_URL}/api/cakes`, {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(recipe)
+
+    });
 
     if (!response.ok) {
         throw new Error("Error al crear la receta");
+    }
+
+    return await response.json();
+
+}
+
+export async function update(id, recipe) {
+
+    const response = await fetch(`${API_URL}/api/cakes/${id}`, {
+
+        method: "PUT",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(recipe)
+
+    });
+
+    if (!response.ok) {
+        throw new Error("Error al actualizar la receta");
+    }
+
+    return await response.json();
+
+}
+
+export async function remove(id) {
+
+    const response = await fetch(`${API_URL}/api/cakes/${id}`, {
+
+        method: "DELETE"
+
+    });
+
+    if (!response.ok) {
+        throw new Error("Error al eliminar la receta");
     }
 
     return await response.json();

@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
-import axios from 'axios'
+import * as recipeApi from "../../api/recipe.api";
 import {Link} from 'react-router-dom'
- import { API_URL } from "../../api/config.js";
+
 
 import './recetas.css';
 
@@ -12,17 +12,26 @@ export default function Recetas() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const fetchIngredients = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/api/cakes`);
-        setCakes(response.data);
-      } catch (error) {
-        console.error('Error al obtener la lista de ingredientes', error);
-      }
-    };
-    fetchIngredients();
-  }, []);
 
+    const loadRecipes = async () => {
+
+        try {
+
+            const recipes = await recipeApi.getAll();
+
+            setCakes(recipes);
+
+        } catch (error) {
+
+            console.error("Error al obtener las recetas", error);
+
+        }
+
+    };
+
+    loadRecipes();
+
+}, []);
   // Función para filtrar las recetas en función del término de búsqueda
   const filteredCakes = cakes.filter((cake) =>
     cake.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -72,7 +81,7 @@ export default function Recetas() {
                 {
                     
                     cake.ingredients.map(ingredient =>
-                        <li key={ingredient.name}>{ingredient.ingredient.name}: ${ ingredient.quantity * (ingredient.ingredient.priceKg/1000)}</li>
+                        <li key={ingredient.name}>{ingredient.ingredient.name}: ${ ingredient.quantity * (ingredient.ingredient.unitPrice/1000)}</li>
                         
                     )
                     
@@ -82,11 +91,11 @@ export default function Recetas() {
                 <b>Costos totales:</b>
                     ${cake.ingredients.reduce((total, ingredient) => {
                     // Verifica si ingredient.quantity y ingredient.ingredient.precioPorKilo son números válidos
-                    if (typeof ingredient.quantity === 'number' && typeof ingredient.ingredient.priceKg === 'number') {
-                        let costoIngrediente = (ingredient.quantity * ingredient.ingredient.priceKg) / 1000;
+                    if (typeof ingredient.quantity === 'number' && typeof ingredient.ingredient.unitPrice === 'number') {
+                        let costoIngrediente = (ingredient.quantity * ingredient.ingredient.unitPrice) / 1000;
                         return total + costoIngrediente;
                     } else {
-                        console.error('Valores no válidos en ingredient.quantity o ingredient.ingredient.priceKg');
+                        console.error('Valores no válidos en ingredient.quantity o ingredient.ingredient.unitPrice');
                         return total;
                     }
                 }, 0).toFixed(2)}
