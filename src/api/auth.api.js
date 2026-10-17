@@ -2,53 +2,45 @@ import axios from "axios";
 import { API_URL } from "./config";
 
 export async function login(formData) {
+  const response = await fetch(`${API_URL}/api/login`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: formData.username,
+      password: formData.password,
+    }),
+  });
 
-    const response = await axios.post(
+  const result = await response.json().catch(() => ({}));
 
-        `${API_URL}/api/login`,
+  if (!response.ok || !result.success) {
+    throw new Error(result.error || "Error al iniciar sesión");
+  }
 
-        formData,
-
-        {
-            withCredentials: true
-        }
-
-    );
-
-    return response.data;
-
+  return result;
 }
-
 export async function logout() {
+  const response = await axios.post(
+    `${API_URL}/api/logout`,
 
-    const response = await axios.post(
+    {},
 
-        `${API_URL}/api/logout`,
+    {
+      withCredentials: true,
+    },
+  );
 
-        {},
-
-        {
-            withCredentials: true
-        }
-
-    );
-
-    return response.data;
-
+  return response.data;
 }
 
 export async function checkAuth() {
+  const response = await fetch(`${API_URL}/api/check-auth`, {
+    method: "GET",
+    credentials: "include",
+  });
 
-    const response = await axios.get(
-
-        `${API_URL}/api/check-auth`,
-
-        {
-            withCredentials: true
-        }
-
-    );
-
-    return response.data;
-
+  return response.data;
 }

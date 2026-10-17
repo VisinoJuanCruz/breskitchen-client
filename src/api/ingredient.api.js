@@ -12,25 +12,26 @@ export async function getAll() {
 
 }
 
-export async function create(data) {
 
-    const response = await fetch(
-        `${API_URL}/api/ingredients`,
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        }
-    );
+export async function create(data) {
+    const response = await fetch(`${API_URL}/api/ingredients`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+
+    const result = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-        throw new Error("Error al crear el ingrediente");
+        throw new Error(
+            result.error || result.message || "Error al crear el ingrediente"
+        );
     }
 
-    return await response.json();
-
+    return result;
 }
 
 export const update = async (id, ingredient) => {
@@ -39,6 +40,7 @@ export const update = async (id, ingredient) => {
         `${API_URL}/api/ingredients/${id}`,
         {
             method: "PUT",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -60,6 +62,7 @@ export async function updateUnitPrice(id, data) {
         `${API_URL}/api/ingredients/updatePrice/${id}`,
         {
             method: "PUT",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -81,6 +84,7 @@ export async function updateName(id, data) {
         `${API_URL}/api/ingredients/updateName/${id}`,
         {
             method: "PUT",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -101,7 +105,8 @@ export async function remove(id) {
     const response = await fetch(
         `${API_URL}/api/ingredients/${id}`,
         {
-            method: "DELETE"
+            method: "DELETE",
+            credentials: "include",
         }
     );
 
