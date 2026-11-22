@@ -29,6 +29,30 @@ const STAGE_LABELS = {
   otro: "Otro",
 };
 
+const getCompatibleUnits = (baseUnit) => {
+  const units = {
+    kg: ["kg", "g"],
+    g: ["g", "kg"],
+    l: ["l", "ml"],
+    ml: ["ml", "l"],
+    unidad: ["unidad"],
+  };
+
+  return units[baseUnit] || [];
+};
+
+const getUnitLabel = (unit) => {
+  const labels = {
+    kg: "Kilogramos (kg)",
+    g: "Gramos (g)",
+    l: "Litros (l)",
+    ml: "Mililitros (ml)",
+    unidad: "Unidad",
+  };
+
+  return labels[unit] || unit;
+};
+
 const CakeForm = () => {
   const [cakeData, setCakeData] = useState({
     name: "",
@@ -134,18 +158,25 @@ const CakeForm = () => {
       (ing) => ing.ingredient === ingredientId,
     );
 
-    if (!isAlreadyAdded) {
-      setIngredientsByStage((prev) => ({
-        ...prev,
-        [stage]: [
-          ...prev[stage],
-          {
-            ingredient: ingredientId,
-            quantity: 0,
-          },
-        ],
-      }));
-    }
+    if (isAlreadyAdded) return;
+
+    const ingredientDetail = ingredientList.find(
+      (ingredient) => ingredient._id === ingredientId,
+    );
+
+    if (!ingredientDetail) return;
+
+    setIngredientsByStage((prev) => ({
+      ...prev,
+      [stage]: [
+        ...prev[stage],
+        {
+          ingredient: ingredientId,
+          quantity: 0,
+          quantityUnit: ingredientDetail.unit,
+        },
+      ],
+    }));
   };
 
   /**
@@ -156,6 +187,15 @@ const CakeForm = () => {
       ...prev,
       [stage]: prev[stage].map((ing) =>
         ing.ingredient === ingredientId ? { ...ing, quantity } : ing,
+      ),
+    }));
+  };
+
+  const handleQuantityUnitChange = (stage, ingredientId, quantityUnit) => {
+    setIngredientsByStage((prev) => ({
+      ...prev,
+      [stage]: prev[stage].map((ing) =>
+        ing.ingredient === ingredientId ? { ...ing, quantityUnit } : ing,
       ),
     }));
   };
@@ -179,7 +219,8 @@ const CakeForm = () => {
       ingredients.forEach((ing) => {
         allIngredients.push({
           ingredient: ing.ingredient,
-          quantity: ing.quantity,
+          quantity: Number(ing.quantity),
+          quantityUnit: ing.quantityUnit,
           stage: stage,
         });
       });
@@ -465,6 +506,28 @@ const CakeForm = () => {
                             }
                           />
 
+                          <select
+                            value={
+                              ing.quantityUnit || ingredientDetail?.unit || ""
+                            }
+                            onChange={(e) =>
+                              handleQuantityUnitChange(
+                                stage,
+                                ing.ingredient,
+                                e.target.value,
+                              )
+                            }
+                            disabled={!ingredientDetail}
+                          >
+                            {getCompatibleUnits(ingredientDetail?.unit).map(
+                              (unit) => (
+                                <option key={unit} value={unit}>
+                                  {getUnitLabel(unit)}
+                                </option>
+                              ),
+                            )}
+                          </select>
+
                           <button
                             type="button"
                             className="btn-remove-ingredient"
@@ -488,6 +551,7 @@ const CakeForm = () => {
               {activeStageForms.has(stage) ? (
                 <div className="stage-form">
                   <select
+                    className="ingredient-select"
                     defaultValue=""
                     onChange={(e) => {
                       if (e.target.value) {

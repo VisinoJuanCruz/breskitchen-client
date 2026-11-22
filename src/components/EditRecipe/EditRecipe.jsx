@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -30,6 +31,30 @@ const STAGE_LABELS = {
   default: "General",
 };
 
+const getCompatibleUnits = (baseUnit) => {
+  const units = {
+    kg: ["kg", "g"],
+    g: ["g", "kg"],
+    l: ["l", "ml"],
+    ml: ["ml", "l"],
+    unidad: ["unidad"],
+  };
+
+  return units[baseUnit] || [];
+};
+
+const getUnitLabel = (unit) => {
+  const labels = {
+    kg: "Kilogramos (kg)",
+    g: "Gramos (g)",
+    l: "Litros (l)",
+    ml: "Mililitros (ml)",
+    unidad: "Unidad",
+  };
+
+  return labels[unit] || unit;
+};
+
 const EditRecipe = () => {
   const MySwal = withReactContent(Swal);
   const { id } = useParams();
@@ -52,7 +77,6 @@ const EditRecipe = () => {
     outstanding: false,
   });
 
-  // Ingredientes agrupados por stage
   const [ingredientsByStage, setIngredientsByStage] = useState({
     masa: [],
     bizcochuelo: [],
@@ -98,7 +122,22 @@ const EditRecipe = () => {
 
         const stagesUsed = new Set();
 
-        recipe.ingredients.forEach((ing) => {
+        const normalizedIngredients = (recipe.ingredients || []).map((ing) => {
+          const ingredientDetail =
+            typeof ing.ingredient === "object" && ing.ingredient !== null
+              ? ing.ingredient
+              : null;
+
+          return {
+            ...ing,
+            ingredient: ingredientDetail
+              ? ingredientDetail._id
+              : ing.ingredient,
+            quantityUnit: ing.quantityUnit || ingredientDetail?.unit || "",
+          };
+        });
+
+        normalizedIngredients.forEach((ing) => {
           const stage = ing.stage || "otro";
 
           if (byStage[stage]) {
@@ -121,7 +160,6 @@ const EditRecipe = () => {
     const loadIngredients = async () => {
       try {
         const ingredients = await ingredientApi.getAll();
-
         setIngredientList(ingredients);
       } catch (error) {
         console.error("Error al obtener los ingredientes", error);
@@ -133,14 +171,15 @@ const EditRecipe = () => {
 
   const handleCakeChange = (e) => {
     const { name, value } = e.target;
-    setCakeData({
-      ...cakeData,
+
+    setCakeData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
   /**
-   * Agregar nuevo stage para selector de ingredientes
+   * Agregar un nuevo stage.
    */
   const handleAddStage = (stage) => {
     setActiveStages((prev) => {
@@ -157,9 +196,38 @@ const EditRecipe = () => {
   };
 
   /**
-   * Remover stage completo
+   * Mostrar u ocultar el selector de ingredientes.
    */
-  const handleRemoveStage = (stage) => {
+  const handleToggleStageForm = (stage) => {
+    setActiveStageForms((prev) => {
+      const newSet = new Set(prev);
+
+      if (newSet.has(stage)) {
+        newSet.delete(stage);
+      } else {
+        newSet.add(stage);
+      }
+
+      return newSet;
+    });
+  };
+
+  /**
+   * Eliminar un stage completo.
+   */
+  const handleRemoveStage = async (stage) => {
+    const confirmDelete = await MySwal.fire({
+      title: `¿Eliminar la etapa ${STAGE_LABELS[stage]}?`,
+      text: "También se eliminarán todos los ingredientes asociados a esta etapa.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar etapa",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#c0392b",
+    });
+
+    if (!confirmDelete.isConfirmed) return;
+
     setIngredientsByStage((prev) => ({
       ...prev,
       [stage]: [],
@@ -179,30 +247,37 @@ const EditRecipe = () => {
   };
 
   /**
-   * Agregar ingrediente a un stage
+   * Agregar ingrediente a un stage.
    */
   const handleAddIngredientToStage = (stage, ingredientId) => {
     const isAlreadyAdded = ingredientsByStage[stage].some(
       (ing) => ing.ingredient === ingredientId,
     );
 
-    if (!isAlreadyAdded) {
-      setIngredientsByStage((prev) => ({
-        ...prev,
-        [stage]: [
-          ...prev[stage],
-          {
-            ingredient: ingredientId,
-            quantity: 0,
-            stage: stage,
-          },
-        ],
-      }));
-    }
+    if (isAlreadyAdded) return;
+
+    const ingredientDetail = ingredientList.find(
+      (ingredient) => ingredient._id === ingredientId,
+    );
+
+    if (!ingredientDetail) return;
+
+    setIngredientsByStage((prev) => ({
+      ...prev,
+      [stage]: [
+        ...prev[stage],
+        {
+          ingredient: ingredientId,
+          quantity: 0,
+          quantityUnit: ingredientDetail.unit,
+          stage,
+        },
+      ],
+    }));
   };
 
   /**
-   * Cambiar cantidad de ingrediente en un stage
+   * Cambiar cantidad de ingrediente.
    */
   const handleQuantityChange = (stage, ingredientId, quantity) => {
     setIngredientsByStage((prev) => ({
@@ -214,7 +289,19 @@ const EditRecipe = () => {
   };
 
   /**
-   * Remover ingrediente de un stage
+   * Cambiar unidad de cantidad del ingrediente.
+   */
+  const handleQuantityUnitChange = (stage, ingredientId, quantityUnit) => {
+    setIngredientsByStage((prev) => ({
+      ...prev,
+      [stage]: prev[stage].map((ing) =>
+        ing.ingredient === ingredientId ? { ...ing, quantityUnit } : ing,
+      ),
+    }));
+  };
+
+  /**
+   * Eliminar ingrediente de un stage.
    */
   const handleRemoveIngredientFromStage = (stage, ingredientId) => {
     setIngredientsByStage((prev) => ({
@@ -228,15 +315,24 @@ const EditRecipe = () => {
 
     const allIngredients = Object.entries(ingredientsByStage).flatMap(
       ([stage, ingredients]) =>
-        ingredients.map((ing) => ({
-          _id: ing._id,
-          ingredient:
+        ingredients.map((ing) => {
+          const ingredientId =
             typeof ing.ingredient === "object"
               ? ing.ingredient._id
-              : ing.ingredient,
-          quantity: Number(ing.quantity),
-          stage,
-        })),
+              : ing.ingredient;
+
+          const ingredientDetail = ingredientList.find(
+            (ingredient) => ingredient._id === ingredientId,
+          );
+
+          return {
+            _id: ing._id,
+            ingredient: ingredientId,
+            quantity: Number(ing.quantity),
+            quantityUnit: ing.quantityUnit || ingredientDetail?.unit,
+            stage,
+          };
+        }),
     );
 
     const confirmEdit = await MySwal.fire({
@@ -263,7 +359,6 @@ const EditRecipe = () => {
       formData.append("outstanding", cakeData.outstanding);
       formData.append("ingredients", JSON.stringify(allIngredients));
 
-      // Solo se envía una imagen si el usuario seleccionó una nueva.
       if (imageFile) {
         formData.append("image", imageFile);
       }
@@ -300,6 +395,7 @@ const EditRecipe = () => {
     if (confirmDelete.isConfirmed) {
       try {
         await recipeApi.remove(id);
+
         MySwal.fire({
           title: "Receta eliminada con éxito",
           icon: "success",
@@ -308,6 +404,7 @@ const EditRecipe = () => {
         });
       } catch (error) {
         console.error("Error al eliminar la receta", error);
+
         MySwal.fire({
           title: "Error al eliminar la receta",
           text: "Ha ocurrido un error al eliminar la receta.",
@@ -320,6 +417,7 @@ const EditRecipe = () => {
   return (
     <div className="form-recipes-container">
       <h2 className="form-recipes-title">Editar Receta</h2>
+
       <form className="form-recipes" onSubmit={handleSubmit}>
         <div>
           <label>Nombre del producto:</label>
@@ -332,6 +430,7 @@ const EditRecipe = () => {
             required
           />
         </div>
+
         <div>
           <label>Descripción:</label>
           <br />
@@ -343,6 +442,7 @@ const EditRecipe = () => {
             required
           />
         </div>
+
         <div>
           <label>Precio:</label>
           <br />
@@ -354,6 +454,7 @@ const EditRecipe = () => {
             required
           />
         </div>
+
         <div>
           <label>¿En oferta?</label>
 
@@ -362,13 +463,14 @@ const EditRecipe = () => {
             name="ofer"
             checked={cakeData.ofer}
             onChange={() =>
-              setCakeData((prevCakeData) => ({
-                ...prevCakeData,
-                ofer: !prevCakeData.ofer, // Invertir el valor actual
+              setCakeData((prev) => ({
+                ...prev,
+                ofer: !prev.ofer,
               }))
             }
           />
-          {cakeData.ofer ? (
+
+          {cakeData.ofer && (
             <div>
               <label>Porcentaje de descuento:</label>
               <br />
@@ -380,9 +482,8 @@ const EditRecipe = () => {
                 required
               />
             </div>
-          ) : (
-            <></>
           )}
+
           <div>
             <label>¿Mostrar en Carousel?</label>
 
@@ -391,13 +492,14 @@ const EditRecipe = () => {
               name="carousel"
               checked={cakeData.carousel}
               onChange={() =>
-                setCakeData((prevCakeData) => ({
-                  ...prevCakeData,
-                  carousel: !prevCakeData.carousel, // Invertir el valor actual
+                setCakeData((prev) => ({
+                  ...prev,
+                  carousel: !prev.carousel,
                 }))
               }
             />
           </div>
+
           <div>
             <label>Destacado?</label>
 
@@ -406,9 +508,9 @@ const EditRecipe = () => {
               name="outstanding"
               checked={cakeData.outstanding}
               onChange={() =>
-                setCakeData((prevCakeData) => ({
-                  ...prevCakeData,
-                  outstanding: !prevCakeData.outstanding, // Invertir el valor actual
+                setCakeData((prev) => ({
+                  ...prev,
+                  outstanding: !prev.outstanding,
                 }))
               }
             />
@@ -447,13 +549,7 @@ const EditRecipe = () => {
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (!file) return;
-
-              setImageFile(file);
-              setImagePreview(URL.createObjectURL(file));
-            }}
+            onChange={handleImageChange}
           />
         </div>
 
@@ -468,13 +564,15 @@ const EditRecipe = () => {
             required
           />
         </div>
+
         <hr />
 
-        {/* NUEVA SECCIÓN: INGREDIENTES POR STAGES */}
         <h3>Ingredientes por Etapa</h3>
+
         <p style={{ fontSize: "0.9em", color: "#666" }}>
           Agrupar ingredientes por etapa de elaboración
         </p>
+
         <div className="add-stage-container">
           <select
             value=""
@@ -497,11 +595,13 @@ const EditRecipe = () => {
             ))}
           </select>
         </div>
+
         <div className="stages-container">
           {Array.from(activeStages).map((stage) => (
             <div key={stage} className="stage-section">
               <div className="stage-header">
                 <h4>{STAGE_LABELS[stage]}</h4>
+
                 {ingredientsByStage[stage].length > 0 && (
                   <span className="stage-badge">
                     {ingredientsByStage[stage].length} ingredientes
@@ -509,19 +609,31 @@ const EditRecipe = () => {
                 )}
               </div>
 
-              {/* Mostrar ingredientes del stage */}
+              {/* Ingredientes de la etapa */}
               {ingredientsByStage[stage].length > 0 && (
                 <div className="stage-ingredients-list">
                   {ingredientsByStage[stage].map((ing) => {
-                    const ingredientDetail = ingredientList.find(
-                      (i) => i._id === ing.ingredient,
-                    );
+                    const ingredientId =
+                      typeof ing.ingredient === "object"
+                        ? ing.ingredient?._id
+                        : ing.ingredient;
+
+                    const ingredientDetail =
+                      typeof ing.ingredient === "object"
+                        ? ing.ingredient
+                        : ingredientList.find(
+                            (i) => i._id === ingredientId,
+                          );
+
                     return (
                       <div
-                        key={ing.ingredient}
+                        key={ingredientId}
                         className="stage-ingredient-item"
                       >
-                        <label>{ingredientDetail?.name || "Ingrediente"}</label>
+                        <label>
+                          {ingredientDetail?.name || "Ingrediente"}
+                        </label>
+
                         <div className="ingredient-controls">
                           <input
                             type="number"
@@ -531,19 +643,44 @@ const EditRecipe = () => {
                             onChange={(e) =>
                               handleQuantityChange(
                                 stage,
-                                ing.ingredient,
+                                ingredientId,
                                 parseFloat(e.target.value) || 0,
                               )
                             }
-                            placeholder="Cantidad (g)"
+                            placeholder="Cantidad"
                           />
+
+                          <select
+                            value={
+                              ing.quantityUnit ||
+                              ingredientDetail?.unit ||
+                              ""
+                            }
+                            onChange={(e) =>
+                              handleQuantityUnitChange(
+                                stage,
+                                ingredientId,
+                                e.target.value,
+                              )
+                            }
+                            disabled={!ingredientDetail}
+                          >
+                            {getCompatibleUnits(
+                              ingredientDetail?.unit,
+                            ).map((unit) => (
+                              <option key={unit} value={unit}>
+                                {getUnitLabel(unit)}
+                              </option>
+                            ))}
+                          </select>
+
                           <button
                             type="button"
                             className="btn-remove-ingredient"
                             onClick={() =>
                               handleRemoveIngredientFromStage(
                                 stage,
-                                ing.ingredient,
+                                ingredientId,
                               )
                             }
                           >
@@ -556,23 +693,33 @@ const EditRecipe = () => {
                 </div>
               )}
 
-              {/* Formulario de agregación de ingredientes */}
-              {activeStageForms.has(stage) ? (
+              {/* Selector de ingredientes */}
+              {activeStageForms.has(stage) && (
                 <div className="stage-form">
                   <select
+                    className="ingredient-select"
                     defaultValue=""
                     onChange={(e) => {
                       if (e.target.value) {
-                        handleAddIngredientToStage(stage, e.target.value);
+                        handleAddIngredientToStage(
+                          stage,
+                          e.target.value,
+                        );
                         e.target.value = "";
                       }
                     }}
                   >
-                    <option value="">Seleccionar ingrediente...</option>
+                    <option value="">
+                      Seleccionar ingrediente...
+                    </option>
+
                     {ingredientList.map((ingredient) => {
-                      const isAlreadyAdded = ingredientsByStage[stage].some(
+                      const isAlreadyAdded = ingredientsByStage[
+                        stage
+                      ].some(
                         (ing) => ing.ingredient === ingredient._id,
                       );
+
                       return (
                         <option
                           key={ingredient._id}
@@ -585,50 +732,45 @@ const EditRecipe = () => {
                       );
                     })}
                   </select>
-                  <button
-                    type="button"
-                    className="btn-close-form"
-                    onClick={() => {
-                      setActiveStageForms((prev) => {
-                        const newSet = new Set(prev);
-                        newSet.delete(stage);
-                        return newSet;
-                      });
-                    }}
-                  >
-                    Cerrar
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-remove-stage"
-                    onClick={() => handleRemoveStage(stage)}
-                  >
-                    Eliminar etapa
-                  </button>
                 </div>
-              ) : (
+              )}
+
+              {/* Botones siempre visibles: mitad y mitad */}
+              <div className="stage-actions">
                 <button
                   type="button"
-                  className="btn-add-ingredient-stage"
-                  onClick={() => handleAddStage(stage)}
+                  className="btn-add-ingredient"
+                  onClick={() => handleToggleStageForm(stage)}
                 >
-                  + Agregar ingrediente
+                  {activeStageForms.has(stage)
+                    ? "Cerrar selector"
+                    : "+ Agregar ingrediente"}
                 </button>
-              )}
+
+                <button
+                  type="button"
+                  className="btn-remove-stage"
+                  onClick={() => handleRemoveStage(stage)}
+                >
+                  Eliminar etapa
+                </button>
+              </div>
             </div>
           ))}
         </div>
+
         <hr />
 
         <button type="submit" className="form-recipes-button">
           Guardar Cambios
         </button>
+
         <button
           type="button"
           className="form-recipes-button"
           onClick={handleDeleteRecipe}
         >
-          Delete{" "}
+          Delete
         </button>
       </form>
     </div>

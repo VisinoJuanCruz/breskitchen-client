@@ -38,43 +38,25 @@ export default function Recetas() {
     }, {});
   };
 
-  // Función auxiliar para calcular el costo individual de un ingrediente según su unidad
-  const calculateIngredientCost = (item) => {
-    console.log(item)
-    // Si el backend ya te devuelve el 'cost' calculado, lo usamos directamente
-    
-
-    const { quantity, ingredient } = item;
-    if (
-      !ingredient ||
-      typeof quantity !== "number" ||
-      typeof ingredient.unitPrice !== "number"
-    ) {
-      return 0;
-    }
-
-    const unit = ingredient.unit;
-    console.log("ESTO:",ingredient, unit);
-
-    // 1. Si se vende por unidad (ej. cajas, moldes, huevos), la cantidad es directa
-    if (unit === "unidad") {
-      return quantity * ingredient.unitPrice;
-    }
-
-    // 2. Si el precio base es por Kilo (kg) o Litro (l), pero en la receta se usan gramos (g) o mililitros (ml)
-    // (Asumimos que la cantidad ingresada en la receta está expresada en la unidad base menor o que se divide por 1000)
-    if (unit === "kg" || unit === "l") {
-      return (quantity * ingredient.unitPrice);
-    }
-
-    // 3. Si el ingrediente se maneja directamente en gramos (g) o mililitros (ml) con precio por esa unidad
-    if (unit === "g" || unit === "ml") {
-      return quantity * ingredient.unitPrice;
-    }
-
-    // Por defecto si no coincide con ninguna regla anterior
-    return (quantity * ingredient.unitPrice) / 1000;
+  const getUnitLabel = (unit) => {
+  const labels = {
+    kg: "kg",
+    g: "gr",
+    l: "l",
+    ml: "ml",
+    unidad: "u",
   };
+
+  return labels[unit] || unit || "";
+};
+
+const calculateIngredientCost = (item) => {
+  if (typeof item.cost === "number") {
+    return item.cost;
+  }
+
+  return 0;
+};
 
   return (
     <div className="recetas-container">
@@ -143,8 +125,9 @@ export default function Recetas() {
                     <ul style={{ marginTop: "4px", marginBottom: "8px" }}>
                       {items.map((item) => (
                         <li key={item._id || item.ingredient?._id}>
-                          {item.quantity} {item.ingredient?.unit || ""} -{" "}
-                          {item.ingredient?.name}
+                          {item.quantity} {getUnitLabel(
+  item.quantityUnit || item.ingredient?.unit
+)} - {item.ingredient?.name}
                         </li>
                       ))}
                     </ul>
@@ -161,7 +144,7 @@ export default function Recetas() {
                   const itemCost = calculateIngredientCost(item);
                   return (
                     <li key={item._id || item.ingredient?._id}>
-                      {item.ingredient?.name}: ${itemCost.toFixed(2)}
+                      {item.ingredient?.name}: ${Math.round(itemCost).toLocaleString("es-AR")}
                     </li>
                   );
                 })}
@@ -169,7 +152,7 @@ export default function Recetas() {
 
               {/* COSTO TOTAL DE LA RECETA */}
               <b>Costo total:</b>
-              <p>${totalCost.toFixed(2)}</p>
+              <p>${Math.round(totalCost).toLocaleString("es-AR")}</p>
 
               <p>
                 <Link to={`/editar-receta/${cake._id}`} className="edit-button">
