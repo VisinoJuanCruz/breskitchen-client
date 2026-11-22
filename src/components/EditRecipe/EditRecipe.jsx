@@ -15,6 +15,7 @@ const STAGES = [
   "decoracion",
   "terminacion",
   "otro",
+  "default",
 ];
 
 const STAGE_LABELS = {
@@ -26,6 +27,7 @@ const STAGE_LABELS = {
   decoracion: "Decoración",
   terminacion: "Terminación",
   otro: "Otro",
+  default: "General",
 };
 
 const EditRecipe = () => {
@@ -60,6 +62,7 @@ const EditRecipe = () => {
     decoracion: [],
     terminacion: [],
     otro: [],
+    default: [],
   });
 
   const [activeStages, setActiveStages] = useState(new Set());
@@ -90,6 +93,7 @@ const EditRecipe = () => {
           decoracion: [],
           terminacion: [],
           otro: [],
+          default: [],
         };
 
         const stagesUsed = new Set();
@@ -225,6 +229,7 @@ const EditRecipe = () => {
     const allIngredients = Object.entries(ingredientsByStage).flatMap(
       ([stage, ingredients]) =>
         ingredients.map((ing) => ({
+          _id: ing._id,
           ingredient:
             typeof ing.ingredient === "object"
               ? ing.ingredient._id
