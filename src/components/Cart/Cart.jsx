@@ -1,153 +1,204 @@
-import React, { useState, useEffect } from 'react';
-import './cart.css';
-import CartCard from './CartCard.jsx';
-import Swal from 'sweetalert2';
-import {Link} from 'react-router-dom'
 
-const Cart = () => {
-  // Obtener el carrito del localStorage
-  const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || []);
+import React, { useEffect, useState } from "react";
+import "./cart.css";
+import CartCard from "./CartCard.jsx";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
+const readCart = () => {
+  try {
+    const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
 
+    if (!Array.isArray(savedCart)) return [];
+
+    return savedCart
+      .filter((item) => item && item._id)
+      .map((item) => ({
+        ...item,
+        quantity: Math.max(1, Math.floor(Number(item.quantity) || 1)),
+        price: Number(item.price) || 0,
+      }));
+  } catch (error) {
+    console.error("Error al leer el carrito:", error);
+    return [];
+  }
+};
+
+const getFinalPrice = (product) => {
+  const basePrice = Number(product.price) || 0;
+  const discountRate = Number(product.discountRate) || 0;
+
+  return product.ofer === true
+    ? basePrice * (1 - discountRate / 100)
+    : basePrice;
+};
+
+const formatPrice = (price) => {
+  return `$${Number(price || 0).toLocaleString("es-AR", {
+    maximumFractionDigits: 2,
+  })}`;
+};
+
+const Cart = ({ cakes = [], cakesLoading = false }) => {
+  const [cart, setCart] = useState(readCart);
+
+  // Sincronizar los precios con los productos actuales del catálogo.
   useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    setCart(savedCart);
-  }, []);
-  // Función para calcular el total del carrito
+    if (cakesLoading || !Array.isArray(cakes) || cakes.length === 0) {
+      return;
+    }
+
+    const productsById = new Map(
+      cakes.map((product) => [String(product._id), product])
+    );
+
+    const updatedCart = cart.map((item) => {
+      const currentProduct = productsById.get(String(item._id));
+
+      // Si el producto ya no está en el catálogo, conservamos su información.
+      if (!currentProduct) return item;
+
+      return {
+        ...item,
+        name: currentProduct.name ?? item.name,
+        image: currentProduct.image ?? item.image,
+        description: currentProduct.description ?? item.description,
+        basePrice: Number(currentProduct.price) || 0,
+        price: getFinalPrice(currentProduct),
+        ofer: currentProduct.ofer === true,
+        discountRate: Number(currentProduct.discountRate) || 0,
+      };
+    });
+
+    if (JSON.stringify(updatedCart) !== JSON.stringify(cart)) {
+      setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    }
+  }, [cakes, cakesLoading, cart]);
+
   const calculateTotal = () => {
     return cart.reduce((total, item) => {
       return total + item.price * item.quantity;
     }, 0);
   };
 
-  // Función para actualizar el carrito
-  const updateCart = (itemId, newQuantity) => {
-    const updatedCart = cart.map((item) => {
-      if (item._id === itemId) {
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
-    });
+  const updateCartQuantity = (itemId, newQuantity) => {
+    const quantity = Math.floor(Number(newQuantity));
 
-    // Filtra los productos con cantidad mayor a 0 y actualiza el estado del carrito
-    const filteredCart = updatedCart.filter((item) => item.quantity > 0);
-    setCart(filteredCart);
+    if (!Number.isFinite(quantity)) return;
 
-    // Actualiza el carrito en localStorage
-    localStorage.setItem('cart', JSON.stringify(filteredCart));
+    const updatedCart =
+      quantity <= 0
+        ? cart.filter((item) => String(item._id) !== String(itemId))
+        : cart.map((item) =>
+            String(item._id) === String(itemId)
+              ? { ...item, quantity }
+              : item
+          );
+
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
-  const updateCartQuantity = (itemId, newQuantity) => {
-    // Hacer una copia del carrito actual
-    const updatedCart = [...cart];
-  
-    // Buscar el índice del item en la copia del carrito
-    
-    const itemIndex = updatedCart.findIndex((item) => item._id === itemId);
-    
-    if (itemIndex !== -1) {
-      if (newQuantity === 0) {
-        // Si la nueva cantidad es 0, eliminar el item de la copia del carrito
-        
-            updatedCart.splice(itemIndex, 1);
-            // Actualizar el estado del carrito
-            setCart(updatedCart);
-            // Actualizar el carrito en localStorage
-            localStorage.setItem('cart', JSON.stringify(updatedCart));
-          }
-        }
-    }
- 
-
   const clearCart = () => {
-    // Mostrar una alerta de confirmación para vaciar el carrito
     Swal.fire({
       title: '<p class="toast-title">¿Desea vaciar el carrito?</p>',
-      icon: 'question',
+      icon: "question",
       showCancelButton: true,
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'No',
+      confirmButtonText: "Sí",
+      cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        // Vaciar el carrito (eliminar todo del localStorage)
-        localStorage.removeItem('cart');
-        // Actualizar el estado del carrito a un arreglo vacío
+        localStorage.removeItem("cart");
         setCart([]);
       }
     });
   };
 
   const createWhatsAppMessage = () => {
-    // Crear una lista de productos y cantidades a partir del carrito
+    if (cart.length === 0) return;
+
     const productsList = cart.map((item) => {
-      return `${item.quantity} - ${item.name} = $${item.price * item.quantity}`;
+      const subtotal = item.price * item.quantity;
+
+      return `${item.quantity} - ${item.name} = ${formatPrice(subtotal)}`;
     });
-  
-    // Unir la lista de productos en un solo mensaje de texto
-    const message = `Hola Gisela, me gustaría :\n\n${productsList.join('\n')}\n\n*Total: $${calculateTotal()}*`;
-  
-    // Codificar el mensaje para que sea seguro en una URL
-    const encodedMessage = encodeURIComponent(message);
-  
-    // Número de teléfono al que deseas enviar el mensaje (reemplaza con el número correcto)
-    const phoneNumber = '542267410091';
-  
-    // Crear el enlace de WhatsApp con el mensaje predeterminado
-    const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-  
-    // Abrir el enlace de WhatsApp en una nueva pestaña del navegador
-    window.open(whatsappLink, '_blank');
+
+    const message = `Hola Gisela, me gustaría realizar el siguiente pedido:\n\n${productsList.join(
+      "\n"
+    )}\n\n*Total: ${formatPrice(calculateTotal())}*`;
+
+    const phoneNumber = "542267410091";
+    const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+
+    window.open(whatsappLink, "_blank", "noopener,noreferrer");
   };
-  
- 
+
   return (
     <div className="cart-container">
       <h2 className="cart-title">Carrito de Compras 🛒</h2>
+
       {cart.length === 0 ? (
         <>
-        <p className="text-center">El carrito está vacío.</p>
-        <Link to="/productos" className="add-products-link"> <button className="add-products-empty-cart"> Agregar productos al carrito </button></Link>
+          <p className="text-center">El carrito está vacío.</p>
+
+          <Link
+            to="/productos"
+            className="add-products-empty-cart"
+          >
+            Agregar productos al carrito
+          </Link>
         </>
       ) : (
         <>
-        <table className="price-list-table">
-          <thead>
-            <tr>
-            <th>
-              Nombre
-            </th>
-            <th>
-              Precio
-            </th>
-            <th>
-              Cantidad
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-            {cart.map((cake) => (
-              <CartCard cake={cake} updateCartQuantity={updateCartQuantity} />
-          ))}
-          </tbody>
-        </table>
-    
-    <p className="cart-total">Total: ${calculateTotal()}</p>
-        <div className="cart-buttons-container">
-          
-          <button className="add-products-button" onClick={() => window.location.href = "/productos"}>
-            Agregar productos ➕
+          <table className="price-list-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {cart.map((cake) => (
+                <CartCard
+                  key={cake._id}
+                  cake={cake}
+                  updateCartQuantity={updateCartQuantity}
+                  formatPrice={formatPrice}
+                />
+              ))}
+            </tbody>
+          </table>
+
+          <p className="cart-total">
+            Total: {formatPrice(calculateTotal())}
+          </p>
+
+          <div className="cart-buttons-container">
+            <Link to="/productos" className="add-products-button">
+              Agregar productos ➕
+            </Link>
+
+            <button
+              onClick={clearCart}
+              className="clear-cart-button"
+            >
+              Vaciar carrito ✖️
             </button>
-        
-          <button onClick={clearCart} className="clear-cart-button">
-            Vaciar carrito ✖️
-          </button>
-          <button onClick={createWhatsAppMessage} className="order-button">
-            Realizar pedido ✔️
-          </button>
-        </div>
-      </>
+
+            <button
+              onClick={createWhatsAppMessage}
+              className="order-button"
+            >
+              Realizar pedido ✔️
+            </button>
+          </div>
+        </>
       )}
-      
     </div>
   );
 };
